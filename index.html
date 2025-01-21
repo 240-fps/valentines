@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Valentine's Day</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation Dots -->
+  <div class="navigation-dots">
+    <span class="dot active" onclick="goToPage(0)"></span>
+    <span class="dot" onclick="goToPage(1)"></span>
+    <span class="dot" onclick="goToPage(2)"></span>
+  </div>
+
+  <!-- Page 1: Hero Section -->
+  <section id="page-1" class="page active">
+    <header class="hero">
+      <img src="images/hero-picture.jpg" alt="Hero Picture" class="hero-image">
+      <div class="hero-content">
+        <h1 class="hero-title">A message to my beautiful baby!</h1>
+        <p class="hero-question">Will you be my Valentine? ❤️</p>
+        <div class="cta-buttons">
+          <button class="cta-button pulse" id="yes-btn-1">Yes</button>
+          <button class="cta-button pulse" id="yes-btn-2">Yes</button>
+        </div>
+      </div>
+    </header>
+  </section>
+
+  <!-- Page 2: Slideshow and Video -->
+  <section id="page-2" class="page">
+    <h2>Since You Said Yes:</h2>
+    <div class="slideshow-container">
+      <div class="slide active">
+        <img src="images/image1.jpg" alt="Slide 1">
+        <div class="caption">I love your eyes ❤️</div>
+      </div>
+      <div class="slide">
+        <img src="images/image2.jpg" alt="Slide 2">
+        <div class="caption">I love your smile 🌸</div>
+      </div>
+      <div class="slide">
+        <img src="images/image3.jpg" alt="Slide 3">
+        <div class="caption">I love your laugh 💕</div>
+      </div>
+    </div>
+
+    <!-- Slideshow Navigation Dots -->
+    <div class="slideshow-dots">
+      <span class="dot active" onclick="showSlide(0)"></span>
+      <span class="dot" onclick="showSlide(1)"></span>
+      <span class="dot" onclick="showSlide(2)"></span>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <h2>A Special Message</h2>
+      <video controls autoplay loop>
+        <source src="video/valentines-message.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Page 3: Itinerary Section -->
+  <section id="page-3" class="page">
+    <h2>Your Valentine’s Visit</h2>
+    <div class="itinerary">
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 14</h3>
+        <div class="details">
+          <p>A romantic dinner to start our Valentine’s celebration. ❤️</p>
+        </div>
+      </div>
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 15</h3>
+        <div class="details">
+          <p>A lovely day of exploring together, filled with surprises! 🌸</p>
+        </div>
+      </div>
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 16</h3>
+        <div class="details">
+          <p>A getaway to a beautiful destination for some relaxation. 💕</p>
+        </div>
+      </div>
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 17</h3>
+        <div class="details">
+          <p>A day of fun and adventure just for us. 💖</p>
+        </div>
+      </div>
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 18</h3>
+        <div class="details">
+          <p>Celebrating your special day with love and joy. 🎂</p>
+        </div>
+      </div>
+      <div class="itinerary-card" onclick="toggleCard(this)">
+        <h3>Feb 19</h3>
+        <div class="details">
+          <p>Wrapping up our beautiful time with heartfelt moments. 💌</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
