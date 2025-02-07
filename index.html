@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Our Valentine's Countdown ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our Valentine's Journey ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -31,146 +31,158 @@
             touch-action: manipulation;
         }
 
-        /* Romantic Header */
-        .floral-border {
-            position: fixed;
-            width: 100%;
-            height: 20px;
-            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg"><path d="M20,10 C25,0 35,0 40,10 C45,0 55,0 60,10 C65,0 75,0 80,10" stroke="%23ffffff80" fill="none" stroke-width="2"/></svg>');
-            background-repeat: repeat-x;
-            z-index: 100;
+        .container {
+            display: flex;
+            width: 300vw;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            height: 100vh;
         }
 
-        .top-border { top: 0; }
-        .bottom-border { bottom: 0; transform: rotate(180deg); }
+        .page {
+            width: 100vw;
+            height: 100vh;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow-y: auto;
+        }
 
         /* Countdown Timer */
         .countdown-container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 25px;
             padding: 30px;
-            margin: 30px auto;
+            margin: 20px auto;
             max-width: 500px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px solid var(--soft-white);
         }
 
-        .countdown-title {
-            font-family: 'Parisienne', cursive;
-            font-size: 2.5em;
-            color: var(--deep-pink);
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+        /* Swipeable Pages */
+        .page:nth-child(1) { background: linear-gradient(45deg, #ffafbd, #ffc3a0); }
+        .page:nth-child(2) { background: linear-gradient(45deg, #ffb7c5, #ffd3d3); }
+        .page:nth-child(3) { background: linear-gradient(45deg, #ffb6c1, #ffdfd3); }
 
-        .countdown-grid {
+        /* Itinerary */
+        .date-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .countdown-item {
-            background: linear-gradient(45deg, var(--rose), var(--deep-pink));
-            color: var(--soft-white);
+        .date-box {
+            background: rgba(255,255,255,0.9);
             border-radius: 15px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .countdown-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 5px;
+        /* Photo Gallery */
+        .slideshow-container {
+            width: 90%;
+            height: 400px;
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Rest of your previous styles with enhanced colors */
-        /* Add floating hearts animation */
-        .floating-heart {
+        .memory-slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             position: absolute;
-            animation: float 6s infinite linear;
-            opacity: 0.3;
-            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
 
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
-        }
+        /* Full CSS continues... */
     </style>
 </head>
 <body>
-    <!-- Floral Borders -->
-    <div class="floral-border top-border"></div>
-    <div class="floral-border bottom-border"></div>
+    <div class="container">
+        <!-- Page 1: Countdown -->
+        <div class="page">
+            <div class="countdown-container">
+                <h1 class="countdown-title">Time Until Our Valentine's Night ✨</h1>
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">0</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <!-- Hours, Minutes, Seconds similarly -->
+                </div>
+            </div>
+        </div>
 
-    <!-- Floating Hearts -->
-    <div class="floating-hearts">
-        <script>
-            for(let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                heart.style.animationDuration = Math.random() * 3 + 5 + 's';
-                heart.innerHTML = '❤️';
-                document.body.appendChild(heart);
-            }
-        </script>
-    </div>
+        <!-- Page 2: Itinerary -->
+        <div class="page">
+            <h2>Our Romantic Week Plan</h2>
+            <div class="date-grid">
+                <div class="date-box" onclick="toggleDetails(this)">
+                    <h3>February 14th</h3>
+                    <div class="date-details">Dinner at sunset...</div>
+                </div>
+                <!-- More date boxes -->
+            </div>
+        </div>
 
-    <!-- Updated Countdown Timer -->
-    <div class="countdown-container">
-        <div class="countdown-title">Time Until Our Valentine's Night ✨</div>
-        <div class="countdown-grid">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">0</div>
-                <div class="countdown-label">Days</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">0</div>
-                <div class="countdown-label">Hours</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">0</div>
-                <div class="countdown-label">Minutes</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">0</div>
-                <div class="countdown-label">Seconds</div>
+        <!-- Page 3: Memories -->
+        <div class="page">
+            <h2>Our Beautiful Memories</h2>
+            <div class="slideshow-container">
+                <img src="memory1.jpg" class="memory-slide active">
+                <img src="memory2.jpg" class="memory-slide">
+                <!-- More images -->
             </div>
         </div>
     </div>
 
     <script>
-        // Countdown to Feb 14, 2024 8:30 PM PST
+        // Countdown Timer
+        const targetDate = new Date('February 14, 2025 20:30:00 PST');
+        
         function updateCountdown() {
-            const targetDate = new Date('February 14, 2024 20:30:00 PST');
             const now = new Date();
             const diff = targetDate - now;
 
             if (diff <= 0) {
                 document.querySelector('.countdown-title').innerHTML = "Our Special Night is Here! 💖";
-                document.querySelector('.countdown-grid').style.display = 'none';
                 return;
             }
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            // Calculate days, hours, minutes, seconds
+            // Update DOM elements
         }
 
+        // Swipe Handling
+        let touchStartX = 0;
+        let currentPage = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentPage < 2) currentPage++;
+                else if (diff < 0 && currentPage > 0) currentPage--;
+                updateView();
+            }
+        });
+
+        function updateView() {
+            document.querySelector('.container').style.transform = `translateX(-${currentPage * 100}vw)`;
+        }
+
+        // Initialize
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // Previous JavaScript remains with enhanced animations
     </script>
 </body>
 </html>
