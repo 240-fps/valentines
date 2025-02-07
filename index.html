@@ -1,188 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our Valentine's Journey ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --blush: #FFB7C5;
-            --rose: #FF69B4;
-            --dusty-rose: #D8A1A4;
-            --deep-pink: #FF1493;
-            --soft-white: #FFF9FB;
-            --gold: #FFD700;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Quicksand', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--blush), var(--rose));
-            min-height: 100vh;
-            color: #5A2E35;
-            overflow-x: hidden;
-            touch-action: manipulation;
-        }
-
-        .container {
-            display: flex;
-            width: 300vw;
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            height: 100vh;
-        }
-
-        .page {
-            width: 100vw;
-            height: 100vh;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            overflow-y: auto;
-        }
-
-        /* Countdown Timer */
-        .countdown-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 25px;
-            padding: 30px;
-            margin: 20px auto;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        /* Swipeable Pages */
-        .page:nth-child(1) { background: linear-gradient(45deg, #ffafbd, #ffc3a0); }
-        .page:nth-child(2) { background: linear-gradient(45deg, #ffb7c5, #ffd3d3); }
-        .page:nth-child(3) { background: linear-gradient(45deg, #ffb6c1, #ffdfd3); }
-
-        /* Itinerary */
-        .date-grid {
-            display: grid;
-            gap: 15px;
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .date-box {
-            background: rgba(255,255,255,0.9);
-            border-radius: 15px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        /* Photo Gallery */
-        .slideshow-container {
-            width: 90%;
-            height: 400px;
-            margin: 20px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .memory-slide {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        /* Full CSS continues... */
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Valentine's Surprise</title>
+  <!-- Google Fonts for a romantic touch -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables for colors */
+    :root {
+      --primary-color: #ff9a9e;
+      --secondary-color: #fad0c4;
+      --tertiary-color: #a18cd1;
+      --quaternary-color: #fbc2eb;
+      --quinary-color: #fbc2eb;
+      --senary-color: #a6c1ee;
+      --text-color: #fff;
+    }
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Slider Container: 3 slides side-by-side */
+    .slider {
+      display: flex;
+      height: 100%;
+      width: 300%;
+      transition: transform 0.5s ease;
+      scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
+    }
+    /* Hide native scrollbar */
+    .slider::-webkit-scrollbar {
+      display: none;
+    }
+    /* Each Slide */
+    .slide {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Slide 1: Countdown */
+    #slide1 {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      text-align: center;
+    }
+    #slide1 h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+    #slide1 .countdown {
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: 20px;
+    }
+    #slide1 p {
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
+    /* Slide 2: Itinerary */
+    #slide2 {
+      background: linear-gradient(135deg, var(--tertiary-color), var(--quaternary-color));
+      overflow-y: auto;
+    }
+    #slide2 h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: var(--text-color);
+      text-align: center;
+    }
+    .itinerary {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .itinerary details {
+      background: rgba(255,255,255,0.2);
+      padding: 15px;
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.3s;
+      color: var(--text-color);
+    }
+    .itinerary details:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.02);
+    }
+    .itinerary summary {
+      font-size: 1.5rem;
+      cursor: pointer;
+      outline: none;
+    }
+    .itinerary p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+    /* Slide 3: Memories & Valentine Question */
+    #slide3 {
+      background: linear-gradient(135deg, var(--quinary-color), var(--senary-color));
+      text-align: center;
+    }
+    #slide3 h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+    .slideshow-container {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    }
+    .slideshow img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .slideshow img.active {
+      opacity: 1;
+    }
+    .slideshow-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+    }
+    .slideshow-nav button {
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5rem;
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .slideshow-nav button:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .ask-section {
+      margin-top: 20px;
+    }
+    .ask-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--text-color);
+    }
+    .ask-section button {
+      background: #ff4081;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.5rem;
+      border-radius: 10px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .ask-section button:hover {
+      background: #e73370;
+    }
+    /* Navigation Dots */
+    .nav-dots {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .nav-dots .dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .nav-dots .dot.active {
+      background: #fff;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      #slide1 h1 { font-size: 2.5rem; }
+      #slide1 .countdown { font-size: 1.8rem; }
+      #slide2 h1 { font-size: 2.2rem; }
+      .itinerary summary { font-size: 1.3rem; }
+      #slide3 h1 { font-size: 2.5rem; }
+      .ask-section h2 { font-size: 2rem; }
+      .ask-section button { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Page 1: Countdown -->
-        <div class="page">
-            <div class="countdown-container">
-                <h1 class="countdown-title">Time Until Our Valentine's Night ✨</h1>
-                <div class="countdown-grid">
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="days">0</div>
-                        <div class="countdown-label">Days</div>
-                    </div>
-                    <!-- Hours, Minutes, Seconds similarly -->
-                </div>
-            </div>
+  <!-- Slider with 3 slides -->
+  <div class="slider" id="slider">
+    <!-- Slide 1: Countdown -->
+    <section class="slide" id="slide1">
+      <div>
+        <h1>Countdown to Valentine's Day</h1>
+        <div class="countdown" id="countdown"></div>
+        <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
+      </div>
+    </section>
+    <!-- Slide 2: Itinerary -->
+    <section class="slide" id="slide2">
+      <div>
+        <h1>Our Valentine's Week Itinerary</h1>
+        <div class="itinerary">
+          <details>
+            <summary>Feb 14 – Valentine's Day</summary>
+            <p>Romantic dinner at our favorite restaurant. Expect a delightful surprise!</p>
+          </details>
+          <details>
+            <summary>Feb 15 – Day 2</summary>
+            <p>Morning stroll and a picnic in the park under the soft glow of sunrise.</p>
+          </details>
+          <details>
+            <summary>Feb 16 – Day 3</summary>
+            <p>Visit an art gallery followed by a creative workshop.</p>
+          </details>
+          <details>
+            <summary>Feb 17 – Day 4</summary>
+            <p>Adventure awaits: hiking, exploring scenic trails, and capturing memories.</p>
+          </details>
+          <details>
+            <summary>Feb 18 – Day 5</summary>
+            <p>A day of relaxation: spa treatments and a cozy movie night.</p>
+          </details>
+          <details>
+            <summary>Feb 19 – Day 6</summary>
+            <p>A charming farewell brunch and a heartfelt surprise gift.</p>
+          </details>
         </div>
-
-        <!-- Page 2: Itinerary -->
-        <div class="page">
-            <h2>Our Romantic Week Plan</h2>
-            <div class="date-grid">
-                <div class="date-box" onclick="toggleDetails(this)">
-                    <h3>February 14th</h3>
-                    <div class="date-details">Dinner at sunset...</div>
-                </div>
-                <!-- More date boxes -->
-            </div>
+      </div>
+    </section>
+    <!-- Slide 3: Memories & Valentine Question -->
+    <section class="slide" id="slide3">
+      <div>
+        <h1>Our Beautiful Memories</h1>
+        <div class="slideshow-container">
+          <div class="slideshow" id="slideshow">
+            <!-- Replace these placeholder images with your own memories -->
+            <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1" class="active">
+            <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
+            <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
+          </div>
+          <div class="slideshow-nav">
+            <button id="prev">&lsaquo;</button>
+            <button id="next">&rsaquo;</button>
+          </div>
         </div>
-
-        <!-- Page 3: Memories -->
-        <div class="page">
-            <h2>Our Beautiful Memories</h2>
-            <div class="slideshow-container">
-                <img src="memory1.jpg" class="memory-slide active">
-                <img src="memory2.jpg" class="memory-slide">
-                <!-- More images -->
-            </div>
+        <div class="ask-section">
+          <h2>Will You Be My Valentine?</h2>
+          <button id="valentineBtn">Yes, I will!</button>
         </div>
-    </div>
+      </div>
+    </section>
+  </div>
+  <!-- Navigation Dots -->
+  <div class="nav-dots" id="navDots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+  </div>
 
-    <script>
-        // Countdown Timer
-        const targetDate = new Date('February 14, 2025 20:30:00 PST');
-        
-        function updateCountdown() {
-            const now = new Date();
-            const diff = targetDate - now;
+  <script>
+    /* -----------------------------
+       Countdown Timer
+       ----------------------------- */
+    const countdownEl = document.getElementById("countdown");
+    // Target: Feb 14, 2025 8:30 PM PST (GMT-0800)
+    const targetDate = new Date("Feb 14, 2025 20:30:00 GMT-0800").getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        countdownEl.textContent = "It's time!";
+        return;
+      }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-            if (diff <= 0) {
-                document.querySelector('.countdown-title').innerHTML = "Our Special Night is Here! 💖";
-                return;
-            }
-
-            // Calculate days, hours, minutes, seconds
-            // Update DOM elements
-        }
-
-        // Swipe Handling
-        let touchStartX = 0;
-        let currentPage = 0;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
+    /* -----------------------------
+       Navigation Dots & Slide Scrolling
+       ----------------------------- */
+    const slider = document.getElementById("slider");
+    const dots = document.querySelectorAll(".nav-dots .dot");
+    slider.addEventListener("scroll", () => {
+      let index = Math.round(slider.scrollLeft / window.innerWidth);
+      dots.forEach(dot => dot.classList.remove("active"));
+      if(dots[index]) { dots[index].classList.add("active"); }
+    });
+    dots.forEach(dot => {
+      dot.addEventListener("click", () => {
+        const index = dot.getAttribute("data-index");
+        slider.scrollTo({
+          left: index * window.innerWidth,
+          behavior: "smooth"
         });
+      });
+    });
 
-        document.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > 50) {
-                if (diff > 0 && currentPage < 2) currentPage++;
-                else if (diff < 0 && currentPage > 0) currentPage--;
-                updateView();
-            }
-        });
+    /* -----------------------------
+       Memories Slideshow
+       ----------------------------- */
+    const slideshow = document.getElementById("slideshow");
+    const slides = slideshow.querySelectorAll("img");
+    let currentSlide = 0;
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+    }
+    document.getElementById("prev").addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+    document.getElementById("next").addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+    // Auto-advance every 5 seconds
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 5000);
 
-        function updateView() {
-            document.querySelector('.container').style.transform = `translateX(-${currentPage * 100}vw)`;
-        }
+    /* -----------------------------
+       Valentine Button Interaction
+       ----------------------------- */
+    document.getElementById("valentineBtn").addEventListener("click", () => {
+      alert("I love you! Can't wait to share this amazing week with you!");
+    });
 
-        // Initialize
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
+    /* -----------------------------
+       Adjust slider on window resize (for responsiveness)
+       ----------------------------- */
+    window.addEventListener("resize", () => {
+      const activeIndex = document.querySelector(".nav-dots .dot.active").getAttribute("data-index");
+      slider.scrollTo({
+        left: activeIndex * window.innerWidth,
+        behavior: "smooth"
+      });
+    });
+  </script>
 </body>
 </html>
