@@ -2,159 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- iOS Specific Meta Tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>My Valentine ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet>
+    <title>Our Valentine's Countdown ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --rose: #FF007F;
+            --blush: #FFB7C5;
+            --rose: #FF69B4;
+            --dusty-rose: #D8A1A4;
+            --deep-pink: #FF1493;
+            --soft-white: #FFF9FB;
             --gold: #FFD700;
-            --deep-red: #B03060;
-            --soft-pink: #FFF0F5;
-            --safe-area-top: env(safe-area-inset-top);
-            --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Parisienne', cursive;
+            font-family: 'Quicksand', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            height: 100vh;
-            height: -webkit-fill-available;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--blush), var(--rose));
+            min-height: 100vh;
+            color: #5A2E35;
+            overflow-x: hidden;
             touch-action: manipulation;
         }
 
-        .container {
-            display: flex;
-            width: 300vw;
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        /* Romantic Header */
+        .floral-border {
+            position: fixed;
+            width: 100%;
+            height: 20px;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg"><path d="M20,10 C25,0 35,0 40,10 C45,0 55,0 60,10 C65,0 75,0 80,10" stroke="%23ffffff80" fill="none" stroke-width="2"/></svg>');
+            background-repeat: repeat-x;
+            z-index: 100;
         }
 
-        .page {
-            width: 100vw;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-            padding: calc(var(--safe-area-top) + 20px) 15px calc(var(--safe-area-bottom) + 60px);
+        .top-border { top: 0; }
+        .bottom-border { bottom: 0; transform: rotate(180deg); }
+
+        /* Countdown Timer */
+        .countdown-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--soft-white);
+        }
+
+        .countdown-title {
+            font-family: 'Parisienne', cursive;
+            font-size: 2.5em;
+            color: var(--deep-pink);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             text-align: center;
-            position: relative;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
-        /* iPhone X+ Safe Areas */
-        @supports(padding: max(0px)) {
-            .page {
-                padding-top: calc(var(--safe-area-top) + 20px);
-                padding-bottom: calc(var(--safe-area-bottom) + 60px);
-            }
+        .countdown-item {
+            background: linear-gradient(45deg, var(--rose), var(--deep-pink));
+            color: var(--soft-white);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
-        /* Swipeable Container Adjustments */
-        .container {
-            height: 100vh;
-            height: -webkit-fill-available;
+        .countdown-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        /* Optimized Touch Targets */
-        button, .date-box {
-            min-width: 44px;
-            min-height: 44px;
+        /* Rest of your previous styles with enhanced colors */
+        /* Add floating hearts animation */
+        .floating-heart {
+            position: absolute;
+            animation: float 6s infinite linear;
+            opacity: 0.3;
+            font-size: 1.2em;
         }
 
-        /* Mobile-Optimized Date Grid */
-        .date-grid {
-            grid-template-columns: 1fr;
-            padding: 10px;
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
         }
-
-        /* Mobile Slideshow */
-        .slideshow-container {
-            height: 50vh;
-            width: 95%;
-        }
-
-        /* iOS-Specific Adjustments */
-        input, button {
-            -webkit-appearance: none;
-            border-radius: 0;
-        }
-
-        @media screen and (max-width: 768px) {
-            .proposal-content {
-                padding: 20px;
-                margin: 10px;
-            }
-
-            .floating-heart {
-                font-size: 3em;
-            }
-
-            h1 {
-                font-size: 2em !important;
-            }
-
-            .romantic-btn {
-                font-size: 1.2em;
-                padding: 12px 30px;
-            }
-        }
-
-        /* Rest of previous styles remain */
     </style>
 </head>
 <body>
-    <!-- Previous content remains -->
+    <!-- Floral Borders -->
+    <div class="floral-border top-border"></div>
+    <div class="floral-border bottom-border"></div>
+
+    <!-- Floating Hearts -->
+    <div class="floating-hearts">
+        <script>
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+                heart.innerHTML = '❤️';
+                document.body.appendChild(heart);
+            }
+        </script>
+    </div>
+
+    <!-- Updated Countdown Timer -->
+    <div class="countdown-container">
+        <div class="countdown-title">Time Until Our Valentine's Night ✨</div>
+        <div class="countdown-grid">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">0</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">0</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">0</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">0</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // iOS Viewport Height Fix
-        function setViewportHeight() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        // Countdown to Feb 14, 2024 8:30 PM PST
+        function updateCountdown() {
+            const targetDate = new Date('February 14, 2024 20:30:00 PST');
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.querySelector('.countdown-title').innerHTML = "Our Special Night is Here! 💖";
+                document.querySelector('.countdown-grid').style.display = 'none';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        window.addEventListener('resize', setViewportHeight);
-        setViewportHeight();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-        // Enhanced Touch Handling
-        let touchStartX = 0;
-        let touchStartY = 0;
-        const swipeThreshold = 50;
-        const verticalThreshold = 30;
-
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
-
-        document.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            const diffX = touchStartX - touchEndX;
-            const diffY = touchStartY - touchEndY;
-
-            if (Math.abs(diffX) > swipeThreshold && Math.abs(diffY) < verticalThreshold) {
-                if (diffX > 0 && currentPage < 2) nextPage();
-                else if (diffX < 0 && currentPage > 0) prevPage();
-            }
-        });
-
-        // Prevent iOS Pull-to-Refresh
-        document.body.addEventListener('touchmove', function(e) {
-            if(!this.scrollTop && !this.scrollLeft)
-                e.preventDefault();
-        }, { passive: false });
-
-        // Rest of previous JavaScript remains
+        // Previous JavaScript remains with enhanced animations
     </script>
 </body>
 </html>
