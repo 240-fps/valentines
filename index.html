@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <!-- Responsive meta tag with no zoom -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <!-- Apple meta tags for full-screen web app mode -->
+  <!-- Apple meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
@@ -20,15 +20,14 @@
       CSS Variables & Basic Reset
     ---------------------------------------------------*/
     :root {
-      /* Vibrant Valentine’s color palette */
+      /* Vibrant Valentine’s palette */
       --slide1-start: #ff5e62;       /* Bold red-pink */
       --slide1-end:   #ff9966;       /* Warm coral */
       --slide2-start: #ff99cc;       /* Soft pink */
       --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
       --slide3-start: #ff416c;       /* Deep pink/red */
       --slide3-end:   #ff4b2b;       /* Fiery red-orange */
-      /* For love hearts, use a classic love heart red */
-      --heart-color: #ff3366;
+      --heart-gradient: linear-gradient(45deg, #ff5e62, #ff9966);
       --text-color: #fff;
       --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
@@ -65,7 +64,8 @@
     }
     
     /*---------------------------------------------------
-      Floating Decorative Containers (appear on every slide)
+      Floating Decorative Containers (for hearts & petals)
+      These containers are placed on every slide.
     ---------------------------------------------------*/
     .heart-container,
     .flower-container {
@@ -101,35 +101,31 @@
       font-size: 1.2rem;
     }
     
-    /* Classic Love Heart Shape using pseudo-elements */
+    /* Classic Love Heart with Text (for the floating decorative elements) */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
+      background: var(--heart-gradient);
+      clip-path: polygon(
+        50% 0%, 61% 11%, 72% 22%, 80% 35%, 84% 50%,
+        80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%,
+        28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      text-align: center;
+      /* Initial rotation to display the heart properly */
       transform: rotate(-45deg);
       animation: loveHeartFloat 12s linear infinite;
-    }
-    .love-heart::before,
-    .love-heart::after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: var(--heart-color);
-      border-radius: 50%;
-    }
-    .love-heart::before {
-      top: -25px;
-      left: 0;
-    }
-    .love-heart::after {
-      left: 25px;
-      top: 0;
     }
     @keyframes loveHeartFloat {
       0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
       15% { opacity: 1; }
-      100% { transform: translateY(-150vh) rotate(-45deg); opacity: 0; }
+      100% { transform: translateY(-150vh) rotate(315deg); opacity: 0; }
     }
     
     /* Rose Petal (Flower) styling using inline SVG as background */
@@ -291,7 +287,7 @@
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
-      <!-- Slide 2: Interactive Itinerary -->
+      <!-- Slide 2: Itinerary -->
       <div class="swiper-slide" id="slide2">
         <h1>Our Valentine's Week Itinerary</h1>
         <div class="itinerary">
@@ -356,9 +352,9 @@
   
   <!-- Include Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <!-- Include GSAP for advanced animations -->
+  <!-- Include GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <!-- Include Canvas Confetti for interactive effects -->
+  <!-- Include Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <script>
@@ -423,13 +419,18 @@
           el.style.left = leftPos + "%";
           el.style.top = "100%";
           const delay = Math.random() * 5;
-          const duration = (elementClass === "love-heart") ? (10 + Math.random() * 8) : (12 + Math.random() * 6);
-          const scale = (elementClass === "love-heart") ? (0.6 + Math.random() * 0.8) : (0.7 + Math.random() * 0.6);
+          const duration = elementClass === "love-heart" ? (10 + Math.random() * 8) : (12 + Math.random() * 6);
+          const scale = elementClass === "love-heart" ? (0.6 + Math.random() * 0.8) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
-          // For hearts, set initial transform to the default
-          if(elementClass === "love-heart") {
+          // Set the initial transform. For love-heart, we need to rotate -45deg for the correct shape.
+          if (elementClass === "love-heart") {
             el.style.transform = `rotate(-45deg) scale(${scale})`;
+            // Randomly choose a phrase to display inside the heart
+            const phrases = ["I love you", "Be mine"];
+            el.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+            el.style.fontSize = "10px";
+            el.style.fontWeight = "bold";
           }
           container.appendChild(el);
         }
