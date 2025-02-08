@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Responsive meta with no user scaling -->
+  <!-- Responsive meta tag with no zoom -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <!-- Apple meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,7 +20,7 @@
       CSS Variables & Basic Reset
     ---------------------------------------------------*/
     :root {
-      /* Updated vibrant pink/red palette */
+      /* Updated vibrant Valentine's palette */
       --slide1-start: #ff5e62;       /* Bold red-pink */
       --slide1-end:   #ff9966;       /* Warm coral */
       --slide2-start: #ff99cc;       /* Soft pink */
@@ -32,7 +32,6 @@
       --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
     }
-    
     * {
       margin: 0;
       padding: 0;
@@ -48,7 +47,7 @@
     }
     
     /*---------------------------------------------------
-      Main Swiper (Full-Screen Slider)
+      Main Swiper Container (Full-Screen Slider)
     ---------------------------------------------------*/
     .swiper {
       width: 100%;
@@ -65,7 +64,21 @@
     }
     
     /*---------------------------------------------------
-      Slide 1 – Countdown, Hearts & Petals
+      Floating Decorative Containers (applied to every slide)
+    ---------------------------------------------------*/
+    .heart-container,
+    .flower-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    /*---------------------------------------------------
+      Slide 1 – Countdown, Floating Hearts & Petals
     ---------------------------------------------------*/
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
@@ -86,17 +99,8 @@
     #slide1 p {
       font-size: 1.2rem;
     }
-    /* Containers for hearts and petals */
-    .heart-container, .petal-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    /* Heart styling */
+    
+    /* Heart style using clip-path */
     .heart {
       position: absolute;
       width: 40px;
@@ -114,18 +118,19 @@
       15%  { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
-    /* Flower styling (rose petals) using inline SVG as a background */
+    
+    /* Flower (rose petal) style using inline SVG as background */
     .flower {
       position: absolute;
       width: 40px;
       height: 40px;
-      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23FF3366' d='M32 4C20 4 12 14 12 26c0 9.9 6.5 18.4 16 21.5V60h8V47h8v13h8V47.5c9.5-3.1 16-11.6 16-21.5C52 14 44 4 32 4z'/></svg>") no-repeat center center;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23FF3366' d='M32 4C20 4 12 14 12 26c0 9.9 6.5 18.4 16 21.5V60h8V47h8v13h8V47.5c9.5-3.1 16-11.6 16-21.5 0-12-8-22-20-22z'/></svg>") no-repeat center center;
       background-size: contain;
       animation: petalFloat 14s linear infinite;
     }
     @keyframes petalFloat {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20% { opacity: 1; }
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20%  { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
     
@@ -136,6 +141,7 @@
       background: linear-gradient(135deg, var(--slide2-start), var(--slide2-end));
       overflow-y: auto;
       padding-bottom: 40px;
+      position: relative;
     }
     #slide2 h1 {
       font-family: 'Playfair Display', serif;
@@ -148,6 +154,7 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      position: relative;
     }
     .itinerary details {
       background: rgba(255, 255, 255, 0.15);
@@ -178,6 +185,7 @@
     ---------------------------------------------------*/
     #slide3 {
       background: linear-gradient(135deg, var(--slide3-start), var(--slide3-end));
+      position: relative;
     }
     #slide3 h1 {
       font-family: 'Playfair Display', serif;
@@ -191,6 +199,7 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 12px var(--shadow-color);
+      position: relative;
     }
     /* Nested Swiper for Memories Slider */
     .swiper-nested {
@@ -261,11 +270,12 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown, Hearts & Flowers -->
+      <!-- Slide 1: Countdown, Floating Hearts & Petals -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
+        <!-- Decorative elements on Slide 1 -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
@@ -298,8 +308,11 @@
             <p>A charming farewell brunch and a heartfelt surprise gift.</p>
           </details>
         </div>
+        <!-- Decorative elements on Slide 2 -->
+        <div class="heart-container"></div>
+        <div class="flower-container"></div>
       </div>
-      <!-- Slide 3: Memories & Valentine -->
+      <!-- Slide 3: Memories & Valentine Question -->
       <div class="swiper-slide" id="slide3">
         <h1>Our Beautiful Memories</h1>
         <!-- Nested Swiper for Memories Slider -->
@@ -321,6 +334,9 @@
           <h2>Will You Be My Valentine?</h2>
           <button id="valentineBtn">Yes, I will!</button>
         </div>
+        <!-- Decorative elements on Slide 3 -->
+        <div class="heart-container"></div>
+        <div class="flower-container"></div>
       </div>
     </div>
     <div class="swiper-pagination"></div>
@@ -365,7 +381,7 @@
      * Countdown Timer
      ***********************/
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 8:30 PM PST (ISO‑8601)
+    // Target: February 14, 2025 8:30 PM PST (ISO‑8601 format)
     const targetDateTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -384,44 +400,32 @@
     updateCountdown();
     
     /***********************
-     * Generate Random Hearts for Slide 1
+     * Generate Random Decorative Elements for Each Slide
      ***********************/
-    const heartContainer = document.querySelector(".heart-container");
-    const numHearts = 30;
-    for (let i = 0; i < numHearts; i++) {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      const leftPos = Math.random() * 100;
-      heart.style.left = leftPos + "%";
-      heart.style.top = "100%";
-      const delay = Math.random() * 5;
-      const duration = 10 + Math.random() * 8;
-      const scale = 0.6 + Math.random() * 0.8;
-      heart.style.animationDelay = delay + "s";
-      heart.style.animationDuration = duration + "s";
-      heart.style.transform = `rotate(45deg) scale(${scale})`;
-      heartContainer.appendChild(heart);
+    function generateElements(selector, numElements, elementClass) {
+      // For every container that matches the selector:
+      document.querySelectorAll(selector).forEach(container => {
+        for (let i = 0; i < numElements; i++) {
+          const el = document.createElement("div");
+          el.classList.add(elementClass);
+          const leftPos = Math.random() * 100;
+          el.style.left = leftPos + "%";
+          el.style.top = "100%";
+          const delay = Math.random() * 5;
+          const duration = 10 + Math.random() * 8;
+          const scale = 0.6 + Math.random() * 0.8;
+          el.style.animationDelay = delay + "s";
+          el.style.animationDuration = duration + "s";
+          // Set initial transform
+          el.style.transform = `rotate(45deg) scale(${scale})`;
+          container.appendChild(el);
+        }
+      });
     }
-    
-    /***********************
-     * Generate Random Flowers for Slide 1
-     ***********************/
-    const petalContainer = document.querySelector(".flower-container");
-    const numPetals = 20;
-    for (let i = 0; i < numPetals; i++) {
-      const petal = document.createElement("div");
-      petal.classList.add("flower");
-      const leftPos = Math.random() * 100;
-      petal.style.left = leftPos + "%";
-      petal.style.top = "100%";
-      const delay = Math.random() * 5;
-      const duration = 12 + Math.random() * 6;
-      const scale = 0.7 + Math.random() * 0.6;
-      petal.style.animationDelay = delay + "s";
-      petal.style.animationDuration = duration + "s";
-      petal.style.transform = `rotate(0deg) scale(${scale})`;
-      petalContainer.appendChild(petal);
-    }
+    // Generate 30 hearts in each heart-container
+    generateElements(".heart-container", 30, "heart");
+    // Generate 20 flowers (petals) in each flower-container
+    generateElements(".flower-container", 20, "flower");
     
     /***********************
      * Itinerary Card Auto-Close & Single-Open Behavior
@@ -441,24 +445,20 @@
     });
     
     /***********************
-     * Valentine Button with Confetti & GSAP Bounce
+     * Valentine Button with Confetti, GSAP Bounce & Burst Effect
      ***********************/
     document.getElementById("valentineBtn").addEventListener("click", () => {
-      // Trigger confetti with custom heart shape (if supported)
       confetti({
         particleCount: 100,
         spread: 70,
-        shapes: ["heart"],  // Attempt to use "heart" shape; if not supported, it falls back to default
         origin: { y: 0.6 }
       });
       gsap.fromTo("#valentineBtn", { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
-      // Additionally, create a burst of DOM hearts on slide 3
-      createBurstOfHearts();
+      createBurstOfDecor();
       alert("I love you! Can't wait to share this amazing week with you!");
     });
     
-    // Example function to create a burst of hearts on Slide 3 using GSAP
-    function createBurstOfHearts() {
+    function createBurstOfDecor() {
       const burstContainer = document.createElement("div");
       burstContainer.style.position = "absolute";
       burstContainer.style.top = "50%";
@@ -467,23 +467,29 @@
       burstContainer.style.pointerEvents = "none";
       document.getElementById("slide3").appendChild(burstContainer);
       
-      for (let i = 0; i < 20; i++) {
-        const burstHeart = document.createElement("div");
-        burstHeart.classList.add("heart");
-        burstHeart.style.position = "absolute";
-        burstHeart.style.width = "30px";
-        burstHeart.style.height = "30px";
-        burstHeart.style.left = (Math.random() * 100) + "%";
-        burstHeart.style.top = (Math.random() * 100) + "%";
-        burstHeart.style.opacity = "0";
-        burstContainer.appendChild(burstHeart);
-        gsap.to(burstHeart, {
+      // Create a burst of hearts and flowers (total 30 elements)
+      for (let i = 0; i < 30; i++) {
+        const isHeart = Math.random() < 0.5;
+        const elem = document.createElement("div");
+        if (isHeart) {
+          elem.classList.add("heart");
+        } else {
+          elem.classList.add("flower");
+        }
+        elem.style.position = "absolute";
+        elem.style.width = "30px";
+        elem.style.height = "30px";
+        elem.style.left = (Math.random() * 100) + "%";
+        elem.style.top = (Math.random() * 100) + "%";
+        elem.style.opacity = "0";
+        burstContainer.appendChild(elem);
+        gsap.to(elem, {
           duration: 1 + Math.random(),
           opacity: 0,
           x: (Math.random() - 0.5) * 200,
           y: (Math.random() - 0.5) * 200,
           rotation: Math.random() * 360,
-          onComplete: () => burstHeart.remove()
+          onComplete: () => elem.remove()
         });
       }
     }
