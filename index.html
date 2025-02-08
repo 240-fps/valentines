@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Ensure proper scaling and disable zoom -->
+  <!-- Responsive meta with no user scaling -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <!-- Apple meta tags for full-screen web app mode -->
+  <!-- Apple meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts for modern typography -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS for main and nested sliders -->
+  <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
@@ -20,17 +20,19 @@
       CSS Variables & Basic Reset
     ---------------------------------------------------*/
     :root {
-      --slide1-start: #ffafbd;       /* Soft pink */
-      --slide1-end:   #ffc3a0;         /* Light peach */
-      --slide2-start: #a18cd1;         /* Soft lavender */
-      --slide2-end:   #fbc2eb;         /* Light lavender */
-      --slide3-start: #fccb90;         /* Soft orange-pink */
-      --slide3-end:   #d57eeb;         /* Vibrant purple */
-      --heart-gradient: linear-gradient(45deg, #ffafbd, #ffc3a0);
+      /* Updated vibrant pink/red palette */
+      --slide1-start: #ff5e62;       /* Bold red-pink */
+      --slide1-end:   #ff9966;       /* Warm coral */
+      --slide2-start: #ff99cc;       /* Soft pink */
+      --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
+      --slide3-start: #ff416c;       /* Deep pink/red */
+      --slide3-end:   #ff4b2b;       /* Fiery red-orange */
+      --heart-gradient: linear-gradient(45deg, #ff5e62, #ff9966);
       --text-color: #fff;
-      --shadow-color: rgba(0, 0, 0, 0.15);
+      --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
     }
+    
     * {
       margin: 0;
       padding: 0;
@@ -46,7 +48,7 @@
     }
     
     /*---------------------------------------------------
-      Main Swiper Container (Full-Screen Slider)
+      Main Swiper (Full-Screen Slider)
     ---------------------------------------------------*/
     .swiper {
       width: 100%;
@@ -63,7 +65,7 @@
     }
     
     /*---------------------------------------------------
-      Slide 1 – Countdown, Hearts & Flowers
+      Slide 1 – Countdown, Hearts & Petals
     ---------------------------------------------------*/
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
@@ -84,8 +86,8 @@
     #slide1 p {
       font-size: 1.2rem;
     }
-    /* Containers for hearts and flowers */
-    .heart-container, .flower-container {
+    /* Containers for hearts and petals */
+    .heart-container, .petal-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -112,16 +114,16 @@
       15%  { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
-    /* Flower styling using an inline SVG as a background image (rose) */
+    /* Flower styling (rose petals) using inline SVG as a background */
     .flower {
       position: absolute;
       width: 40px;
       height: 40px;
-      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23FF4081' d='M32 4C20 4 12 14 12 26c0 9.9 6.5 18.4 16 21.5V60h8V47h8v13h8V47.5c9.5-3.1 16-11.6 16-21.5 0-12-8-22-20-22z'/></svg>") no-repeat center center;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23FF3366' d='M32 4C20 4 12 14 12 26c0 9.9 6.5 18.4 16 21.5V60h8V47h8v13h8V47.5c9.5-3.1 16-11.6 16-21.5C52 14 44 4 32 4z'/></svg>") no-repeat center center;
       background-size: contain;
-      animation: flowerFloat 14s linear infinite;
+      animation: petalFloat 14s linear infinite;
     }
-    @keyframes flowerFloat {
+    @keyframes petalFloat {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       20% { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
@@ -297,7 +299,7 @@
           </details>
         </div>
       </div>
-      <!-- Slide 3: Memories & Valentine Question -->
+      <!-- Slide 3: Memories & Valentine -->
       <div class="swiper-slide" id="slide3">
         <h1>Our Beautiful Memories</h1>
         <!-- Nested Swiper for Memories Slider -->
@@ -363,7 +365,7 @@
      * Countdown Timer
      ***********************/
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 8:30 PM PST (ISO‑8601 format)
+    // Target: February 14, 2025 8:30 PM PST (ISO‑8601)
     const targetDateTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -404,21 +406,21 @@
     /***********************
      * Generate Random Flowers for Slide 1
      ***********************/
-    const flowerContainer = document.querySelector(".flower-container");
-    const numFlowers = 20;
-    for (let i = 0; i < numFlowers; i++) {
-      const flower = document.createElement("div");
-      flower.classList.add("flower");
+    const petalContainer = document.querySelector(".flower-container");
+    const numPetals = 20;
+    for (let i = 0; i < numPetals; i++) {
+      const petal = document.createElement("div");
+      petal.classList.add("flower");
       const leftPos = Math.random() * 100;
-      flower.style.left = leftPos + "%";
-      flower.style.top = "100%";
+      petal.style.left = leftPos + "%";
+      petal.style.top = "100%";
       const delay = Math.random() * 5;
       const duration = 12 + Math.random() * 6;
-      const scale = 0.6 + Math.random() * 0.8;
-      flower.style.animationDelay = delay + "s";
-      flower.style.animationDuration = duration + "s";
-      flower.style.transform = `rotate(0deg) scale(${scale})`;
-      flowerContainer.appendChild(flower);
+      const scale = 0.7 + Math.random() * 0.6;
+      petal.style.animationDelay = delay + "s";
+      petal.style.animationDuration = duration + "s";
+      petal.style.transform = `rotate(0deg) scale(${scale})`;
+      petalContainer.appendChild(petal);
     }
     
     /***********************
@@ -442,14 +444,49 @@
      * Valentine Button with Confetti & GSAP Bounce
      ***********************/
     document.getElementById("valentineBtn").addEventListener("click", () => {
+      // Trigger confetti with custom heart shape (if supported)
       confetti({
         particleCount: 100,
         spread: 70,
+        shapes: ["heart"],  // Attempt to use "heart" shape; if not supported, it falls back to default
         origin: { y: 0.6 }
       });
       gsap.fromTo("#valentineBtn", { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
+      // Additionally, create a burst of DOM hearts on slide 3
+      createBurstOfHearts();
       alert("I love you! Can't wait to share this amazing week with you!");
     });
+    
+    // Example function to create a burst of hearts on Slide 3 using GSAP
+    function createBurstOfHearts() {
+      const burstContainer = document.createElement("div");
+      burstContainer.style.position = "absolute";
+      burstContainer.style.top = "50%";
+      burstContainer.style.left = "50%";
+      burstContainer.style.transform = "translate(-50%, -50%)";
+      burstContainer.style.pointerEvents = "none";
+      document.getElementById("slide3").appendChild(burstContainer);
+      
+      for (let i = 0; i < 20; i++) {
+        const burstHeart = document.createElement("div");
+        burstHeart.classList.add("heart");
+        burstHeart.style.position = "absolute";
+        burstHeart.style.width = "30px";
+        burstHeart.style.height = "30px";
+        burstHeart.style.left = (Math.random() * 100) + "%";
+        burstHeart.style.top = (Math.random() * 100) + "%";
+        burstHeart.style.opacity = "0";
+        burstContainer.appendChild(burstHeart);
+        gsap.to(burstHeart, {
+          duration: 1 + Math.random(),
+          opacity: 0,
+          x: (Math.random() - 0.5) * 200,
+          y: (Math.random() - 0.5) * 200,
+          rotation: Math.random() * 360,
+          onComplete: () => burstHeart.remove()
+        });
+      }
+    }
   </script>
 </body>
 </html>
