@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <!-- Responsive meta tag with no zoom -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <!-- Apple meta tags -->
+  <!-- Apple meta tags for full-screen web app mode -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
@@ -20,14 +20,15 @@
       CSS Variables & Basic Reset
     ---------------------------------------------------*/
     :root {
-      /* Updated vibrant Valentine's palette */
+      /* Vibrant Valentine’s color palette */
       --slide1-start: #ff5e62;       /* Bold red-pink */
       --slide1-end:   #ff9966;       /* Warm coral */
       --slide2-start: #ff99cc;       /* Soft pink */
       --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
       --slide3-start: #ff416c;       /* Deep pink/red */
       --slide3-end:   #ff4b2b;       /* Fiery red-orange */
-      --heart-gradient: linear-gradient(45deg, #ff5e62, #ff9966);
+      /* For love hearts, use a classic love heart red */
+      --heart-color: #ff3366;
       --text-color: #fff;
       --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
@@ -64,7 +65,7 @@
     }
     
     /*---------------------------------------------------
-      Floating Decorative Containers (applied to every slide)
+      Floating Decorative Containers (appear on every slide)
     ---------------------------------------------------*/
     .heart-container,
     .flower-container {
@@ -78,7 +79,7 @@
     }
     
     /*---------------------------------------------------
-      Slide 1 – Countdown, Floating Hearts & Petals
+      Slide 1 – Countdown, Floating Love Hearts & Rose Petals
     ---------------------------------------------------*/
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
@@ -100,26 +101,38 @@
       font-size: 1.2rem;
     }
     
-    /* Heart style using clip-path */
-    .heart {
+    /* Classic Love Heart Shape using pseudo-elements */
+    .love-heart {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      background: var(--heart-gradient);
-      clip-path: polygon(
-        50% 0%, 61% 11%, 72% 22%, 80% 35%, 84% 50%,
-        80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%,
-        28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%
-      );
-      animation: heartFloat 12s linear infinite;
+      width: 50px;
+      height: 50px;
+      transform: rotate(-45deg);
+      animation: loveHeartFloat 12s linear infinite;
     }
-    @keyframes heartFloat {
-      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      15%  { opacity: 1; }
-      100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
+    .love-heart::before,
+    .love-heart::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: var(--heart-color);
+      border-radius: 50%;
+    }
+    .love-heart::before {
+      top: -25px;
+      left: 0;
+    }
+    .love-heart::after {
+      left: 25px;
+      top: 0;
+    }
+    @keyframes loveHeartFloat {
+      0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: translateY(-150vh) rotate(-45deg); opacity: 0; }
     }
     
-    /* Flower (rose petal) style using inline SVG as background */
+    /* Rose Petal (Flower) styling using inline SVG as background */
     .flower {
       position: absolute;
       width: 40px;
@@ -129,13 +142,13 @@
       animation: petalFloat 14s linear infinite;
     }
     @keyframes petalFloat {
-      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20%  { opacity: 1; }
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
     
     /*---------------------------------------------------
-      Slide 2 – Interactive Itinerary
+      Slide 2 – Interactive Itinerary (Feb 14–19)
     ---------------------------------------------------*/
     #slide2 {
       background: linear-gradient(135deg, var(--slide2-start), var(--slide2-end));
@@ -154,7 +167,6 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
-      position: relative;
     }
     .itinerary details {
       background: rgba(255, 255, 255, 0.15);
@@ -270,16 +282,16 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown, Floating Hearts & Petals -->
+      <!-- Slide 1: Countdown, Floating Love Hearts & Rose Petals -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
-        <!-- Decorative elements on Slide 1 -->
+        <!-- Decorative Containers -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
-      <!-- Slide 2: Itinerary -->
+      <!-- Slide 2: Interactive Itinerary -->
       <div class="swiper-slide" id="slide2">
         <h1>Our Valentine's Week Itinerary</h1>
         <div class="itinerary">
@@ -308,7 +320,7 @@
             <p>A charming farewell brunch and a heartfelt surprise gift.</p>
           </details>
         </div>
-        <!-- Decorative elements on Slide 2 -->
+        <!-- Decorative Containers -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
@@ -334,7 +346,7 @@
           <h2>Will You Be My Valentine?</h2>
           <button id="valentineBtn">Yes, I will!</button>
         </div>
-        <!-- Decorative elements on Slide 3 -->
+        <!-- Decorative Containers -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
@@ -381,7 +393,7 @@
      * Countdown Timer
      ***********************/
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 8:30 PM PST (ISO‑8601 format)
+    // Target: February 14, 2025 8:30 PM PST (ISO‑8601)
     const targetDateTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -400,10 +412,9 @@
     updateCountdown();
     
     /***********************
-     * Generate Random Decorative Elements for Each Slide
+     * Generate Random Decorative Elements
      ***********************/
     function generateElements(selector, numElements, elementClass) {
-      // For every container that matches the selector:
       document.querySelectorAll(selector).forEach(container => {
         for (let i = 0; i < numElements; i++) {
           const el = document.createElement("div");
@@ -412,19 +423,21 @@
           el.style.left = leftPos + "%";
           el.style.top = "100%";
           const delay = Math.random() * 5;
-          const duration = 10 + Math.random() * 8;
-          const scale = 0.6 + Math.random() * 0.8;
+          const duration = (elementClass === "love-heart") ? (10 + Math.random() * 8) : (12 + Math.random() * 6);
+          const scale = (elementClass === "love-heart") ? (0.6 + Math.random() * 0.8) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
-          // Set initial transform
-          el.style.transform = `rotate(45deg) scale(${scale})`;
+          // For hearts, set initial transform to the default
+          if(elementClass === "love-heart") {
+            el.style.transform = `rotate(-45deg) scale(${scale})`;
+          }
           container.appendChild(el);
         }
       });
     }
-    // Generate 30 hearts in each heart-container
-    generateElements(".heart-container", 30, "heart");
-    // Generate 20 flowers (petals) in each flower-container
+    // Generate 30 love hearts in each container with class "heart-container"
+    generateElements(".heart-container", 30, "love-heart");
+    // Generate 20 rose petals in each container with class "flower-container"
     generateElements(".flower-container", 20, "flower");
     
     /***********************
@@ -451,7 +464,8 @@
       confetti({
         particleCount: 100,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
+        shapes: ["heart"]
       });
       gsap.fromTo("#valentineBtn", { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       createBurstOfDecor();
@@ -467,15 +481,10 @@
       burstContainer.style.pointerEvents = "none";
       document.getElementById("slide3").appendChild(burstContainer);
       
-      // Create a burst of hearts and flowers (total 30 elements)
       for (let i = 0; i < 30; i++) {
         const isHeart = Math.random() < 0.5;
         const elem = document.createElement("div");
-        if (isHeart) {
-          elem.classList.add("heart");
-        } else {
-          elem.classList.add("flower");
-        }
+        elem.classList.add(isHeart ? "love-heart" : "flower");
         elem.style.position = "absolute";
         elem.style.width = "30px";
         elem.style.height = "30px";
