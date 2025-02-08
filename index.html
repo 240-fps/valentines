@@ -2,28 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Ensure proper scaling on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Ensures proper scaling and touch behavior on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <!-- Apple meta tags for full-screen web app mode -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
   <!-- Google Fonts for a romantic touch -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Include Hammer.js for touch/pan detection -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
   <style>
-    /* CSS Variables for colors */
-    :root {
-      --primary-color: #ff9a9e;
-      --secondary-color: #fad0c4;
-      --tertiary-color: #a18cd1;
-      --quaternary-color: #fbc2eb;
-      --quinary-color: #fbc2eb;
-      --senary-color: #a6c1ee;
-      --text-color: #fff;
-    }
-    /* Global Reset */
+    /* Basic Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%;
@@ -31,35 +19,35 @@
       overflow: hidden;
       font-family: 'Roboto', sans-serif;
       background: #111;
-      color: var(--text-color);
+      color: #fff;
     }
-    /* SLIDER CONTAINER (transform-based) */
+    /* SLIDER CONTAINER using native scroll-snap */
     .slider {
-      position: relative;
-      width: 300vw;  /* 3 slides (each 100vw) */
+      display: flex;
+      width: 100%;
       height: 100vh;
-      transition: transform 0.3s ease;
-      /* Allow vertical scrolling if needed on children */
-      touch-action: pan-y;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
-    /* Each slide takes full viewport width/height */
+    /* Hide the scrollbar (works in WebKit) */
+    .slider::-webkit-scrollbar { display: none; }
+    /* Each slide fills the viewport */
     .slide {
-      display: inline-block;
+      flex: 0 0 100%;
       width: 100vw;
       height: 100vh;
-      vertical-align: top;
+      scroll-snap-align: start;
       position: relative;
       padding: 20px;
-      /* Center content */
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
     /* Slide 1: Countdown & Floating Hearts */
     #slide1 {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       text-align: center;
       overflow: hidden;
     }
@@ -68,13 +56,12 @@
       font-size: 3rem;
       margin-bottom: 20px;
     }
-    #slide1 .countdown {
+    .countdown {
       font-size: 2rem;
-      font-weight: 500;
       margin-bottom: 20px;
     }
     #slide1 p { font-size: 1.2rem; }
-    /* Floating Hearts with Float & Spin Effect */
+    /* Floating Hearts Animation */
     .heart-container {
       position: absolute;
       top: 0;
@@ -89,8 +76,8 @@
       width: 30px;
       height: 30px;
       background: #ff4081;
-      transform-origin: center;
-      animation: floatAndSpin 6s linear infinite;
+      transform: rotate(45deg);
+      animation: floatSpin 6s linear infinite;
     }
     .heart::before,
     .heart::after {
@@ -102,17 +89,17 @@
       height: 30px;
     }
     .heart::before { top: -15px; left: 0; }
-    .heart::after  { left: 15px; top: 0; }
-    @keyframes floatAndSpin {
-      0%   { transform: translateY(100vh) rotate(45deg); opacity: 0; }
-      30%  { opacity: 1; }
+    .heart::after { left: 15px; top: 0; }
+    @keyframes floatSpin {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+      50% { opacity: 1; }
       100% { transform: translateY(-20vh) rotate(405deg); opacity: 0; }
     }
     /* Slide 2: Itinerary */
     #slide2 {
-      background: linear-gradient(135deg, var(--tertiary-color), var(--quaternary-color));
-      /* NOTE: Vertical scrolling in this slide may be disabled due to our pan handler */
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
       overflow-y: auto;
+      padding-bottom: 40px; /* Allow some extra bottom space for scrolling */
     }
     #slide2 h1 {
       font-family: 'Playfair Display', serif;
@@ -121,21 +108,22 @@
       text-align: center;
     }
     .itinerary {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
     .itinerary details {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.2);
       padding: 15px;
       border-radius: 10px;
       transition: background 0.3s, transform 0.3s;
+      color: #fff;
     }
     .itinerary details:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255,255,255,0.3);
       transform: scale(1.02);
     }
     .itinerary summary {
@@ -149,7 +137,7 @@
     }
     /* Slide 3: Memories & Valentine Question */
     #slide3 {
-      background: linear-gradient(135deg, var(--quinary-color), var(--senary-color));
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
       text-align: center;
     }
     #slide3 h1 {
@@ -169,7 +157,7 @@
       position: relative;
       width: 100%;
       height: 0;
-      padding-bottom: 56.25%;  /* 16:9 Aspect Ratio */
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     }
     .slideshow img {
       position: absolute;
@@ -192,19 +180,16 @@
       padding: 0 10px;
     }
     .slideshow-nav button {
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0,0,0,0.5);
       border: none;
-      color: var(--text-color);
+      color: #fff;
       font-size: 1.5rem;
       padding: 8px 12px;
       border-radius: 50%;
       cursor: pointer;
       transition: background 0.3s;
     }
-    .slideshow-nav button:hover { background: rgba(0, 0, 0, 0.8); }
-    .ask-section {
-      margin-top: 20px;
-    }
+    .slideshow-nav button:hover { background: rgba(0,0,0,0.8); }
     .ask-section h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
@@ -218,6 +203,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s;
+      color: #fff;
     }
     .ask-section button:hover { background: #e73370; }
     /* Navigation Dots */
@@ -228,21 +214,20 @@
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
-      z-index: 100;
+      z-index: 10;
     }
     .nav-dots .dot {
       width: 12px;
       height: 12px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255,255,255,0.5);
       border-radius: 50%;
       cursor: pointer;
-      transition: background 0.3s;
     }
     .nav-dots .dot.active { background: #fff; }
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       #slide1 h1 { font-size: 2.5rem; }
-      #slide1 .countdown { font-size: 1.8rem; }
+      .countdown { font-size: 1.8rem; }
       #slide2 h1 { font-size: 2.2rem; }
       .itinerary summary { font-size: 1.3rem; }
       #slide3 h1 { font-size: 2.5rem; }
@@ -252,16 +237,15 @@
   </style>
 </head>
 <body>
-  <!-- SLIDER CONTAINER (controlled via transform) -->
-  <div id="slider" class="slider">
+  <!-- SLIDER CONTAINER -->
+  <div class="slider" id="slider">
     <!-- Slide 1: Countdown with Floating Hearts -->
-    <section id="slide1" class="slide">
+    <section class="slide" id="slide1">
       <div>
         <h1>Countdown to Valentine's Day</h1>
-        <div id="countdown" class="countdown"></div>
+        <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
       </div>
-      <!-- Floating Hearts -->
       <div class="heart-container">
         <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
         <div class="heart" style="left: 30%; animation-delay: 1s;"></div>
@@ -271,7 +255,7 @@
       </div>
     </section>
     <!-- Slide 2: Itinerary -->
-    <section id="slide2" class="slide">
+    <section class="slide" id="slide2">
       <div>
         <h1>Our Valentine's Week Itinerary</h1>
         <div class="itinerary">
@@ -303,12 +287,12 @@
       </div>
     </section>
     <!-- Slide 3: Memories & Valentine Question -->
-    <section id="slide3" class="slide">
+    <section class="slide" id="slide3">
       <div>
         <h1>Our Beautiful Memories</h1>
         <div class="slideshow-container">
           <div class="slideshow" id="slideshow">
-            <!-- Replace placeholder images with your own photos -->
+            <!-- Replace these placeholder images with your own photos -->
             <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1" class="active">
             <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
             <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
@@ -332,11 +316,8 @@
     <div class="dot" data-index="2"></div>
   </div>
   <script>
-    /***********************
-     * Countdown Timer
-     ***********************/
+    // Countdown Timer
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 at 8:30 PM PST (ISO-8601 format)
     const targetDate = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -354,66 +335,27 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    /***********************
-     * Slider Functionality using Pan
-     ***********************/
-    let currentSlide = 0;
+    // Update navigation dots based on slider scroll
     const slider = document.getElementById("slider");
-    const slides = document.querySelectorAll(".slide");
-    const totalSlides = slides.length;
-    
-    // Update the slider transform and navigation dots
-    function updateSlider() {
-      slider.style.transform = `translateX(-${currentSlide * 100}vw)`;
-      document.querySelectorAll(".nav-dots .dot").forEach((dot, i) => {
-        dot.classList.toggle("active", i === currentSlide);
+    const dots = document.querySelectorAll(".nav-dots .dot");
+    slider.addEventListener("scroll", () => {
+      const index = Math.round(slider.scrollLeft / window.innerWidth);
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
       });
-    }
-    
-    // Initialize Hammer.js on the slider element
-    const hammer = new Hammer(slider);
-    // Set Hammer to detect horizontal pans
-    hammer.get("pan").set({ direction: Hammer.DIRECTION_HORIZONTAL });
-    
-    let panStartX = 0;
-    hammer.on("panstart", function(ev) {
-      // Disable transition for smooth dragging
-      slider.style.transition = "none";
-      panStartX = currentSlide * -window.innerWidth;
     });
-    
-    hammer.on("pan", function(ev) {
-      // Update slider position during pan
-      slider.style.transform = `translateX(${panStartX + ev.deltaX}px)`;
-    });
-    
-    hammer.on("panend", function(ev) {
-      // Re-enable transition
-      slider.style.transition = "transform 0.3s ease";
-      // Determine if sufficient horizontal distance was dragged (50px threshold)
-      if (ev.deltaX < -50 && currentSlide < totalSlides - 1) {
-        currentSlide++;
-      } else if (ev.deltaX > 50 && currentSlide > 0) {
-        currentSlide--;
-      }
-      updateSlider();
-    });
-    
     // Navigation dots click event
-    document.querySelectorAll(".nav-dots .dot").forEach(dot => {
+    dots.forEach(dot => {
       dot.addEventListener("click", () => {
-        currentSlide = parseInt(dot.getAttribute("data-index"), 10);
-        updateSlider();
+        const index = parseInt(dot.getAttribute("data-index"), 10);
+        slider.scrollTo({ left: index * window.innerWidth, behavior: "smooth" });
       });
     });
     
-    /***********************
-     * Memories Slideshow (Slide 3)
-     ***********************/
+    // Memories Slideshow (Slide 3)
     let currentMemory = 0;
     const slideshow = document.getElementById("slideshow");
     const memories = slideshow.querySelectorAll("img");
-    
     function showMemory(index) {
       memories.forEach((img, i) => {
         img.classList.toggle("active", i === index);
@@ -432,15 +374,10 @@
       showMemory(currentMemory);
     }, 5000);
     
-    /***********************
-     * Valentine Button Interaction
-     ***********************/
+    // Valentine Button Interaction
     document.getElementById("valentineBtn").addEventListener("click", () => {
       alert("I love you! Can't wait to share this amazing week with you!");
     });
-    
-    // Optional: Update slider on window resize
-    window.addEventListener("resize", updateSlider);
   </script>
 </body>
 </html>
