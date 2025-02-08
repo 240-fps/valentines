@@ -63,7 +63,7 @@
     }
     
     /*---------------------------------------------------
-      Slide 1 – Countdown & Floating Hearts
+      Slide 1 – Countdown, Hearts & Petals
     ---------------------------------------------------*/
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
@@ -84,7 +84,8 @@
     #slide1 p {
       font-size: 1.2rem;
     }
-    .heart-container {
+    /* Container for animated hearts and petals */
+    .heart-container, .petal-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -93,7 +94,7 @@
       pointer-events: none;
       overflow: hidden;
     }
-    /* Modern heart shape using clip-path */
+    /* Heart Element */
     .heart {
       position: absolute;
       width: 40px;
@@ -104,12 +105,25 @@
         80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%,
         28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%
       );
-      /* GSAP will also be used to add additional randomness */
-      animation: floatSpin 12s linear infinite;
+      animation: heartFloat 12s linear infinite;
     }
-    @keyframes floatSpin {
+    @keyframes heartFloat {
       0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       15%  { opacity: 1; }
+      100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
+    }
+    /* Petal Element */
+    .petal {
+      position: absolute;
+      width: 30px;
+      height: 50px;
+      background: radial-gradient(circle at center, #ff99cc, #ff66aa);
+      clip-path: ellipse(50% 60% at 50% 40%);
+      animation: petalFloat 15s linear infinite;
+    }
+    @keyframes petalFloat {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20%  { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
     
@@ -245,12 +259,14 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown & Floating Hearts -->
+      <!-- Slide 1: Countdown, Hearts & Petals -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
         <div class="heart-container"></div>
+        <!-- New container for petals -->
+        <div class="petal-container"></div>
       </div>
       <!-- Slide 2: Itinerary -->
       <div class="swiper-slide" id="slide2">
@@ -282,10 +298,10 @@
           </details>
         </div>
       </div>
-      <!-- Slide 3: Memories & Valentine Question -->
+      <!-- Slide 3: Memories & Valentine -->
       <div class="swiper-slide" id="slide3">
         <h1>Our Beautiful Memories</h1>
-        <!-- Nested Swiper for Memories Slideshow -->
+        <!-- Nested Swiper for Memories Slider -->
         <div class="swiper mySwiperNested swiper-nested">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -374,21 +390,38 @@
     for (let i = 0; i < numHearts; i++) {
       const heart = document.createElement("div");
       heart.classList.add("heart");
-      // Random left position between 0% and 100%
       const leftPos = Math.random() * 100;
       heart.style.left = leftPos + "%";
-      // Start at the bottom
       heart.style.top = "100%";
-      // Random animation delay (0 to 5 seconds)
       const delay = Math.random() * 5;
-      // Random animation duration (10 to 18 seconds)
       const duration = 10 + Math.random() * 8;
-      // Random scale (0.6 to 1.4)
       const scale = 0.6 + Math.random() * 0.8;
       heart.style.animationDelay = delay + "s";
       heart.style.animationDuration = duration + "s";
       heart.style.transform = `rotate(45deg) scale(${scale})`;
       heartContainer.appendChild(heart);
+    }
+    
+    /***********************
+     * Generate Random Petals for Slide 1
+     ***********************/
+    const petalContainer = document.createElement("div");
+    petalContainer.classList.add("petal-container");
+    document.querySelector("#slide1").appendChild(petalContainer);
+    const numPetals = 20;
+    for (let i = 0; i < numPetals; i++) {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      const leftPos = Math.random() * 100;
+      petal.style.left = leftPos + "%";
+      petal.style.top = "100%";
+      const delay = Math.random() * 5;
+      const duration = 12 + Math.random() * 5;
+      const scale = 0.7 + Math.random() * 0.6;
+      petal.style.animationDelay = delay + "s";
+      petal.style.animationDuration = duration + "s";
+      petal.style.transform = `scale(${scale})`;
+      petalContainer.appendChild(petal);
     }
     
     /***********************
@@ -403,7 +436,7 @@
               other.removeAttribute("open");
             }
           });
-          // Animate the opened details content with GSAP
+          // Animate the content in with GSAP
           gsap.fromTo(this.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
         }
       });
