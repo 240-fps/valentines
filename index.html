@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Responsive meta tag with no zoom -->
+  <!-- Responsive meta tag (disables user scaling) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <!-- Apple meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts for typography -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS -->
+  <!-- Swiper CSS for main and nested sliders -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
@@ -27,7 +27,8 @@
       --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
       --slide3-start: #ff416c;       /* Deep pink/red */
       --slide3-end:   #ff4b2b;       /* Fiery red-orange */
-      --heart-gradient: linear-gradient(45deg, #ff5e62, #ff9966);
+      /* For love hearts, we use a classic red */
+      --heart-color: #ff3366;
       --text-color: #fff;
       --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
@@ -64,8 +65,8 @@
     }
     
     /*---------------------------------------------------
-      Floating Decorative Containers (for hearts & petals)
-      These containers are placed on every slide.
+      Floating Decorative Containers (for hearts & flowers)
+      (These appear on every slide)
     ---------------------------------------------------*/
     .heart-container,
     .flower-container {
@@ -101,26 +102,30 @@
       font-size: 1.2rem;
     }
     
-    /* Classic Love Heart with Text (for the floating decorative elements) */
+    /* Classic "Love Heart" Shape with Text
+       This creates a familiar heart shape with inner text.
+       We use a clip-path polygon for the shape.
+    */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
-      background: var(--heart-gradient);
-      clip-path: polygon(
-        50% 0%, 61% 11%, 72% 22%, 80% 35%, 84% 50%,
-        80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%,
-        28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%
-      );
+      background: var(--heart-color);
+      /* A clip-path for a classic heart shape */
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Roboto', sans-serif;
-      color: #fff;
-      text-align: center;
-      /* Initial rotation to display the heart properly */
+      /* Rotate the heart so that it appears in the proper orientation */
       transform: rotate(-45deg);
       animation: loveHeartFloat 12s linear infinite;
+    }
+    .love-heart span {
+      transform: rotate(45deg); /* Counteract the parent rotation so text is upright */
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+      padding: 2px;
     }
     @keyframes loveHeartFloat {
       0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
@@ -283,11 +288,11 @@
         <h1>Countdown to Valentine's Day</h1>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
-        <!-- Decorative Containers -->
+        <!-- Decorative containers for floating elements -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
-      <!-- Slide 2: Itinerary -->
+      <!-- Slide 2: Interactive Itinerary -->
       <div class="swiper-slide" id="slide2">
         <h1>Our Valentine's Week Itinerary</h1>
         <div class="itinerary">
@@ -316,7 +321,7 @@
             <p>A charming farewell brunch and a heartfelt surprise gift.</p>
           </details>
         </div>
-        <!-- Decorative Containers -->
+        <!-- Decorative containers for floating elements -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
@@ -342,7 +347,7 @@
           <h2>Will You Be My Valentine?</h2>
           <button id="valentineBtn">Yes, I will!</button>
         </div>
-        <!-- Decorative Containers -->
+        <!-- Decorative containers for floating elements -->
         <div class="heart-container"></div>
         <div class="flower-container"></div>
       </div>
@@ -352,9 +357,9 @@
   
   <!-- Include Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <!-- Include GSAP for animations -->
+  <!-- Include GSAP for advanced animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <!-- Include Canvas Confetti -->
+  <!-- Include Canvas Confetti for interactive effects -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <script>
@@ -419,26 +424,28 @@
           el.style.left = leftPos + "%";
           el.style.top = "100%";
           const delay = Math.random() * 5;
-          const duration = elementClass === "love-heart" ? (10 + Math.random() * 8) : (12 + Math.random() * 6);
-          const scale = elementClass === "love-heart" ? (0.6 + Math.random() * 0.8) : (0.7 + Math.random() * 0.6);
+          const duration = (elementClass === "love-heart") ? (10 + Math.random() * 8) : (12 + Math.random() * 6);
+          const scale = (elementClass === "love-heart") ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
-          // Set the initial transform. For love-heart, we need to rotate -45deg for the correct shape.
-          if (elementClass === "love-heart") {
+          if(elementClass === "love-heart") {
             el.style.transform = `rotate(-45deg) scale(${scale})`;
-            // Randomly choose a phrase to display inside the heart
+            // Add text inside the heart
             const phrases = ["I love you", "Be mine"];
-            el.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-            el.style.fontSize = "10px";
-            el.style.fontWeight = "bold";
+            const span = document.createElement("span");
+            span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+            span.style.transform = "rotate(45deg)";
+            span.style.fontSize = "10px";
+            span.style.fontWeight = "bold";
+            el.appendChild(span);
           }
           container.appendChild(el);
         }
       });
     }
-    // Generate 30 love hearts in each container with class "heart-container"
+    // Generate 30 love hearts in every heart-container
     generateElements(".heart-container", 30, "love-heart");
-    // Generate 20 rose petals in each container with class "flower-container"
+    // Generate 20 rose petals in every flower-container
     generateElements(".flower-container", 20, "flower");
     
     /***********************
