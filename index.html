@@ -63,7 +63,7 @@
     }
     
     /*---------------------------------------------------
-      Slide 1 – Countdown, Hearts & Petals
+      Slide 1 – Countdown, Hearts & Flowers
     ---------------------------------------------------*/
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
@@ -84,8 +84,8 @@
     #slide1 p {
       font-size: 1.2rem;
     }
-    /* Container for animated hearts and petals */
-    .heart-container, .petal-container {
+    /* Containers for hearts and flowers */
+    .heart-container, .flower-container {
       position: absolute;
       top: 0;
       left: 0;
@@ -94,7 +94,7 @@
       pointer-events: none;
       overflow: hidden;
     }
-    /* Heart Element */
+    /* Heart styling */
     .heart {
       position: absolute;
       width: 40px;
@@ -112,18 +112,18 @@
       15%  { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
-    /* Petal Element */
-    .petal {
+    /* Flower styling using an inline SVG as a background image (rose) */
+    .flower {
       position: absolute;
-      width: 30px;
-      height: 50px;
-      background: radial-gradient(circle at center, #ff99cc, #ff66aa);
-      clip-path: ellipse(50% 60% at 50% 40%);
-      animation: petalFloat 15s linear infinite;
+      width: 40px;
+      height: 40px;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23FF4081' d='M32 4C20 4 12 14 12 26c0 9.9 6.5 18.4 16 21.5V60h8V47h8v13h8V47.5c9.5-3.1 16-11.6 16-21.5 0-12-8-22-20-22z'/></svg>") no-repeat center center;
+      background-size: contain;
+      animation: flowerFloat 14s linear infinite;
     }
-    @keyframes petalFloat {
-      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20%  { opacity: 1; }
+    @keyframes flowerFloat {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
     
@@ -259,14 +259,13 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown, Hearts & Petals -->
+      <!-- Slide 1: Countdown, Hearts & Flowers -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
         <div class="heart-container"></div>
-        <!-- New container for petals -->
-        <div class="petal-container"></div>
+        <div class="flower-container"></div>
       </div>
       <!-- Slide 2: Itinerary -->
       <div class="swiper-slide" id="slide2">
@@ -298,7 +297,7 @@
           </details>
         </div>
       </div>
-      <!-- Slide 3: Memories & Valentine -->
+      <!-- Slide 3: Memories & Valentine Question -->
       <div class="swiper-slide" id="slide3">
         <h1>Our Beautiful Memories</h1>
         <!-- Nested Swiper for Memories Slider -->
@@ -403,25 +402,23 @@
     }
     
     /***********************
-     * Generate Random Petals for Slide 1
+     * Generate Random Flowers for Slide 1
      ***********************/
-    const petalContainer = document.createElement("div");
-    petalContainer.classList.add("petal-container");
-    document.querySelector("#slide1").appendChild(petalContainer);
-    const numPetals = 20;
-    for (let i = 0; i < numPetals; i++) {
-      const petal = document.createElement("div");
-      petal.classList.add("petal");
+    const flowerContainer = document.querySelector(".flower-container");
+    const numFlowers = 20;
+    for (let i = 0; i < numFlowers; i++) {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
       const leftPos = Math.random() * 100;
-      petal.style.left = leftPos + "%";
-      petal.style.top = "100%";
+      flower.style.left = leftPos + "%";
+      flower.style.top = "100%";
       const delay = Math.random() * 5;
-      const duration = 12 + Math.random() * 5;
-      const scale = 0.7 + Math.random() * 0.6;
-      petal.style.animationDelay = delay + "s";
-      petal.style.animationDuration = duration + "s";
-      petal.style.transform = `scale(${scale})`;
-      petalContainer.appendChild(petal);
+      const duration = 12 + Math.random() * 6;
+      const scale = 0.6 + Math.random() * 0.8;
+      flower.style.animationDelay = delay + "s";
+      flower.style.animationDuration = duration + "s";
+      flower.style.transform = `rotate(0deg) scale(${scale})`;
+      flowerContainer.appendChild(flower);
     }
     
     /***********************
@@ -436,7 +433,6 @@
               other.removeAttribute("open");
             }
           });
-          // Animate the content in with GSAP
           gsap.fromTo(this.querySelector("p"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
         }
       });
