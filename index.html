@@ -2,31 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Ensure proper scaling and disable user zoom for a full‑screen experience -->
+  <!-- Ensure proper scaling and disable user zoom for a full-screen experience -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <!-- Apple meta tags for full‑screen web app mode -->
+  <!-- Apple meta tags for full-screen web app mode -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
   <!-- Google Fonts for a modern look (Roboto for body, Playfair Display for headings) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* CSS Variables for a modern, romantic palette and effects */
+    /* CSS Variables for our palette and effects */
     :root {
-      --primary-color: #ff9a9e;
-      --secondary-color: #fad0c4;
-      --tertiary-color: #a18cd1;
-      --quaternary-color: #fbc2eb;
+      --primary-color: #ff758c;      /* Slide 1 gradient */
+      --secondary-color: #ff7eb3;
+      --tertiary-color: #7f7fd5;       /* Slide 2 gradient */
+      --quaternary-color: #86a8e7;
+      --fifth-color: #91eae4;
+      --sixth-color: #fbd3e9;          /* Slide 3 gradient */
+      --seventh-color: #bb377d;
       --text-color: #fff;
-      --shadow-color: rgba(0,0,0,0.15);
+      --shadow-color: rgba(0, 0, 0, 0.15);
       --transition-speed: 0.3s;
     }
     /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%;
       height: 100%;
@@ -35,7 +34,7 @@
       background: #111;
       color: var(--text-color);
     }
-    /* Native scroll-snap slider container */
+    /* Slider using native scroll-snap */
     .slider {
       display: flex;
       width: 100%;
@@ -44,10 +43,8 @@
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
     }
-    /* Hide the scrollbar in WebKit browsers */
-    .slider::-webkit-scrollbar {
-      display: none;
-    }
+    /* Hide scrollbar (WebKit) */
+    .slider::-webkit-scrollbar { display: none; }
     /* Each slide fills the viewport */
     .slide {
       flex: 0 0 100%;
@@ -79,9 +76,7 @@
       margin-bottom: 20px;
       letter-spacing: 1px;
     }
-    #slide1 p {
-      font-size: 1.2rem;
-    }
+    #slide1 p { font-size: 1.2rem; }
     /* Heart Container – hearts will be dynamically generated */
     .heart-container {
       position: absolute;
@@ -92,7 +87,7 @@
       pointer-events: none;
       overflow: hidden;
     }
-    /* New Heart Style using clip-path for a modern heart shape */
+    /* Modern Heart Shape using clip-path */
     .heart {
       position: absolute;
       width: 40px;
@@ -103,10 +98,11 @@
         80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%,
         28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%
       );
-      animation: floatSpin 10s linear infinite;
+      /* The keyframes make the heart start at the bottom and float upward while rotating */
+      animation: floatSpin linear infinite;
     }
     @keyframes floatSpin {
-      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
       10%  { opacity: 1; }
       100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
     }
@@ -131,7 +127,7 @@
       gap: 15px;
     }
     .itinerary details {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255,255,255,0.15);
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 4px 10px var(--shadow-color);
@@ -139,7 +135,7 @@
       cursor: pointer;
     }
     .itinerary details:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255,255,255,0.25);
       transform: scale(1.02);
     }
     .itinerary summary {
@@ -153,7 +149,7 @@
     }
     /* Slide 3: Memories & Valentine Question */
     #slide3 {
-      background: linear-gradient(135deg, var(--quaternary-color), var(--fifth-color));
+      background: linear-gradient(135deg, var(--sixth-color), var(--seventh-color));
       text-align: center;
     }
     #slide3 h1 {
@@ -227,7 +223,6 @@
     .ask-section button:hover {
       background: #e73370;
     }
-    /* Navigation Dots */
     .nav-dots {
       position: fixed;
       bottom: 20px;
@@ -249,7 +244,6 @@
       background: #fff;
       transform: scale(1.2);
     }
-    /* Responsive Adjustments */
     @media (max-width: 768px) {
       #slide1 h1 { font-size: 2.5rem; }
       .countdown { font-size: 1.8rem; }
@@ -262,7 +256,6 @@
   </style>
 </head>
 <body>
-  <!-- SLIDER CONTAINER (native scroll-snap) -->
   <div class="slider" id="slider">
     <!-- Slide 1: Countdown & Floating Hearts -->
     <section class="slide" id="slide1">
@@ -273,7 +266,7 @@
       </div>
       <div class="heart-container"></div>
     </section>
-    <!-- Slide 2: Itinerary (Days: Feb 14–18) -->
+    <!-- Slide 2: Itinerary -->
     <section class="slide" id="slide2">
       <div>
         <h1>Our Valentine's Week Itinerary</h1>
@@ -307,7 +300,6 @@
         <h1>Our Beautiful Memories</h1>
         <div class="slideshow-container">
           <div class="slideshow" id="slideshow">
-            <!-- Replace these placeholder images with your own photos -->
             <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1" class="active">
             <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
             <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
@@ -324,7 +316,6 @@
       </div>
     </section>
   </div>
-  <!-- Navigation Dots -->
   <div class="nav-dots" id="navDots">
     <div class="dot active" data-index="0"></div>
     <div class="dot" data-index="1"></div>
@@ -335,7 +326,6 @@
      * Countdown Timer
      ***********************/
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 8:30 PM PST (ISO‑8601 format)
     const targetDate = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -406,19 +396,19 @@
      * Generate Random Hearts
      ***********************/
     const heartContainer = document.querySelector('.heart-container');
-    const numHearts = 30; // Number of hearts to generate
+    const numHearts = 30;
     for (let i = 0; i < numHearts; i++) {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       // Random left position between 0% and 100%
       const leftPos = Math.random() * 100;
-      // Set starting position at bottom
+      // Start at the bottom of the container
       heart.style.top = "100%";
-      // Random animation delay (0 to 10 seconds)
+      // Random animation delay between 0 and 10 seconds
       const delay = Math.random() * 10;
-      // Random animation duration (10 to 18 seconds)
+      // Random animation duration between 10 and 18 seconds
       const duration = 10 + Math.random() * 8;
-      // Random scale (0.6 to 1.4)
+      // Random scale between 0.6 and 1.4
       const scale = 0.6 + Math.random() * 0.8;
       heart.style.left = leftPos + '%';
       heart.style.animationDelay = delay + 's';
@@ -426,17 +416,6 @@
       heart.style.transform = `rotate(45deg) scale(${scale})`;
       heartContainer.appendChild(heart);
     }
-    
-    /***********************
-     * Itinerary Card Auto-Close Behavior
-     ***********************/
-    // When clicking anywhere on the document, close any open <details>
-    document.addEventListener("click", function(e) {
-      const openDetail = document.querySelector("details[open]");
-      if (openDetail && !openDetail.contains(e.target)) {
-        openDetail.removeAttribute("open");
-      }
-    });
   </script>
 </body>
 </html>
