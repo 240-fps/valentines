@@ -17,13 +17,13 @@
        Theme Variables & Global Styles
     ================================ */
     :root {
-      --background: #121212;
-      --primary: #E91E63;
-      --secondary: #FF4081;
-      --accent: #8E24AA;
-      --text: #FFFFFF;
-      --card-bg: rgba(255,255,255,0.15);
-      --heart-color: #ff3366;
+      --background: #121212;             /* Dark background */
+      --primary: #E91E63;                /* Neon pink */
+      --secondary: #FF4081;              /* Lighter pink */
+      --accent: #8E24AA;                 /* Deep purple accent */
+      --text: #FFFFFF;                   /* White text */
+      --card-bg: rgba(255,255,255,0.15);  /* Translucent frosted-glass */
+      --heart-color: #ff3366;            /* Classic candy heart red */
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
@@ -55,9 +55,11 @@
       position: relative;
       padding: 1rem;
     }
+    /* Fade effect for slide transitions */
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
+    /* Pagination dots at the bottom */
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
@@ -103,6 +105,7 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
+    /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -126,10 +129,10 @@
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: rgba(18,18,18,0.8);
+      background: rgba(18,18,18,0.8); /* Translucent background */
       position: relative;
-      z-index: 5;
-      padding: 1.5rem;  /* Reduced padding to help fit on an iPhone */
+      z-index: 5;  /* Ensure itinerary cards appear above floating hearts */
+      padding: 1.5rem;  /* Reduced padding for iPhone */
       overflow: hidden;
     }
     .itinerary-section h2 {
@@ -275,7 +278,8 @@
       left: 25px;
       top: 0;
     }
-    /* Center the text using flex centering (no extra translate needed) */
+    /* Center the text within the heart using flex centering; 
+       rotate the text 45deg so it appears horizontal */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -284,7 +288,6 @@
       text-align: center;
       color: var(--text);
       display: block;
-      /* Remove extra translate so flex centering (align-items: center; justify-content: center) does the work */
       transform: rotate(45deg);
       transform-origin: center;
       width: 100%;
@@ -377,12 +380,6 @@
   </style>
 </head>
 <body>
-  <!-- Background Music Audio (hidden) -->
-  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop autoplay></audio>
-  
-  <!-- Music Toggle Button -->
-  <button id="musicToggle" class="music-toggle">Mute</button>
-  
   <!-- Main Swiper Container (3 Slides: Hero, Itinerary, Memories & CTA) -->
   <div class="swiper mySwiperMain">
     <div class="swiper-wrapper">
@@ -484,19 +481,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
   
   <script>
-    /* --- Background Music Toggle --- */
-    const bgMusic = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    musicToggle.addEventListener('click', () => {
-      if (bgMusic.muted) {
-        bgMusic.muted = false;
-        musicToggle.textContent = "Mute";
-      } else {
-        bgMusic.muted = true;
-        musicToggle.textContent = "Unmute";
-      }
-    });
-    
     /* --- Countdown Timer --- */
     const countdownEl = document.getElementById('countdown');
     const targetTime = new Date("2025-02-14T20:30:00-08:00").getTime();
