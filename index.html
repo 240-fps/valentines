@@ -130,7 +130,7 @@
       left: 25px;
       top: 0;
     }
-    /* Ensure any text inside appears on top */
+    /* Center and counter-rotate the text so it appears horizontal */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -138,6 +138,9 @@
       font-weight: bold;
       text-align: center;
       color: var(--text-color);
+      display: block;
+      transform: rotate(45deg);
+      width: 100%;
     }
     
     /* Updated keyframes: include translateX(-50%) and use the scale from --scale */
@@ -194,6 +197,15 @@
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       margin-bottom: 20px;
+    }
+    /* Rose image added for extra decoration in slide 2 */
+    .rose-image {
+      margin: 0 auto 20px;
+      width: 96px;
+    }
+    .rose-image img {
+      width: 100%;
+      display: block;
     }
     .itinerary {
       max-width: 600px;
@@ -329,6 +341,10 @@
       <!-- Slide 2: Interactive Itinerary -->
       <div class="swiper-slide" id="slide2">
         <h1>Our Valentine's Week Itinerary</h1>
+        <!-- Added rose image for extra decoration -->
+        <div class="rose-image">
+          <img src="https://img.icons8.com/color/96/000000/rose.png" alt="Rose">
+        </div>
         <div class="itinerary">
           <details>
             <summary>Feb 14 – Valentine's Day</summary>
