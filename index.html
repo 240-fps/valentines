@@ -17,17 +17,17 @@
        Theme Variables & Global Styles
     ================================ */
     :root {
-      --background: #121212;             /* Dark background */
-      --primary: #E91E63;                /* Neon pink */
-      --secondary: #FF4081;              /* Lighter pink */
-      --accent: #8E24AA;                 /* Deep purple accent */
-      --text: #FFFFFF;                   /* White text */
-      --card-bg: rgba(255,255,255,0.15);  /* Translucent frosted-glass */
-      --heart-color: #ff3366;            /* Classic candy heart red */
+      --background: #121212;
+      --primary: #E91E63;
+      --secondary: #FF4081;
+      --accent: #8E24AA;
+      --text: #FFFFFF;
+      --card-bg: rgba(255,255,255,0.15);
+      --heart-color: #ff3366;
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
-    /* Disable scrolling on the page */
+    /* Disable scrolling */
     html, body {
       width: 100%;
       height: 100%;
@@ -55,11 +55,9 @@
       position: relative;
       padding: 1rem;
     }
-    /* Fade effect for slide transitions */
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
-    /* Pagination dots at the bottom */
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
@@ -105,7 +103,6 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -124,27 +121,27 @@
     }
     
     /* ================================
-       Itinerary Slide (Clickable Cards in 2×3 Grid)
+       Itinerary Slide (2×3 Grid of Clickable Cards)
     ================================ */
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: rgba(18,18,18,0.8); /* Translucent background so hearts show through */
+      background: rgba(18,18,18,0.8);
       position: relative;
-      z-index: 5;  /* Ensure itinerary cards appear above floating hearts */
-      padding: 3rem 1rem;
-      overflow: hidden; /* Disable scrolling on this slide */
+      z-index: 5;
+      padding: 1.5rem;  /* Reduced padding to help fit on an iPhone */
+      overflow: hidden;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
       text-align: center;
     }
     .itinerary-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 1rem;
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
@@ -152,24 +149,25 @@
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
-      padding: 1.5rem;
+      padding: 1rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       cursor: pointer;
       overflow: hidden;
       transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-      /* Force cards to be square */
       aspect-ratio: 1;
     }
     .card:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
     .card-header {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       font-weight: bold;
+      margin-bottom: 0.5rem;
     }
     .card-content {
       height: 0;
       opacity: 0;
       overflow: hidden;
+      font-size: 0.9rem;
     }
     
     /* ================================
@@ -185,7 +183,7 @@
       align-items: center;
       overflow-y: auto;
       position: relative;
-      z-index: 5; /* Content above floating hearts */
+      z-index: 5;
     }
     .memories-cta h2 {
       font-family: 'Playfair Display', serif;
@@ -245,10 +243,10 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 1; /* Behind all main content */
+      z-index: 1;
     }
     
-    /* --- Floating Hearts: Steal This Heart from Your Provided Code --- */
+    /* --- Floating Hearts (Stolen Heart) --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -257,7 +255,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* The heart always stays rotated -45deg */
       animation: loveHeartFloat 12s linear infinite;
       cursor: default;
     }
@@ -278,8 +275,7 @@
       left: 25px;
       top: 0;
     }
-    /* Center and rotate the text so it appears horizontal.
-       Removed extra translate so that flex centering takes over. */
+    /* Center the text using flex centering (no extra translate needed) */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -288,7 +284,7 @@
       text-align: center;
       color: var(--text);
       display: block;
-      /* No extra translation; the heart’s flex centering will do the job */
+      /* Remove extra translate so flex centering (align-items: center; justify-content: center) does the work */
       transform: rotate(45deg);
       transform-origin: center;
       width: 100%;
@@ -362,6 +358,21 @@
     .popup-content p {
       font-size: 1.8rem;
       font-family: 'Playfair Display', serif;
+    }
+    
+    /* ================================
+       Media Query for Smaller Screens (iPhone)
+    ================================ */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; }
+      .countdown { font-size: 2rem; }
+      .itinerary-section h2 { font-size: 2rem; }
+      .card { padding: 0.8rem; font-size: 0.9rem; }
+      .card-header { font-size: 1.2rem; }
+      .memories-cta h2 { font-size: 2rem; }
+      .cta h2 { font-size: 1.8rem; }
+      .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
     }
   </style>
 </head>
@@ -452,7 +463,6 @@
         </section>
       </div>
     </div>
-    <!-- Main Swiper Pagination (dots) -->
     <div class="swiper-pagination"></div>
   </div>
   
