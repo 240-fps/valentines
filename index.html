@@ -6,25 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts for Professional Typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Fonts for a Modern Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS for Memories Slider -->
+  <!-- Swiper CSS for the Memories Slider -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* CSS Variables for the Love-Themed Professional Palette */
+    /* CSS Variables for a Modern Neon-Inspired Theme */
     :root {
-      --primary-color: #e63946;         /* Bold, vibrant red */
-      --secondary-color: #f1faee;         /* Clean off-white */
-      --accent-color: #a8dadc;            /* Subtle accent */
-      --background-color: #1d3557;        /* Deep navy-blue for contrast */
-      --text-color: #f1faee;
-      --font-heading: 'Playfair Display', serif;
-      --font-body: 'Roboto', sans-serif;
+      --background: #121212;         /* Dark background */
+      --header-bg: rgba(18, 18, 18, 0.9);
+      --primary: #E91E63;            /* Neon pink */
+      --secondary: #FF4081;          /* Lighter pink */
+      --accent: #8E24AA;             /* Deep purple accent */
+      --text: #FFFFFF;               /* White text */
+      --card-bg: rgba(255, 255, 255, 0.1);
       --transition-speed: 0.3s;
     }
-    
+
     /* Global Reset & Base Styles */
     * {
       margin: 0;
@@ -32,24 +32,27 @@
       box-sizing: border-box;
     }
     body {
-      font-family: var(--font-body);
-      background-color: var(--background-color);
-      color: var(--text-color);
+      font-family: 'Montserrat', sans-serif;
+      background: var(--background);
+      color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
     a {
-      color: var(--primary-color);
+      color: var(--primary);
       text-decoration: none;
     }
-    
-    /* Fixed Header with Navigation */
+
+    /* Fixed Header with Smooth Navigation */
     header {
-      background: var(--background-color);
-      padding: 1rem 2rem;
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: 100;
+      background: var(--header-bg);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     header nav ul {
       list-style: none;
@@ -60,53 +63,78 @@
       margin-left: 1.5rem;
     }
     header nav ul li a {
-      font-weight: 500;
+      font-weight: 600;
       transition: color var(--transition-speed);
     }
     header nav ul li a:hover {
-      color: var(--primary-color);
+      color: var(--secondary);
     }
-    
-    /* Hero Section */
+
+    /* Hero Section: Full-Viewport with Animated Gradient Background */
     .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
-      background: linear-gradient(135deg, var(--primary-color), #ff8fa3);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      position: relative;
+      overflow: hidden;
       padding: 0 1rem;
     }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+      animation: pulse 8s infinite;
+      z-index: 1;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(0.8); opacity: 0.6; }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
     .hero h1 {
-      font-family: var(--font-heading);
-      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
       margin-bottom: 1rem;
     }
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       margin-bottom: 2rem;
+      max-width: 600px;
     }
     .countdown {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: bold;
       margin-bottom: 2rem;
     }
-    
-    /* General Section Styles */
+
+    /* Section Base Styles */
     .section {
       padding: 4rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
     .section h2 {
-      font-family: var(--font-heading);
-      font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
       text-align: center;
     }
-    
-    /* Itinerary Section: Card Layout */
+
+    /* Itinerary Section: Modern Card Layout */
     .itinerary-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -114,77 +142,87 @@
       margin-top: 2rem;
     }
     .card {
-      background: var(--secondary-color);
-      color: #333;
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
       padding: 1.5rem;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform var(--transition-speed);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
     }
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
     }
     .card h3 {
-      font-family: var(--font-heading);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
       margin-bottom: 0.5rem;
+      color: var(--primary);
     }
-    
-    /* Memories Section: Slider Container */
+    .card p {
+      font-size: 1rem;
+    }
+
+    /* Memories Section: Swiper Slider */
     .slider-container {
-      position: relative;
       margin-top: 2rem;
     }
-    
+    .swiper {
+      width: 100%;
+      padding-bottom: 2rem;
+    }
+    .swiper-slide img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
     /* Call-to-Action Section */
     .cta {
       text-align: center;
       padding: 4rem 2rem;
-      background: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      position: relative;
+      overflow: hidden;
     }
     .cta h2 {
-      font-family: var(--font-heading);
-      font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
       margin-bottom: 1.5rem;
     }
     .cta button {
-      background: var(--secondary-color);
-      color: var(--background-color);
-      padding: 0.75rem 1.5rem;
-      font-size: 1.25rem;
+      background: var(--secondary);
+      color: var(--background);
+      padding: 0.75rem 1.75rem;
+      font-size: 1.5rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: background var(--transition-speed);
+      transition: background var(--transition-speed), transform var(--transition-speed);
     }
     .cta button:hover {
       background: #fff;
+      transform: scale(1.05);
     }
-    
+
     /* Footer */
     footer {
       text-align: center;
       padding: 2rem;
-      background: #333;
-      color: #bbb;
+      background: #1a1a1a;
+      color: #888;
+      font-size: 0.9rem;
     }
-    
+
     /* Responsive Styles */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1.1rem;
-      }
-      .countdown {
-        font-size: 1.75rem;
-      }
-      .section h2 {
-        font-size: 2rem;
-      }
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1.1rem; }
+      .countdown { font-size: 2rem; }
+      .section h2 { font-size: 2.2rem; }
     }
-    
-    /* Additional Decorative Elements (Floating Hearts & Rose Petals) */
+
+    /* Decorative Floating Elements (Background Effects) */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -193,45 +231,30 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
+      z-index: 0;
       overflow: hidden;
-      z-index: 1;
     }
-    /* Heart Elements */
+    /* Floating Hearts using a Clip-Path Heart Shape */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
-      background: var(--primary-color);
+      background: var(--primary);
+      /* Use a clip-path to form a heart shape */
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
-      /* Random rotation & upward motion animation (spinning) */
       animation: spin 12s linear infinite;
-    }
-    .love-heart::before,
-    .love-heart::after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: var(--primary-color);
-      border-radius: 50%;
-    }
-    .love-heart::before {
-      top: -25px;
-      left: 0;
-    }
-    .love-heart::after {
-      left: 25px;
-      top: 0;
     }
     .love-heart span {
       font-size: 10px;
       font-weight: bold;
       text-align: center;
-      color: var(--secondary-color);
-      width: 100%;
+      color: var(--text);
+      padding: 2px;
+      /* Ensure the text is not clipped by increasing line-height */
+      line-height: 1.2;
     }
     @keyframes spin {
       0% {
@@ -247,12 +270,12 @@
         opacity: 0;
       }
     }
-    /* Rose Petals */
+    /* Floating Rose Petals */
     .flower {
       position: absolute;
       width: 20px;
       height: 30px;
-      background: #ff8fa3;
+      background: var(--secondary);
       clip-path: polygon(50% 0%, 70% 20%, 60% 100%, 40% 100%, 30% 20%);
       opacity: 0.8;
       animation: petalFloat 14s linear infinite;
@@ -290,9 +313,11 @@
   <main>
     <!-- Hero Section -->
     <section class="hero" id="hero">
-      <h1>My Valentine's Surprise</h1>
-      <p>Countdown to a week filled with love, surprises, and unforgettable moments.</p>
-      <div class="countdown" id="countdown">Loading...</div>
+      <div class="hero-content">
+        <h1>My Valentine's Surprise</h1>
+        <p>A celebration of love, surprises, and unforgettable moments.</p>
+        <div class="countdown" id="countdown">Loading...</div>
+      </div>
     </section>
     
     <!-- Itinerary Section -->
@@ -301,27 +326,27 @@
       <div class="itinerary-cards">
         <div class="card">
           <h3>Feb 14 – Valentine's Day</h3>
-          <p>A romantic dinner at a charming restaurant with a special surprise.</p>
+          <p>A romantic dinner at an exclusive venue with an unforgettable surprise.</p>
         </div>
         <div class="card">
           <h3>Feb 15 – Day 2</h3>
-          <p>Morning stroll and a delightful picnic in a scenic park.</p>
+          <p>A serene morning stroll paired with a gourmet picnic in a picturesque park.</p>
         </div>
         <div class="card">
           <h3>Feb 16 – Day 3</h3>
-          <p>An art gallery visit followed by an inspiring creative workshop.</p>
+          <p>An inspiring visit to an art gallery followed by a creative workshop.</p>
         </div>
         <div class="card">
           <h3>Feb 17 – Day 4</h3>
-          <p>An adventurous hike to capture breathtaking moments.</p>
+          <p>An adventurous hike capturing breathtaking landscapes and memories.</p>
         </div>
         <div class="card">
           <h3>Feb 18 – Day 5</h3>
-          <p>A day of pampering with spa treatments and relaxation.</p>
+          <p>A day of pampering with luxurious spa treatments and relaxation.</p>
         </div>
         <div class="card">
           <h3>Feb 19 – Day 6</h3>
-          <p>A charming farewell brunch paired with a heartfelt gift.</p>
+          <p>A charming farewell brunch paired with a heartfelt keepsake.</p>
         </div>
       </div>
     </section>
@@ -334,13 +359,13 @@
         <div class="swiper mySwiperNested">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1" style="width:100%; border-radius:8px;">
+              <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1">
             </div>
             <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2" style="width:100%; border-radius:8px;">
+              <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
             </div>
             <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3" style="width:100%; border-radius:8px;">
+              <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
             </div>
           </div>
           <!-- Slider Pagination -->
@@ -366,27 +391,25 @@
   <div class="flower-container"></div>
   
   <!-- External Libraries -->
-  <!-- Swiper JS for slider functionality -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <!-- GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
   
   <script>
     /* Countdown Timer */
-    const countdownElement = document.getElementById('countdown');
-    const targetDate = new Date("2025-02-14T20:30:00-08:00").getTime();
+    const countdownEl = document.getElementById('countdown');
+    const targetTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
-      const diff = targetDate - now;
+      const diff = targetTime - now;
       if (diff < 0) {
-        countdownElement.textContent = "It's time!";
+        countdownEl.textContent = "It's time!";
         return;
       }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
@@ -404,9 +427,9 @@
       }
     });
     
-    /* Generate Floating Hearts & Rose Petals */
-    function generateFloatingElements(selector, count, elementClass) {
-      const container = document.querySelector(selector);
+    /* Generate Floating Decorative Elements */
+    function generateFloatingElements(containerSelector, count, elementClass) {
+      const container = document.querySelector(containerSelector);
       for (let i = 0; i < count; i++) {
         const el = document.createElement('div');
         el.classList.add(elementClass);
@@ -414,19 +437,16 @@
         el.style.top = '100%';
         el.style.animationDelay = Math.random() * 5 + 's';
         el.style.animationDuration = (10 + Math.random() * 8) + 's';
-        // For hearts, set random starting rotation and scale
         if (elementClass === 'love-heart') {
           const randomStart = Math.floor(Math.random() * 360);
           el.style.setProperty('--start', randomStart + 'deg');
           const scale = 0.8 + Math.random() * 0.7;
           el.style.setProperty('--scale', scale);
-          // Insert centered text inside the heart
           const phrases = ["I Love You", "Be Mine"];
           const span = document.createElement('span');
           span.textContent = phrases[Math.floor(Math.random() * phrases.length)];
           el.appendChild(span);
         } else {
-          // For rose petals, just random scale
           const scale = 0.7 + Math.random() * 0.6;
           el.style.setProperty('--scale', scale);
         }
@@ -444,13 +464,13 @@
     });
     
     function createRosePetals() {
-      const petalContainer = document.createElement('div');
-      petalContainer.style.position = 'fixed';
-      petalContainer.style.top = '50%';
-      petalContainer.style.left = '50%';
-      petalContainer.style.transform = 'translate(-50%, -50%)';
-      petalContainer.style.pointerEvents = 'none';
-      document.body.appendChild(petalContainer);
+      const burstContainer = document.createElement('div');
+      burstContainer.style.position = 'fixed';
+      burstContainer.style.top = '50%';
+      burstContainer.style.left = '50%';
+      burstContainer.style.transform = 'translate(-50%, -50%)';
+      burstContainer.style.pointerEvents = 'none';
+      document.body.appendChild(burstContainer);
       
       for (let i = 0; i < 30; i++) {
         const petal = document.createElement('div');
@@ -461,7 +481,7 @@
         petal.style.opacity = '0';
         const scale = 0.7 + Math.random() * 0.6;
         petal.style.setProperty('--scale', scale);
-        petalContainer.appendChild(petal);
+        burstContainer.appendChild(petal);
         gsap.to(petal, {
           duration: 1 + Math.random(),
           opacity: 0,
@@ -471,7 +491,7 @@
           onComplete: () => petal.remove()
         });
       }
-      setTimeout(() => petalContainer.remove(), 3000);
+      setTimeout(() => burstContainer.remove(), 3000);
     }
   </script>
 </body>
