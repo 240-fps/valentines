@@ -17,17 +17,17 @@
        Theme Variables & Global Styles
     ================================ */
     :root {
-      --background: #121212;             /* Dark background */
-      --primary: #E91E63;                /* Neon pink */
-      --secondary: #FF4081;              /* Lighter pink */
-      --accent: #8E24AA;                 /* Deep purple accent */
-      --text: #FFFFFF;                   /* White text */
-      --card-bg: rgba(255,255,255,0.15);  /* Translucent frosted-glass */
-      --heart-color: #ff3366;            /* Classic candy heart red */
+      --background: #121212;
+      --primary: #E91E63;
+      --secondary: #FF4081;
+      --accent: #8E24AA;
+      --text: #FFFFFF;
+      --card-bg: rgba(255,255,255,0.15);
+      --heart-color: #ff3366;
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
-    /* Disable scrolling */
+    /* Disable scrolling on the entire page */
     html, body {
       width: 100%;
       height: 100%;
@@ -55,11 +55,9 @@
       position: relative;
       padding: 1rem;
     }
-    /* Fade effect for slide transitions */
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
-    /* Pagination dots at the bottom */
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
@@ -105,7 +103,6 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -129,10 +126,10 @@
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: rgba(18,18,18,0.8); /* Translucent background */
+      background: rgba(18,18,18,0.8);
       position: relative;
-      z-index: 5;  /* Ensure itinerary cards appear above floating hearts */
-      padding: 1.5rem;  /* Reduced padding for iPhone */
+      z-index: 5;
+      padding: 1.5rem;
       overflow: hidden;
     }
     .itinerary-section h2 {
@@ -141,13 +138,17 @@
       margin-bottom: 1rem;
       text-align: center;
     }
+    /* Force a grid with 2 columns and 3 rows that fills a fixed portion of the viewport */
     .itinerary-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
       gap: 1rem;
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
+      /* Set a height so that the grid cells are sized relative to the viewport */
+      height: 70vh;
     }
     .card {
       background: var(--card-bg);
@@ -199,8 +200,10 @@
       max-width: 600px;
       margin: 0 auto 2rem auto;
     }
+    /* Set a fixed height for the nested swiper so the CTA button is visible */
     .swiper.mySwiperNested {
       width: 100%;
+      height: 40vh;
       padding-bottom: 1rem;
     }
     .swiper.mySwiperNested .swiper-slide img {
@@ -246,7 +249,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 1;
+      z-index: -1; /* Placed behind all main content */
     }
     
     /* --- Floating Hearts (Stolen Heart) --- */
@@ -278,8 +281,7 @@
       left: 25px;
       top: 0;
     }
-    /* Center the text within the heart using flex centering; 
-       rotate the text 45deg so it appears horizontal */
+    /* Center the text using flex centering; remove extra translate */
     .love-heart span {
       position: relative;
       z-index: 1;
