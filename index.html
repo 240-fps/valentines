@@ -130,7 +130,8 @@
       left: 25px;
       top: 0;
     }
-    /* Center and counter-rotate the text so it appears horizontal */
+    /* Center and counter-rotate the text so it appears horizontal.
+       Added translateY(-3px) and transform-origin for improved centering. */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -139,7 +140,8 @@
       text-align: center;
       color: var(--text-color);
       display: block;
-      transform: rotate(45deg);
+      transform: translateY(-3px) rotate(45deg);
+      transform-origin: center;
       width: 100%;
     }
     
