@@ -124,16 +124,17 @@
     }
     
     /* ================================
-       Itinerary Slide (Clickable Cards)
+       Itinerary Slide (Clickable Cards in 2×3 Grid)
     ================================ */
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: rgba(18,18,18,0.8); /* Translucent background */
+      background: rgba(18,18,18,0.8); /* Translucent background so hearts show through */
       position: relative;
       z-index: 5;  /* Ensure itinerary cards appear above floating hearts */
       padding: 3rem 1rem;
-      overflow-y: auto;
+      /* Remove scrolling */
+      overflow: hidden;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
@@ -143,12 +144,11 @@
     }
     .itinerary-cards {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
-      margin-top: 2rem;
+      width: 100%;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
     .card {
       background: var(--card-bg);
@@ -159,6 +159,8 @@
       cursor: pointer;
       overflow: hidden;
       transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      /* Force cards to be square */
+      aspect-ratio: 1;
     }
     .card:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
     .card-header {
@@ -244,7 +246,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: -1;  /* Set to -1 so that hearts/flowers are behind all main content */
+      z-index: 1; /* Behind all main content */
     }
     
     /* --- Floating Hearts: Steal This Heart from Your Provided Code --- */
@@ -287,7 +289,7 @@
       text-align: center;
       color: var(--text);
       display: block;
-      transform: translateY(-5px) rotate(45deg);
+      transform: translateY(-50%) rotate(45deg);
       transform-origin: center;
       width: 100%;
     }
@@ -344,7 +346,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 20;
+      z-index: 30;
       opacity: 0;
       pointer-events: none;
     }
@@ -455,7 +457,7 @@
   </div>
   
   <!-- Popup Modal for "Yes, I will!" Button -->
-  <div id="popupModal" class="popup-modal">
+  <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
       <!-- Replace the src URL below with your custom popup GIF -->
       <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
@@ -530,6 +532,7 @@
       burstContainer.style.left = '50%';
       burstContainer.style.transform = 'translate(-50%, -50%)';
       burstContainer.style.pointerEvents = 'none';
+      burstContainer.style.zIndex = '30';
       document.body.appendChild(burstContainer);
       
       const numParticles = 20;
@@ -609,22 +612,6 @@
     }
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
-    
-    /* --- Popup Modal Animation for "Yes, I will!" Button --- */
-    document.getElementById('valentineBtn').addEventListener('click', () => {
-      createParticleBurst(); // Optional burst on click
-      gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
-      
-      // Show the popup modal with a cool animation
-      const modal = document.getElementById('popupModal');
-      modal.style.display = 'flex';
-      gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.5, onComplete: () => {
-          // After 3 seconds, fade out and hide the modal
-          gsap.to(modal, { opacity: 0, duration: 0.5, delay: 3, onComplete: () => {
-             modal.style.display = 'none';
-          }});
-      }});
-    });
   </script>
   
   <!-- Popup Modal Markup -->
@@ -648,7 +635,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 20;
+      z-index: 30;
       opacity: 0;
       pointer-events: none;
     }
