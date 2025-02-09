@@ -99,7 +99,7 @@
       box-shadow: 0 4px 12px var(--shadow-color);
     }
     
-    /* --- Classic Heart Shape using Pseudo-Elements --- */
+    /* --- Classic Heart Shape with Randomized Starting Rotation & Spinning Animation --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -108,8 +108,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* The hearts spin while floating with a random scale */
-      animation: loveHeartFloat 12s linear infinite;
+      /* Each heart uses the 'spin' animation. Its starting rotation is randomized via --start */
+      animation: spin 12s linear infinite;
     }
     /* Two circles to form the top lobes */
     .love-heart::before,
@@ -121,7 +121,6 @@
       background: var(--heart-color);
       border-radius: 50%;
     }
-    /* Position the circles above the square */
     .love-heart::before {
       top: -25px;
       left: 0;
@@ -130,33 +129,38 @@
       left: 25px;
       top: 0;
     }
-    /* The inner text simply shifts upward; it spins along with the heart */
-    .love-heart span {
-      position: relative;
-      z-index: 1;
-      font-size: 10px;
-      font-weight: bold;
-      text-align: center;
-      color: var(--text-color);
+    /* Wrap the heart's inner text in a container that counter-rotates so the text stays horizontal */
+    .love-heart .heart-content {
       display: block;
-      transform: translateY(-5px);
-      transform-origin: center;
-      width: 100%;
+      animation: counterSpin 12s linear infinite;
     }
-    
-    /* Keyframes: Hearts start at -45deg and spin a full 360° to 315deg */
-    @keyframes loveHeartFloat {
+    /* Keyframes for the spinning hearts.
+       Each heart rotates from its random start (var(--start)) through +360deg over 12 seconds. */
+    @keyframes spin {
       0% {
-        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(100vh) rotate(calc(var(--start) + 0deg)) scale(var(--scale));
         opacity: 0;
       }
       15% {
-        transform: translateX(-50%) translateY(80vh) rotate(135deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(80vh) rotate(calc(var(--start) + 180deg)) scale(var(--scale));
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(315deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
         opacity: 0;
+      }
+    }
+    /* Keyframes for the counter-rotation of the inner text.
+       This cancels the parent's rotation so that the text remains horizontal. */
+    @keyframes counterSpin {
+      0% {
+        transform: rotate(calc(-1 * (var(--start) + 0deg)));
+      }
+      15% {
+        transform: rotate(calc(-1 * (var(--start) + 180deg)));
+      }
+      100% {
+        transform: rotate(calc(-1 * (var(--start) + 360deg)));
       }
     }
     
@@ -165,13 +169,11 @@
       position: absolute;
       width: 20px;
       height: 30px;
-      background: #ff66aa; /* You may tweak this if desired */
-      /* This polygon creates a teardrop/petal-like shape */
+      background: #ff66aa;
       clip-path: polygon(50% 0%, 70% 20%, 60% 100%, 40% 100%, 30% 20%);
       opacity: 0.8;
       animation: petalFloat 14s linear infinite;
     }
-    
     @keyframes petalFloat {
       0% {
         transform: translateX(-50%) translateY(100vh) rotate(0deg) scale(var(--scale));
@@ -187,7 +189,7 @@
       }
     }
     
-    /* --- Slide 2 – Interactive Itinerary (Feb 14–19) --- */
+    /* --- Slide 2 – Interactive Itinerary --- */
     #slide2 {
       background: linear-gradient(135deg, var(--slide2-start), var(--slide2-end));
       overflow-y: auto;
@@ -199,7 +201,6 @@
       font-size: 2.8rem;
       margin-bottom: 20px;
     }
-    /* Rose image added for extra decoration in slide 2 */
     .rose-image {
       margin: 0 auto 20px;
       width: 96px;
@@ -258,7 +259,6 @@
       box-shadow: 0 4px 12px var(--shadow-color);
       position: relative;
     }
-    /* Nested Swiper for Memories Slider */
     .swiper-nested {
       width: 100%;
       height: 300px;
@@ -325,12 +325,10 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown, Floating Love Hearts, Rose Petals & GIF -->
+      <!-- Slide 1: Countdown, Floating Hearts, Rose Petals & GIF -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
-        <!-- Optional GIF Container -->
         <div class="gif-container">
-          <!-- Replace with your GIF URL if desired -->
           <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Valentine's GIF" style="width:200px; border-radius:8px; box-shadow: 0 4px 12px var(--shadow-color);">
         </div>
         <div class="countdown" id="countdown"></div>
@@ -342,7 +340,6 @@
       <!-- Slide 2: Interactive Itinerary -->
       <div class="swiper-slide" id="slide2">
         <h1>Our Valentine's Week Itinerary</h1>
-        <!-- Added rose image for extra decoration -->
         <div class="rose-image">
           <img src="https://img.icons8.com/color/96/000000/rose.png" alt="Rose">
         </div>
@@ -379,7 +376,6 @@
       <!-- Slide 3: Memories & Valentine Question -->
       <div class="swiper-slide" id="slide3">
         <h1>Our Beautiful Memories</h1>
-        <!-- Nested Swiper for Memories Slider -->
         <div class="swiper mySwiperNested swiper-nested">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -410,7 +406,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <!-- Include GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <!-- Include Canvas Confetti (if needed elsewhere) -->
+  <!-- (Optional) Canvas Confetti if needed elsewhere -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <script>
@@ -445,7 +441,6 @@
      * Countdown Timer
      ***********************/
     const countdownEl = document.getElementById("countdown");
-    // Target: February 14, 2025 8:30 PM PST (ISO‑8601)
     const targetDateTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
@@ -479,24 +474,27 @@
           const scale = elementClass === "love-heart" ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
-          // Set CSS variable for scale so that it can be used in keyframes
           el.style.setProperty('--scale', scale);
           if (elementClass === "love-heart") {
-            // Insert text inside the heart
-            const phrases = ["I Love You", "Be Mine"];
+            // Generate a random starting rotation for each heart (0deg to 360deg)
+            const randomStart = Math.floor(Math.random() * 360);
+            el.style.setProperty('--start', randomStart + "deg");
+            // Create a nested container for counter-rotating text
+            const content = document.createElement("div");
+            content.classList.add("heart-content");
             const span = document.createElement("span");
+            const phrases = ["I Love You", "Be Mine"];
             span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
             span.style.fontSize = "10px";
             span.style.fontWeight = "bold";
-            el.appendChild(span);
+            content.appendChild(span);
+            el.appendChild(content);
           }
           container.appendChild(el);
         }
       });
     }
-    // Generate 30 hearts in every container with class "heart-container"
     generateElements(".heart-container", 30, "love-heart");
-    // Generate 20 rose petals in every container with class "flower-container"
     generateElements(".flower-container", 20, "flower");
     
     /***********************
@@ -517,16 +515,14 @@
     });
     
     /***********************
-     * Valentine Button with Rose Petals Effect, GSAP Bounce & Burst Effect
+     * Valentine Button with Rose Petals Effect & GSAP Bounce
      ***********************/
     document.getElementById("valentineBtn").addEventListener("click", () => {
-      // Instead of confetti, create an animated burst of rose petals:
       createRosePetals();
       gsap.fromTo("#valentineBtn", { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       alert("I love you! Can't wait to share this amazing week with you!");
     });
     
-    // New function: Create a burst of rose petal elements only.
     function createRosePetals() {
       const burstContainer = document.createElement("div");
       burstContainer.style.position = "absolute";
@@ -536,7 +532,6 @@
       burstContainer.style.pointerEvents = "none";
       document.getElementById("slide3").appendChild(burstContainer);
       
-      // Create 30 rose petals
       for (let i = 0; i < 30; i++) {
         const elem = document.createElement("div");
         elem.classList.add("flower");
@@ -546,7 +541,6 @@
         elem.style.left = (Math.random() * 100) + "%";
         elem.style.top = (Math.random() * 100) + "%";
         elem.style.opacity = "0";
-        // Set a random scale for each petal
         const burstScale = 0.7 + Math.random() * 0.6;
         elem.style.setProperty('--scale', burstScale);
         burstContainer.appendChild(elem);
