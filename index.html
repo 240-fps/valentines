@@ -109,6 +109,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      /* The heart always stays rotated -45deg */
       animation: loveHeartFloat 12s linear infinite;
     }
     /* Two circles to form the top lobes */
@@ -131,7 +132,7 @@
       top: 0;
     }
     /* Center and counter-rotate the text so it appears horizontal.
-       Added translateY(-3px) and transform-origin for improved centering. */
+       Increased translateY offset (to -5px) to lift the text a bit higher. */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -140,12 +141,12 @@
       text-align: center;
       color: var(--text-color);
       display: block;
-      transform: translateY(-3px) rotate(45deg);
+      transform: translateY(-5px) rotate(45deg);
       transform-origin: center;
       width: 100%;
     }
     
-    /* Updated keyframes: include translateX(-50%) and use the scale from --scale */
+    /* Updated keyframes: fixed rotation at -45deg so hearts never flip */
     @keyframes loveHeartFloat {
       0% {
         transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
@@ -156,7 +157,7 @@
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(315deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
     }
