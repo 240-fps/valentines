@@ -105,8 +105,6 @@
       position: absolute;
       width: 50px;
       height: 50px;
-      /* Rotate the square so it forms the bottom point of the heart */
-      transform: rotate(-45deg);
       background: var(--heart-color);
       display: flex;
       align-items: center;
@@ -142,10 +140,20 @@
       color: var(--text-color);
     }
     
+    /* Updated keyframes: include translateX(-50%) and use the scale from --scale */
     @keyframes loveHeartFloat {
-      0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
-      15% { opacity: 1; }
-      100% { transform: translateY(-150vh) rotate(315deg); opacity: 0; }
+      0% {
+        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
+        opacity: 0;
+      }
+      15% {
+        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-50%) translateY(-150vh) rotate(315deg) scale(var(--scale));
+        opacity: 0;
+      }
     }
     
     /* --- Rose Petal Shape using Clip-Path --- */
@@ -161,9 +169,18 @@
     }
     
     @keyframes petalFloat {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateX(-50%) translateY(100vh) rotate(0deg) scale(var(--scale));
+        opacity: 0;
+      }
+      20% {
+        transform: translateX(-50%) translateY(80vh) rotate(0deg) scale(var(--scale));
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-50%) translateY(-150vh) rotate(360deg) scale(var(--scale));
+        opacity: 0;
+      }
     }
     
     /* --- Slide 2 – Interactive Itinerary (Feb 14–19) --- */
@@ -445,8 +462,9 @@
           const scale = elementClass === "love-heart" ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
+          // Set CSS variable for scale so that it can be used in keyframes
+          el.style.setProperty('--scale', scale);
           if (elementClass === "love-heart") {
-            el.style.transform = `scale(${scale})`;
             // Insert text inside the heart
             const phrases = ["I Love You", "Be Mine"];
             const span = document.createElement("span");
@@ -515,6 +533,9 @@
         elem.style.left = (Math.random() * 100) + "%";
         elem.style.top = (Math.random() * 100) + "%";
         elem.style.opacity = "0";
+        // Set random scale for burst elements too
+        const burstScale = isHeart ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
+        elem.style.setProperty('--scale', burstScale);
         burstContainer.appendChild(elem);
         gsap.to(elem, {
           duration: 1 + Math.random(),
