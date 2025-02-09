@@ -100,42 +100,66 @@
       box-shadow: 0 4px 12px var(--shadow-color);
     }
     
-    /* --- Candy Heart Shape (Classic "I Love You" Heart) --- */
+    /* --- Classic Heart Shape using Pseudo-Elements --- */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
+      /* Rotate the square so it forms the bottom point of the heart */
+      transform: rotate(-45deg);
       background: var(--heart-color);
-      /* Candy heart shape coordinates */
-      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
       display: flex;
       align-items: center;
       justify-content: center;
-      /* No rotation is applied so that it appears as a candy heart */
       animation: loveHeartFloat 12s linear infinite;
     }
+    /* Two circles to form the top lobes */
+    .love-heart::before,
+    .love-heart::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: var(--heart-color);
+      border-radius: 50%;
+    }
+    /* Position the circles above the square */
+    .love-heart::before {
+      top: -25px;
+      left: 0;
+    }
+    .love-heart::after {
+      left: 25px;
+      top: 0;
+    }
+    /* Ensure any text inside appears on top */
     .love-heart span {
+      position: relative;
+      z-index: 1;
       font-size: 10px;
       font-weight: bold;
       text-align: center;
       color: var(--text-color);
     }
+    
     @keyframes loveHeartFloat {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
       15% { opacity: 1; }
-      100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
+      100% { transform: translateY(-150vh) rotate(315deg); opacity: 0; }
     }
     
-    /* --- Rose Petal (Flower) Styling (Simplified) --- */
+    /* --- Rose Petal Shape using Clip-Path --- */
     .flower {
       position: absolute;
-      width: 15px;
-      height: 15px;
-      background-color: red;
-      border-radius: 50%;
+      width: 20px;
+      height: 30px;
+      background: #ff66aa; /* Adjust this color as desired */
+      /* This polygon creates a teardrop/petal-like shape */
+      clip-path: polygon(50% 0%, 70% 20%, 60% 100%, 40% 100%, 30% 20%);
       opacity: 0.8;
       animation: petalFloat 14s linear infinite;
     }
+    
     @keyframes petalFloat {
       0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
       20% { opacity: 1; }
@@ -435,7 +459,7 @@
         }
       });
     }
-    // Generate 30 candy hearts in every container with class "heart-container"
+    // Generate 30 hearts in every container with class "heart-container"
     generateElements(".heart-container", 30, "love-heart");
     // Generate 20 rose petals in every container with class "flower-container"
     generateElements(".flower-container", 20, "flower");
