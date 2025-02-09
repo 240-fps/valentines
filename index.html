@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <!-- Responsive meta tag with no zoom -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <!-- Apple meta tags -->
+  <!-- Apple meta tags for full-screen web app mode -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>My Valentine's Surprise</title>
@@ -16,18 +16,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /*---------------------------------------------------
-      CSS Variables & Basic Reset
-    ---------------------------------------------------*/
     :root {
       /* Vibrant Valentine’s palette */
-      --slide1-start: #ff5e62;       /* Bold red-pink */
-      --slide1-end:   #ff9966;       /* Warm coral */
-      --slide2-start: #ff99cc;       /* Soft pink */
-      --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
-      --slide3-start: #ff416c;       /* Deep pink/red */
-      --slide3-end:   #ff4b2b;       /* Fiery red-orange */
-      /* For love hearts, we use a classic red */
+      --slide1-start: #ff5e62;
+      --slide1-end:   #ff9966;
+      --slide2-start: #ff99cc;
+      --slide2-end:   #ff66aa;
+      --slide3-start: #ff416c;
+      --slide3-end:   #ff4b2b;
       --heart-color: #ff3366;
       --text-color: #fff;
       --shadow-color: rgba(0, 0, 0, 0.25);
@@ -46,10 +42,6 @@
       color: var(--text-color);
       overflow: hidden;
     }
-    
-    /*---------------------------------------------------
-      Main Swiper Container (Full-Screen Slider)
-    ---------------------------------------------------*/
     .swiper {
       width: 100%;
       height: 100vh;
@@ -63,11 +55,7 @@
       position: relative;
       text-align: center;
     }
-    
-    /*---------------------------------------------------
-      Floating Decorative Containers (for hearts & flowers)
-      These containers appear on every slide.
-    ---------------------------------------------------*/
+    /* Decorative containers for floating elements */
     .heart-container,
     .flower-container {
       position: absolute;
@@ -78,10 +66,7 @@
       pointer-events: none;
       overflow: hidden;
     }
-    
-    /*---------------------------------------------------
-      Slide 1 – Countdown, Floating Love Hearts & Rose Petals
-    ---------------------------------------------------*/
+    /* Slide 1 styling */
     #slide1 {
       background: linear-gradient(135deg, var(--slide1-start), var(--slide1-end));
       overflow: hidden;
@@ -101,54 +86,44 @@
     #slide1 p {
       font-size: 1.2rem;
     }
-    
-    /* --- Classic Love Heart Shape with Inner Text --- */
+    /* --- GIF Container Styling --- */
+    .gif-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .gif-container img {
+      width: 200px; /* Adjust size as needed */
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+    /* Classic Love Heart with Inner Text */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
       background: var(--heart-color);
-      /* Use two pseudo-elements to form the two curves */
-      transform: rotate(-45deg);
-      animation: loveHeartFloat 12s linear infinite;
+      clip-path: polygon(50% 0%, 61% 11%, 72% 22%, 80% 35%, 84% 50%, 80% 65%, 72% 78%, 61% 89%, 50% 100%, 39% 89%, 28% 78%, 20% 65%, 16% 50%, 20% 35%, 28% 22%, 39% 11%);
       display: flex;
       align-items: center;
       justify-content: center;
+      transform: rotate(-45deg);
+      animation: loveHeartFloat 12s linear infinite;
     }
-    .love-heart::before,
-    .love-heart::after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      background: var(--heart-color);
-      border-radius: 50%;
-    }
-    .love-heart::before {
-      top: -25px;
-      left: 0;
-    }
-    .love-heart::after {
-      left: 25px;
-      top: 0;
-    }
-    /* Inner text (rotated back to upright) */
     .love-heart span {
-      position: relative;
       transform: rotate(45deg);
-      color: var(--text-color);
       font-size: 10px;
       font-weight: bold;
-      z-index: 1;
       text-align: center;
+      color: var(--text-color);
+      padding: 2px;
     }
     @keyframes loveHeartFloat {
       0% { transform: translateY(100vh) rotate(-45deg); opacity: 0; }
       15% { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(315deg); opacity: 0; }
     }
-    
-    /* --- Rose Petal (Flower) Styling using Inline SVG --- */
+    /* Rose Petal (Flower) styling using inline SVG */
     .flower {
       position: absolute;
       width: 40px;
@@ -162,7 +137,6 @@
       20% { opacity: 1; }
       100% { transform: translateY(-150vh) rotate(360deg); opacity: 0; }
     }
-    
     /*---------------------------------------------------
       Slide 2 – Interactive Itinerary (Feb 14–19)
     ---------------------------------------------------*/
@@ -207,7 +181,6 @@
       font-size: 1.2rem;
       line-height: 1.4;
     }
-    
     /*---------------------------------------------------
       Slide 3 – Memories & Valentine Question
     ---------------------------------------------------*/
@@ -229,7 +202,6 @@
       box-shadow: 0 4px 12px var(--shadow-color);
       position: relative;
     }
-    /* Nested Swiper for Memories Slider */
     .swiper-nested {
       width: 100%;
       height: 300px;
@@ -266,8 +238,6 @@
     .ask-section button:hover {
       background: #e73370;
     }
-    
-    /* Swiper Pagination Styling */
     .swiper-pagination-bullet {
       background: rgba(255, 255, 255, 0.5);
       width: 12px;
@@ -279,10 +249,6 @@
       background: #fff;
       transform: scale(1.2);
     }
-    
-    /*---------------------------------------------------
-      Responsive Adjustments
-    ---------------------------------------------------*/
     @media (max-width: 768px) {
       #slide1 h1 { font-size: 2.5rem; }
       .countdown { font-size: 1.8rem; }
@@ -298,9 +264,14 @@
   <!-- Main Swiper Container -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Countdown, Floating Love Hearts & Rose Petals -->
+      <!-- Slide 1: Countdown, Floating Love Hearts & Rose Petals, and a GIF -->
       <div class="swiper-slide" id="slide1">
         <h1>Countdown to Valentine's Day</h1>
+        <!-- GIF Container -->
+        <div class="gif-container">
+          <!-- Replace the src with the URL of your GIF -->
+          <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Valentine's GIF" style="width:200px; border-radius:8px; box-shadow: 0 4px 12px var(--shadow-color);">
+        </div>
         <div class="countdown" id="countdown"></div>
         <p>Our special week is almost here (Feb 14 – 19, 2025)</p>
         <!-- Decorative Containers -->
@@ -372,9 +343,9 @@
   
   <!-- Include Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <!-- Include GSAP for advanced animations -->
+  <!-- Include GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <!-- Include Canvas Confetti for interactive effects -->
+  <!-- Include Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <script>
@@ -443,10 +414,10 @@
           const scale = elementClass === "love-heart" ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
           el.style.animationDelay = delay + "s";
           el.style.animationDuration = duration + "s";
-          if(elementClass === "love-heart") {
+          if (elementClass === "love-heart") {
             el.style.transform = `rotate(-45deg) scale(${scale})`;
             // Insert text inside the heart
-            const phrases = ["I love you", "Be mine"];
+            const phrases = ["I Love You", "Be Mine"];
             const span = document.createElement("span");
             span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
             span.style.transform = "rotate(45deg)";
