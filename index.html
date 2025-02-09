@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -39,28 +39,6 @@
       scroll-behavior: smooth;
     }
     a { color: var(--primary); text-decoration: none; }
-    
-    /* Custom Cursor (replace URL with your heart‑icon image URL) */
-    body {
-      cursor: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Heart_coraz%C3%B3n.svg/32px-Heart_coraz%C3%B3n.svg.png'), auto;
-    }
-    
-    /* ================================
-       Background Music Toggle Button
-    ================================ */
-    .music-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.6);
-      border: none;
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
     
     /* ================================
        Main Swiper (3 Slides: Hero, Itinerary, Memories & CTA)
@@ -127,18 +105,6 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Love Quotes Overlay */
-    .love-quotes {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      opacity: 0;
-    }
     /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
@@ -163,7 +129,7 @@
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: rgba(18,18,18,0.8); /* Translucent background so hearts show through */
+      background: rgba(18,18,18,0.8); /* Translucent background */
       position: relative;
       z-index: 5;  /* Ensure itinerary cards appear above floating hearts */
       padding: 3rem 1rem;
@@ -278,10 +244,10 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 2; /* Behind main content (which has z-index 3 or 5) */
+      z-index: -1;  /* Set to -1 so that hearts/flowers are behind all main content */
     }
     
-    /* --- Floating Hearts: Using the Stolen Heart Code --- */
+    /* --- Floating Hearts: Steal This Heart from Your Provided Code --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -311,7 +277,8 @@
       left: 25px;
       top: 0;
     }
-    /* Center the text within the heart (it rotates exactly with its parent) */
+    /* Center and rotate the text so it appears horizontal.
+       Adjust the translateY value if needed for perfect centering. */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -320,8 +287,8 @@
       text-align: center;
       color: var(--text);
       display: block;
-      /* Adjust vertical centering as needed */
-      transform: translateY(-50%);
+      transform: translateY(-5px) rotate(45deg);
+      transform-origin: center;
       width: 100%;
     }
     @keyframes loveHeartFloat {
@@ -365,7 +332,7 @@
     }
     
     /* ================================
-       Popup Modal (for "Yes, I will!" Button)
+       Popup Modal (for "Yes, I will!" action)
     ================================ */
     .popup-modal {
       position: fixed;
@@ -417,8 +384,6 @@
             </div>
             <p>A celebration of love, surprises, and unforgettable moments.</p>
             <div class="countdown" id="countdown">Loading...</div>
-            <!-- Love Quotes Overlay -->
-            <div id="loveQuotes" class="love-quotes"></div>
           </div>
         </section>
       </div>
@@ -492,7 +457,8 @@
   <!-- Popup Modal for "Yes, I will!" Button -->
   <div id="popupModal" class="popup-modal">
     <div class="popup-content">
-      <img src="https://media.giphy.com/media/3o6ZtpxSZbQRRnwCKQ/giphy.gif" alt="Celebration GIF">
+      <!-- Replace the src URL below with your custom popup GIF -->
+      <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
       <p>I love you! Can't wait to share this amazing week with you!</p>
     </div>
   </div>
@@ -537,27 +503,6 @@
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
-    
-    /* --- Love Quotes Animation --- */
-    const quotes = [
-      "You are my favorite person",
-      "Every moment with you is magic",
-      "You light up my life",
-      "Forever and always, I love you"
-    ];
-    const loveQuotesEl = document.getElementById('loveQuotes');
-    let quoteIndex = 0;
-    function cycleQuotes() {
-      loveQuotesEl.style.opacity = 0;
-      setTimeout(() => {
-        loveQuotesEl.textContent = quotes[quoteIndex];
-        gsap.to(loveQuotesEl, { opacity: 1, duration: 0.8 });
-        quoteIndex = (quoteIndex + 1) % quotes.length;
-      }, 500);
-    }
-    // Cycle quotes every 4 seconds
-    cycleQuotes();
-    setInterval(cycleQuotes, 4000);
     
     /* --- Initialize Main Swiper (Fade Effect) --- */
     const mainSwiper = new Swiper(".mySwiperMain", {
@@ -664,7 +609,32 @@
     }
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
+    
+    /* --- Popup Modal Animation for "Yes, I will!" Button --- */
+    document.getElementById('valentineBtn').addEventListener('click', () => {
+      createParticleBurst(); // Optional burst on click
+      gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
+      
+      // Show the popup modal with a cool animation
+      const modal = document.getElementById('popupModal');
+      modal.style.display = 'flex';
+      gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.5, onComplete: () => {
+          // After 3 seconds, fade out and hide the modal
+          gsap.to(modal, { opacity: 0, duration: 0.5, delay: 3, onComplete: () => {
+             modal.style.display = 'none';
+          }});
+      }});
+    });
   </script>
+  
+  <!-- Popup Modal Markup -->
+  <div id="popupModal" class="popup-modal" style="display: none;">
+    <div class="popup-content">
+      <!-- Replace the src URL below with your custom popup GIF -->
+      <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
+      <p>I love you! Can't wait to share this amazing week with you!</p>
+    </div>
+  </div>
   
   <!-- Additional Styles for Popup Modal -->
   <style>
@@ -693,6 +663,7 @@
     }
     .popup-content p {
       font-size: 1.8rem;
+      margin-top: 20px;
       font-family: 'Playfair Display', serif;
     }
   </style>
