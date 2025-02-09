@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts for a modern, professional look -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
   <!-- Swiper CSS (for both main and nested sliders) -->
@@ -21,7 +21,7 @@
       --secondary: #FF4081;          /* Lighter pink */
       --accent: #8E24AA;             /* Deep purple accent */
       --text: #FFFFFF;               /* White text */
-      --card-bg: rgba(255,255,255,0.1);
+      --card-bg: rgba(255,255,255,0.15); /* Translucent frosted-glass */
       --heart-color: #ff3366;        /* Classic candy heart red */
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
@@ -39,7 +39,7 @@
     }
     a { color: var(--primary); text-decoration: none; }
     
-    /* --- Main Swiper (3 Full-Screen Slides) --- */
+    /* --- Main Swiper (3 full‑screen slides) --- */
     .swiper.mySwiperMain {
       width: 100%;
       height: 100vh;
@@ -56,10 +56,10 @@
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
-    
-    /* --- Main Swiper Pagination Dots --- */
+    /* Pagination dots at the bottom */
     .swiper-pagination {
       bottom: 20px !important;
+      z-index: 10;
     }
     
     /* --- Hero Slide --- */
@@ -91,13 +91,14 @@
       50% { transform: scale(1.1); opacity: 0.2; }
       100% { transform: scale(0.8); opacity: 0.6; }
     }
-    .hero-content { position: relative; z-index: 2; }
+    .hero-content { position: relative; z-index: 3; }
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3.5rem;
       margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Custom GIF Container – replace the src URL with your custom GIF */
+    /* Custom GIF Container – replace src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -148,7 +149,7 @@
       cursor: pointer;
     }
     details:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
-    details[open] { background: rgba(255,255,255,0.25); }
+    /* No auto-closing: multiple details can be open */
     summary { font-size: 1.5rem; outline: none; }
     details p {
       margin-top: 10px;
@@ -194,6 +195,7 @@
       border-radius: 8px;
       margin: 0 auto;
       max-width: 400px;
+      backdrop-filter: blur(8px);
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
@@ -238,11 +240,12 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 0;
       overflow: hidden;
+      /* Appear above slide backgrounds but behind main content */
+      z-index: 2;
     }
     
-    /* --- Floating Hearts: Using the Provided Classic Heart Shape --- */
+    /* --- Floating Hearts: Classic Candy Heart Shape --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -404,7 +407,7 @@
         </section>
       </div>
     </div>
-    <!-- Main Swiper Pagination (Dots) -->
+    <!-- Main Swiper Pagination (dots) -->
     <div class="swiper-pagination"></div>
   </div>
   
@@ -441,7 +444,7 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    /* --- Initialize Main Swiper (with fade effect) --- */
+    /* --- Initialize Main Swiper (Fade Effect) --- */
     const mainSwiper = new Swiper(".mySwiperMain", {
       effect: 'fade',
       fadeEffect: { crossFade: true },
@@ -455,7 +458,7 @@
       pagination: { el: '.swiper-pagination', clickable: true }
     });
     
-    /* --- Create Particle Burst on Slide Transition --- */
+    /* --- Particle Burst on Slide Transition --- */
     mainSwiper.on('slideChangeTransitionStart', function() {
       createParticleBurst();
     });
@@ -469,7 +472,7 @@
       burstContainer.style.pointerEvents = 'none';
       document.body.appendChild(burstContainer);
       
-      const numParticles = 20; // Adjust number as desired
+      const numParticles = 20; // Adjust as desired
       for (let i = 0; i < numParticles; i++) {
         const isHeart = Math.random() < 0.5;
         const particle = document.createElement('div');
@@ -530,24 +533,13 @@
     
     /* --- Rose Petals Burst on CTA Button Click --- */
     document.getElementById('valentineBtn').addEventListener('click', () => {
-      createParticleBurst(); // Optionally reuse the particle burst effect
+      createParticleBurst();
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       alert("I love you! Can't wait to share this amazing week with you!");
     });
     
-    /* --- Auto-Close Itinerary Details (Only one open at a time) --- */
-    const detailsElements = document.querySelectorAll("details");
-    detailsElements.forEach(detail => {
-      detail.addEventListener("toggle", function () {
-        if (this.open) {
-          detailsElements.forEach(other => {
-            if (other !== this && other.open) {
-              other.removeAttribute("open");
-            }
-          });
-        }
-      });
-    });
+    /* --- Auto-Close Itinerary Details Disabled --- */
+    // (By omitting the auto-close code, multiple itinerary cards can be open simultaneously)
   </script>
 </body>
 </html>
