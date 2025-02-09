@@ -2,37 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Responsive meta tag -->
+  <!-- Optimized for iPhone -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts for a Modern Look -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS for the Memories Slider -->
+  <!-- Swiper CSS (for both main and nested sliders) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* CSS Variables for a Modern Neon-Inspired Theme */
+    /* --- Theme Variables --- */
     :root {
       --background: #121212;         /* Dark background */
-      --header-bg: rgba(18, 18, 18, 0.9);
       --primary: #E91E63;            /* Neon pink */
       --secondary: #FF4081;          /* Lighter pink */
       --accent: #8E24AA;             /* Deep purple accent */
       --text: #FFFFFF;               /* White text */
-      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-bg: rgba(255,255,255,0.1);
       --heart-color: #ff3366;        /* Classic candy heart red */
-      --shadow-color: rgba(0, 0, 0, 0.25);
+      --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
     
-    /* Global Reset & Base Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* --- Global Reset & Base Styles --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Montserrat', sans-serif;
       background: var(--background);
@@ -41,46 +36,37 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+    a { color: var(--primary); text-decoration: none; }
     
-    /* Fixed Header with Smooth Navigation */
-    header {
-      position: fixed;
-      top: 0;
+    /* --- Main Swiper (3 Pages) --- */
+    .swiper.mySwiperMain {
       width: 100%;
-      background: var(--header-bg);
-      padding: 1rem 2rem;
-      z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      height: 100vh;
     }
-    header nav ul {
-      list-style: none;
+    .swiper.mySwiperMain .swiper-slide {
       display: flex;
-      justify-content: flex-end;
-    }
-    header nav ul li {
-      margin-left: 1.5rem;
-    }
-    header nav ul li a {
-      font-weight: 600;
-      transition: color var(--transition-speed);
-    }
-    header nav ul li a:hover {
-      color: var(--secondary);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 1rem;
     }
     
-    /* Hero Section: Full-Viewport with Animated Gradient Background */
+    /* --- Pagination Dots at the Bottom --- */
+    .swiper-pagination {
+      bottom: 20px !important;
+    }
+    
+    /* --- Hero Slide --- */
     .hero {
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
       position: relative;
       overflow: hidden;
       padding: 0 1rem;
@@ -88,8 +74,7 @@
     .hero::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 150%;
       height: 150%;
       background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
@@ -101,14 +86,20 @@
       50% { transform: scale(1.1); opacity: 0.2; }
       100% { transform: scale(0.8); opacity: 0.6; }
     }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
+    .hero-content { position: relative; z-index: 2; }
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3.5rem;
       margin-bottom: 1rem;
+    }
+    /* Custom GIF container – replace the src URL with your custom GIF */
+    .gif-container {
+      margin-bottom: 1rem;
+    }
+    .gif-container img {
+      max-width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
     .hero p {
       font-size: 1.3rem;
@@ -121,75 +112,89 @@
       margin-bottom: 2rem;
     }
     
-    /* Section Base Styles */
-    .section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
+    /* --- Itinerary Slide --- */
+    .itinerary-section {
+      width: 100%;
+      height: 100%;
+      background: var(--background);
+      padding: 3rem 1rem;
+      overflow-y: auto;
     }
-    .section h2 {
+    .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       margin-bottom: 1rem;
       text-align: center;
     }
-    
-    /* Itinerary Section: Modern Card Layout */
     .itinerary-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
       margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .card {
+    details {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
       padding: 1.5rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      cursor: pointer;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
-    }
-    .card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-    .card p {
-      font-size: 1rem;
+    details:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
+    details[open] { background: rgba(255,255,255,0.25); }
+    summary { font-size: 1.5rem; outline: none; }
+    details p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      line-height: 1.4;
     }
     
-    /* Memories Section: Swiper Slider */
-    .slider-container {
-      margin-top: 2rem;
-    }
-    .swiper {
+    /* --- Memories & CTA Slide --- */
+    .memories-cta {
       width: 100%;
-      padding-bottom: 2rem;
+      height: 100%;
+      background: var(--background);
+      padding: 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
     }
-    .swiper-slide img {
+    .memories-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .slider-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+    .swiper.mySwiperNested {
+      width: 100%;
+      padding-bottom: 1rem;
+    }
+    .swiper.mySwiperNested .swiper-slide img {
       width: 100%;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-    
-    /* Call-to-Action Section */
     .cta {
       text-align: center;
-      padding: 4rem 2rem;
+      padding: 2rem 1rem;
       background: linear-gradient(135deg, var(--primary), var(--accent));
-      position: relative;
-      overflow: hidden;
+      border-radius: 8px;
+      margin: 0 auto;
+      max-width: 400px;
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
+      font-size: 2.2rem;
       margin-bottom: 1.5rem;
     }
     .cta button {
@@ -202,12 +207,9 @@
       cursor: pointer;
       transition: background var(--transition-speed), transform var(--transition-speed);
     }
-    .cta button:hover {
-      background: #fff;
-      transform: scale(1.05);
-    }
+    .cta button:hover { background: #fff; transform: scale(1.05); }
     
-    /* Footer */
+    /* --- Footer --- */
     footer {
       text-align: center;
       padding: 2rem;
@@ -216,15 +218,16 @@
       font-size: 0.9rem;
     }
     
-    /* Responsive Styles */
+    /* --- Responsive Styles for iPhone --- */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
       .hero p { font-size: 1.1rem; }
       .countdown { font-size: 2rem; }
-      .section h2 { font-size: 2.2rem; }
+      .itinerary-section h2,
+      .memories-cta h2 { font-size: 2.2rem; }
     }
     
-    /* Decorative Floating Elements (Background Effects) */
+    /* --- Decorative Floating Elements --- */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -237,7 +240,7 @@
       overflow: hidden;
     }
     
-    /* --- Classic Heart Shape using Pseudo-Elements (as provided) --- */
+    /* --- Floating Hearts: Using the Provided Classic Heart Shape --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -246,8 +249,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* The heart always stays rotated -45deg */
-      animation: loveHeartFloat 12s linear infinite;
+      animation: heartSpin 12s linear infinite;
     }
     .love-heart::before,
     .love-heart::after {
@@ -258,14 +260,8 @@
       background: var(--heart-color);
       border-radius: 50%;
     }
-    .love-heart::before {
-      top: -25px;
-      left: 0;
-    }
-    .love-heart::after {
-      left: 25px;
-      top: 0;
-    }
+    .love-heart::before { top: -25px; left: 0; }
+    .love-heart::after { left: 25px; top: 0; }
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -277,23 +273,29 @@
       transform: translateY(-5px) rotate(45deg);
       transform-origin: center;
       width: 100%;
+      animation: counterSpin 12s linear infinite;
     }
-    @keyframes loveHeartFloat {
+    @keyframes heartSpin {
       0% {
-        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(100vh) rotate(calc(var(--start) + 0deg)) scale(var(--scale));
         opacity: 0;
       }
       15% {
-        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(80vh) rotate(calc(var(--start) + 180deg)) scale(var(--scale));
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
         opacity: 0;
       }
     }
+    @keyframes counterSpin {
+      0% { transform: translateY(-5px) rotate(calc(-1 * var(--start))); }
+      15% { transform: translateY(-5px) rotate(calc(-1 * (var(--start) + 180deg))); }
+      100% { transform: translateY(-5px) rotate(calc(-1 * (var(--start) + 360deg))); }
+    }
     
-    /* Floating Rose Petals */
+    /* --- Floating Rose Petals --- */
     .flower {
       position: absolute;
       width: 20px;
@@ -320,89 +322,89 @@
   </style>
 </head>
 <body>
-  <!-- Header & Navigation -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#itinerary">Itinerary</a></li>
-        <li><a href="#memories">Memories</a></li>
-        <li><a href="#cta">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <!-- Main Content -->
-  <main>
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <h1>My Valentine's Surprise</h1>
-        <p>A celebration of love, surprises, and unforgettable moments.</p>
-        <div class="countdown" id="countdown">Loading...</div>
-      </div>
-    </section>
-    
-    <!-- Itinerary Section -->
-    <section class="section" id="itinerary">
-      <h2>Valentine's Week Itinerary</h2>
-      <div class="itinerary-cards">
-        <div class="card">
-          <h3>Feb 14 – Valentine's Day</h3>
-          <p>A romantic dinner at an exclusive venue with an unforgettable surprise.</p>
-        </div>
-        <div class="card">
-          <h3>Feb 15 – Day 2</h3>
-          <p>A serene morning stroll paired with a gourmet picnic in a picturesque park.</p>
-        </div>
-        <div class="card">
-          <h3>Feb 16 – Day 3</h3>
-          <p>An inspiring visit to an art gallery followed by a creative workshop.</p>
-        </div>
-        <div class="card">
-          <h3>Feb 17 – Day 4</h3>
-          <p>An adventurous hike capturing breathtaking landscapes and memories.</p>
-        </div>
-        <div class="card">
-          <h3>Feb 18 – Day 5</h3>
-          <p>A day of pampering with luxurious spa treatments and relaxation.</p>
-        </div>
-        <div class="card">
-          <h3>Feb 19 – Day 6</h3>
-          <p>A charming farewell brunch paired with a heartfelt keepsake.</p>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Memories Section -->
-    <section class="section" id="memories">
-      <h2>Our Beautiful Memories</h2>
-      <div class="slider-container">
-        <!-- Swiper Slider for Memories -->
-        <div class="swiper mySwiperNested">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1">
+  <!-- Main Swiper Container (3 Slides) -->
+  <div class="swiper mySwiperMain">
+    <div class="swiper-wrapper">
+      <!-- Slide 1: Hero -->
+      <div class="swiper-slide">
+        <section class="hero">
+          <div class="hero-content">
+            <h1>My Valentine's Surprise</h1>
+            <!-- Custom GIF: Replace the src with your desired GIF URL -->
+            <div class="gif-container">
+              <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Custom GIF">
             </div>
-            <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
-            </div>
-            <div class="swiper-slide">
-              <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
+            <p>A celebration of love, surprises, and unforgettable moments.</p>
+            <div class="countdown" id="countdown">Loading...</div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Slide 2: Itinerary -->
+      <div class="swiper-slide">
+        <section class="itinerary-section">
+          <h2>Valentine's Week Itinerary</h2>
+          <div class="itinerary-cards">
+            <details>
+              <summary>Feb 14 – Valentine's Day</summary>
+              <p>A romantic dinner at an exclusive venue with a special surprise.</p>
+            </details>
+            <details>
+              <summary>Feb 15 – Day 2</summary>
+              <p>A serene morning stroll paired with a gourmet picnic in a picturesque park.</p>
+            </details>
+            <details>
+              <summary>Feb 16 – Day 3</summary>
+              <p>An inspiring visit to an art gallery followed by a creative workshop.</p>
+            </details>
+            <details>
+              <summary>Feb 17 – Day 4</summary>
+              <p>An adventurous hike capturing breathtaking landscapes and memories.</p>
+            </details>
+            <details>
+              <summary>Feb 18 – Day 5</summary>
+              <p>A day of pampering with luxurious spa treatments and relaxation.</p>
+            </details>
+            <details>
+              <summary>Feb 19 – Day 6</summary>
+              <p>A charming farewell brunch paired with a heartfelt keepsake.</p>
+            </details>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Slide 3: Memories & CTA -->
+      <div class="swiper-slide">
+        <section class="memories-cta">
+          <h2>Our Beautiful Memories</h2>
+          <div class="slider-container">
+            <!-- Nested Swiper for Memories Slider -->
+            <div class="swiper mySwiperNested">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
+                </div>
+              </div>
+              <!-- Slider Pagination -->
+              <div class="swiper-pagination"></div>
             </div>
           </div>
-          <!-- Slider Pagination -->
-          <div class="swiper-pagination"></div>
-        </div>
+          <div class="cta">
+            <h2>Will You Be My Valentine?</h2>
+            <button id="valentineBtn">Yes, I will!</button>
+          </div>
+        </section>
       </div>
-    </section>
-    
-    <!-- Call-to-Action Section -->
-    <section class="cta" id="cta">
-      <h2>Will You Be My Valentine?</h2>
-      <button id="valentineBtn">Yes, I will!</button>
-    </section>
-  </main>
+    </div>
+    <!-- Main Swiper Pagination (dots at the bottom) -->
+    <div class="swiper-pagination"></div>
+  </div>
   
   <!-- Footer -->
   <footer>
@@ -418,7 +420,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
   
   <script>
-    /* Countdown Timer */
+    /* --- Countdown Timer --- */
     const countdownEl = document.getElementById('countdown');
     const targetTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
@@ -437,20 +439,25 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    /* Initialize Swiper for Memories Slider */
-    const swiperNested = new Swiper('.mySwiperNested', {
-      loop: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false
-      },
+    /* --- Initialize Main Swiper for 3 Slides --- */
+    const mainSwiper = new Swiper(".mySwiperMain", {
+      direction: 'horizontal',
+      loop: false,
       pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      }
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      // Enable touch-swipe (default) for iPhone
     });
     
-    /* Generate Floating Decorative Elements */
+    /* --- Initialize Nested Swiper for Memories Slider --- */
+    const swiperNested = new Swiper('.mySwiperNested', {
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true }
+    });
+    
+    /* --- Generate Floating Decorative Elements --- */
     function generateFloatingElements(containerSelector, count, elementClass) {
       const container = document.querySelector(containerSelector);
       for (let i = 0; i < count; i++) {
@@ -461,16 +468,18 @@
         el.style.animationDelay = Math.random() * 5 + 's';
         el.style.animationDuration = (10 + Math.random() * 8) + 's';
         if (elementClass === 'love-heart') {
-          // Set a random starting rotation between 0 and 360deg
+          // Random starting rotation (0° to 360°)
           const randomStart = Math.floor(Math.random() * 360);
           el.style.setProperty('--start', randomStart + 'deg');
-          // Set a random scale between 0.8 and 1.5
+          // Random scale for different sizes (e.g., 0.8 to 1.5)
           const scale = 0.8 + Math.random() * 0.7;
           el.style.setProperty('--scale', scale);
           // Insert centered text inside each heart
           const phrases = ["I Love You", "Be Mine"];
           const span = document.createElement('span');
           span.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+          span.style.fontSize = "10px";
+          span.style.fontWeight = "bold";
           el.appendChild(span);
         } else {
           const scale = 0.7 + Math.random() * 0.6;
@@ -482,7 +491,7 @@
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
     
-    /* Rose Petals Burst on CTA Button Click */
+    /* --- Rose Petals Burst on CTA Button Click --- */
     document.getElementById('valentineBtn').addEventListener('click', () => {
       createRosePetals();
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
@@ -519,6 +528,20 @@
       }
       setTimeout(() => burstContainer.remove(), 3000);
     }
+    
+    /* --- Auto-Close Itinerary Details (only one open at a time) --- */
+    const detailsElements = document.querySelectorAll("details");
+    detailsElements.forEach(detail => {
+      detail.addEventListener("toggle", function () {
+        if (this.open) {
+          detailsElements.forEach(other => {
+            if (other !== this && other.open) {
+              other.removeAttribute("open");
+            }
+          });
+        }
+      });
+    });
   </script>
 </body>
 </html>
