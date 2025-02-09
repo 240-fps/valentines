@@ -17,17 +17,16 @@
   
   <style>
     :root {
-      /* Vibrant Valentine’s palette */
-      --slide1-start: #ff5e62;       /* Bold red-pink */
-      --slide1-end:   #ff9966;       /* Warm coral */
+      /* Vibrant Valentine’s palette – Love Pink & Red Theme */
+      --slide1-start: #ff3366;       /* Bold red-pink */
+      --slide1-end:   #ff6699;       /* Lighter red-pink */
       --slide2-start: #ff99cc;       /* Soft pink */
       --slide2-end:   #ff66aa;       /* Vibrant fuchsia */
-      --slide3-start: #ff416c;       /* Deep pink/red */
-      --slide3-end:   #ff4b2b;       /* Fiery red-orange */
-      /* For candy hearts, we use a classic red */
-      --heart-color: #ff3366;
-      --text-color: #fff;
-      --shadow-color: rgba(0, 0, 0, 0.25);
+      --slide3-start: #cc0033;       /* Deep red */
+      --slide3-end:   #ff3366;       /* Bold red-pink */
+      --heart-color:  #ff3366;       /* Classic red-pink for hearts */
+      --text-color:   #fff;
+      --shadow-color: rgba(0, 0, 0, 0.3);
       --transition-speed: 0.3s;
     }
     * {
@@ -109,7 +108,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* The heart always stays rotated -45deg */
+      /* The hearts spin while floating with a random scale */
       animation: loveHeartFloat 12s linear infinite;
     }
     /* Two circles to form the top lobes */
@@ -131,8 +130,7 @@
       left: 25px;
       top: 0;
     }
-    /* Center and counter-rotate the text so it appears horizontal.
-       Increased translateY offset (to -5px) to lift the text a bit higher. */
+    /* The inner text simply shifts upward; it spins along with the heart */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -141,23 +139,23 @@
       text-align: center;
       color: var(--text-color);
       display: block;
-      transform: translateY(-5px) rotate(45deg);
+      transform: translateY(-5px);
       transform-origin: center;
       width: 100%;
     }
     
-    /* Updated keyframes: fixed rotation at -45deg so hearts never flip */
+    /* Keyframes: Hearts start at -45deg and spin a full 360° to 315deg */
     @keyframes loveHeartFloat {
       0% {
         transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
       15% {
-        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(80vh) rotate(135deg) scale(var(--scale));
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(315deg) scale(var(--scale));
         opacity: 0;
       }
     }
@@ -167,7 +165,7 @@
       position: absolute;
       width: 20px;
       height: 30px;
-      background: #ff66aa; /* Adjust this color as desired */
+      background: #ff66aa; /* You may tweak this if desired */
       /* This polygon creates a teardrop/petal-like shape */
       clip-path: polygon(50% 0%, 70% 20%, 60% 100%, 40% 100%, 30% 20%);
       opacity: 0.8;
@@ -412,7 +410,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <!-- Include GSAP for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <!-- Include Canvas Confetti -->
+  <!-- Include Canvas Confetti (if needed elsewhere) -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <script>
@@ -519,21 +517,17 @@
     });
     
     /***********************
-     * Valentine Button with Confetti, GSAP Bounce & Burst Effect
+     * Valentine Button with Rose Petals Effect, GSAP Bounce & Burst Effect
      ***********************/
     document.getElementById("valentineBtn").addEventListener("click", () => {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        shapes: ["heart"]
-      });
+      // Instead of confetti, create an animated burst of rose petals:
+      createRosePetals();
       gsap.fromTo("#valentineBtn", { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
-      createBurstOfDecor();
       alert("I love you! Can't wait to share this amazing week with you!");
     });
     
-    function createBurstOfDecor() {
+    // New function: Create a burst of rose petal elements only.
+    function createRosePetals() {
       const burstContainer = document.createElement("div");
       burstContainer.style.position = "absolute";
       burstContainer.style.top = "50%";
@@ -542,18 +536,18 @@
       burstContainer.style.pointerEvents = "none";
       document.getElementById("slide3").appendChild(burstContainer);
       
+      // Create 30 rose petals
       for (let i = 0; i < 30; i++) {
-        const isHeart = Math.random() < 0.5;
         const elem = document.createElement("div");
-        elem.classList.add(isHeart ? "love-heart" : "flower");
+        elem.classList.add("flower");
         elem.style.position = "absolute";
         elem.style.width = "30px";
         elem.style.height = "30px";
         elem.style.left = (Math.random() * 100) + "%";
         elem.style.top = (Math.random() * 100) + "%";
         elem.style.opacity = "0";
-        // Set random scale for burst elements too
-        const burstScale = isHeart ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
+        // Set a random scale for each petal
+        const burstScale = 0.7 + Math.random() * 0.6;
         elem.style.setProperty('--scale', burstScale);
         burstContainer.appendChild(elem);
         gsap.to(elem, {
