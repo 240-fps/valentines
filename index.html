@@ -18,7 +18,6 @@
     ================================ */
     :root {
       --background: #121212;             /* Dark background */
-      --header-bg: rgba(18,18,18,0.9);
       --primary: #E91E63;                /* Neon pink */
       --secondary: #FF4081;              /* Lighter pink */
       --accent: #8E24AA;                 /* Deep purple accent */
@@ -106,7 +105,7 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Custom GIF Container – replace src with your custom GIF URL */
+    /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -130,10 +129,9 @@
     .itinerary-section {
       width: 100%;
       height: 100%;
-      /* Translucent background so floating hearts show behind */
-      background: rgba(18,18,18,0.8);
+      background: rgba(18,18,18,0.8); /* Translucent background so hearts show through */
       position: relative;
-      z-index: 5;  /* Ensure cards appear above floating hearts */
+      z-index: 5; /* Ensure itinerary cards appear above floating hearts */
       padding: 3rem 1rem;
       overflow-y: auto;
     }
@@ -186,7 +184,7 @@
       align-items: center;
       overflow-y: auto;
       position: relative;
-      z-index: 5; /* Ensure content is above floating hearts */
+      z-index: 5; /* Content above floating hearts */
     }
     .memories-cta h2 {
       font-family: 'Playfair Display', serif;
@@ -246,10 +244,10 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 2; /* Behind main content */
+      z-index: 2; /* Behind main content (which has z-index 3 or 5) */
     }
     
-    /* --- Floating Hearts: Classic Candy Heart Shape --- */
+    /* --- Floating Hearts: Steal this Heart from Your Provided Code --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -258,8 +256,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: heartSpin 12s linear infinite;
-      cursor: default;
+      /* The heart always stays rotated -45deg */
+      animation: loveHeartFloat 12s linear infinite;
     }
     .love-heart::before,
     .love-heart::after {
@@ -270,29 +268,38 @@
       background: var(--heart-color);
       border-radius: 50%;
     }
-    .love-heart::before { top: -25px; left: 0; }
-    .love-heart::after { left: 25px; top: 0; }
-    /* Inner text: Remove extra transforms so that the text remains centered and rotates exactly with the heart */
+    .love-heart::before {
+      top: -25px;
+      left: 0;
+    }
+    .love-heart::after {
+      left: 25px;
+      top: 0;
+    }
+    /* Center and rotate the text so that it appears horizontal */
     .love-heart span {
-      display: block;
+      position: relative;
+      z-index: 1;
       font-size: 10px;
       font-weight: bold;
       text-align: center;
       color: var(--text);
+      display: block;
+      transform: translateY(-5px) rotate(45deg);
+      transform-origin: center;
       width: 100%;
-      /* No extra transforms; let the parent's flex alignment handle centering */
     }
-    @keyframes heartSpin {
+    @keyframes loveHeartFloat {
       0% {
-        transform: translateX(-50%) translateY(100vh) rotate(calc(var(--start) + 0deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
       15% {
-        transform: translateX(-50%) translateY(80vh) rotate(calc(var(--start) + 180deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
     }
@@ -423,7 +430,10 @@
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetTime - now;
-      if (diff < 0) { countdownEl.textContent = "It's time!"; return; }
+      if (diff < 0) { 
+        countdownEl.textContent = "It's time!"; 
+        return; 
+      }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
