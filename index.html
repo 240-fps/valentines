@@ -41,11 +41,12 @@
     a { color: var(--primary); text-decoration: none; }
     
     /* ================================
-       Main Swiper (3 Slides: Hero, Itinerary, Memories & CTA)
+       Main Swiper
     ================================ */
     .swiper.mySwiperMain {
       width: 100%;
       height: 100vh;
+      margin: 0 auto;
     }
     .swiper.mySwiperMain .swiper-slide {
       display: flex;
@@ -54,6 +55,8 @@
       align-items: center;
       position: relative;
       padding: 1rem;
+      width: 100%;
+      text-align: center;
     }
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
@@ -64,7 +67,7 @@
     }
     
     /* ================================
-       Hero Slide (Fully Filled)
+       Hero Slide
     ================================ */
     .hero {
       width: 100vw;
@@ -74,11 +77,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
       position: relative;
       overflow: hidden;
-      padding: 0;
-      margin: 0;
+      margin: 0 auto;
     }
     .hero::after {
       content: "";
@@ -96,7 +97,11 @@
       50% { transform: scale(1.1); opacity: 0.2; }
       100% { transform: scale(0.8); opacity: 0.6; }
     }
-    .hero-content { position: relative; z-index: 3; }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      margin: 0 auto;
+    }
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3.5rem;
@@ -121,7 +126,7 @@
     }
     
     /* ================================
-       Itinerary Slide (2×3 Grid of Clickable Cards)
+       Itinerary Slide (2×3 Grid of Cards)
     ================================ */
     .itinerary-section {
       width: 100%;
@@ -131,6 +136,7 @@
       z-index: 5;
       padding: 1.5rem;
       overflow: hidden;
+      margin: 0 auto;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
@@ -145,8 +151,8 @@
       gap: 1rem;
       width: 100%;
       max-width: 600px;
+      height: 70vh;  /* Adjust grid height to fill screen on iPhone */
       margin: 0 auto;
-      height: 70vh; /* Adjust the height as needed to fit the iPhone screen */
     }
     .card {
       background: var(--card-bg);
@@ -159,7 +165,10 @@
       transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       aspect-ratio: 1;
     }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    }
     .card-header {
       font-size: 1.2rem;
       font-weight: bold;
@@ -198,7 +207,7 @@
       max-width: 600px;
       margin: 0 auto 2rem auto;
     }
-    /* Fix nested swiper height to 40vh so the CTA button remains visible */
+    /* Set nested swiper height so the CTA button is visible */
     .swiper.mySwiperNested {
       width: 100%;
       height: 40vh;
@@ -233,7 +242,10 @@
       cursor: pointer;
       transition: background var(--transition-speed), transform var(--transition-speed);
     }
-    .cta button:hover { background: #fff; transform: scale(1.05); }
+    .cta button:hover {
+      background: #fff;
+      transform: scale(1.05);
+    }
     
     /* ================================
        Decorative Floating Elements (Particles)
@@ -247,7 +259,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: -1; /* Ensure they stay behind all main content */
+      z-index: 2; /* Set to 2 so they appear in front of the background but behind main interactive content */
     }
     
     /* --- Floating Hearts (Stolen Heart) --- */
@@ -279,7 +291,7 @@
       left: 25px;
       top: 0;
     }
-    /* Center the text using flex centering; no extra translation needed */
+    /* Center the text using flex centering; rotate 45deg */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -655,11 +667,10 @@
       createParticleBurst(); // Optional particle burst on click
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       
-      // Show the popup modal
+      // Show the popup modal with a fade-in animation and enable pointer events for dismissal
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
       gsap.to(modal, { opacity: 1, duration: 0.5, onComplete: () => {
-          // Allow modal to be dismissed by clicking anywhere
           modal.style.pointerEvents = 'auto';
       }});
     });
