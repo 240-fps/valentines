@@ -42,7 +42,7 @@
     a { color: var(--primary); text-decoration: none; }
     
     /* ================================
-       Main Swiper (4 Slides: Hero, Itinerary, Memories & CTA, Crossword Puzzle)
+       Main Swiper (3 Slides: Hero, Itinerary, Memories & CTA)
     ================================ */
     .swiper.mySwiperMain {
       width: 100%;
@@ -106,7 +106,7 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Custom GIF Container – replace src with your custom GIF URL */
+    /* Custom GIF Container – replace the src with your custom GIF URL */
     .gif-container { margin-bottom: 1rem; }
     .gif-container img {
       max-width: 90%;
@@ -130,7 +130,9 @@
     .itinerary-section {
       width: 100%;
       height: 100%;
-      background: var(--background);
+      background: rgba(18,18,18,0.8); /* Translucent background */
+      position: relative;
+      z-index: 3; /* Ensure content is above floating hearts */
       padding: 3rem 1rem;
       overflow-y: auto;
     }
@@ -157,6 +159,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       cursor: pointer;
       overflow: hidden;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
     }
     .card:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
     .card-header {
@@ -229,62 +232,6 @@
     .cta button:hover { background: #fff; transform: scale(1.05); }
     
     /* ================================
-       Crossword Puzzle Slide
-    ================================ */
-    .puzzle-section {
-      width: 100%;
-      height: 100%;
-      background: var(--background);
-      padding: 3rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-y: auto;
-    }
-    .puzzle-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .puzzle-container {
-      margin-bottom: 1.5rem;
-    }
-    .puzzle-grid {
-      border-collapse: collapse;
-      margin: 0 auto;
-    }
-    .puzzle-grid td {
-      border: 1px solid rgba(255,255,255,0.5);
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      vertical-align: middle;
-    }
-    .puzzle-grid input {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      font-size: 1.2rem;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: var(--text);
-      outline: none;
-    }
-    .empty-cell { background: rgba(0,0,0,0.8); }
-    .puzzle-btn {
-      background: var(--secondary);
-      color: var(--background);
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background var(--transition-speed), transform var(--transition-speed);
-      margin-top: 1rem;
-    }
-    .puzzle-btn:hover { background: #fff; transform: scale(1.05); }
-    
-    /* ================================
        Decorative Floating Elements (Particles)
     ================================ */
     .heart-container,
@@ -296,7 +243,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 2;
+      z-index: 2; /* Appear above slide backgrounds, below main content (z-index: 3 and up) */
     }
     
     /* --- Floating Hearts: Classic Candy Heart Shape --- */
@@ -322,7 +269,7 @@
     }
     .love-heart::before { top: -25px; left: 0; }
     .love-heart::after { left: 25px; top: 0; }
-    /* --- Updated: Inner text rotates with the heart --- */
+    /* --- Inner text now rotates with its parent (no separate counter rotation) --- */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -331,7 +278,7 @@
       text-align: center;
       color: var(--text);
       display: block;
-      /* Removed counterSpin animation and extra rotate so it spins with its parent */
+      /* Remove additional rotation; the text simply inherits the parent's transform */
       transform: translateY(-5px);
       transform-origin: center;
       width: 100%;
@@ -378,7 +325,7 @@
   </style>
 </head>
 <body>
-  <!-- Main Swiper Container (4 Slides: Hero, Itinerary, Memories & CTA, Crossword Puzzle) -->
+  <!-- Main Swiper Container (3 Slides: Hero, Itinerary, Memories & CTA) -->
   <div class="swiper mySwiperMain">
     <div class="swiper-wrapper">
       <!-- Slide 1: Hero -->
@@ -457,15 +404,6 @@
           </div>
         </section>
       </div>
-      
-      <!-- Slide 4: Crossword Puzzle -->
-      <div class="swiper-slide">
-        <section class="puzzle-section">
-          <h2>Crossword Puzzle</h2>
-          <div class="puzzle-container" id="puzzleContainer"></div>
-          <button class="puzzle-btn" id="newPuzzleBtn">Generate New Puzzle</button>
-        </section>
-      </div>
     </div>
     <!-- Main Swiper Pagination (dots) -->
     <div class="swiper-pagination"></div>
@@ -486,7 +424,10 @@
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetTime - now;
-      if (diff < 0) { countdownEl.textContent = "It's time!"; return; }
+      if (diff < 0) { 
+        countdownEl.textContent = "It's time!"; 
+        return; 
+      }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -552,7 +493,7 @@
       setTimeout(() => burstContainer.remove(), 3000);
     }
     
-    /* --- Custom Itinerary Card Toggle --- */
+    /* --- Custom Itinerary Card Toggle Animation --- */
     const cards = document.querySelectorAll(".card");
     cards.forEach(card => {
       const content = card.querySelector(".card-content");
@@ -608,72 +549,6 @@
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       alert("I love you! Can't wait to share this amazing week with you!");
     });
-    
-    /* --- Crossword Puzzle Generation --- */
-    function generatePuzzle(phrase) {
-      const text = phrase.replace(/\s/g, '').toUpperCase();
-      const columns = 7;
-      const rows = Math.ceil(text.length / columns);
-      const container = document.getElementById("puzzleContainer");
-      container.innerHTML = "";
-      
-      const table = document.createElement("table");
-      table.classList.add("puzzle-grid");
-      
-      let charIndex = 0;
-      for (let r = 0; r < rows; r++) {
-        const tr = document.createElement("tr");
-        for (let c = 0; c < columns; c++) {
-          const td = document.createElement("td");
-          if (charIndex < text.length) {
-            const input = document.createElement("input");
-            input.type = "text";
-            input.maxLength = 1;
-            input.classList.add("puzzle-cell");
-            input.dataset.letter = text[charIndex];
-            td.appendChild(input);
-            charIndex++;
-          } else {
-            td.classList.add("empty-cell");
-          }
-          tr.appendChild(td);
-        }
-        table.appendChild(tr);
-      }
-      container.appendChild(table);
-    }
-    generatePuzzle("YOU ARE MY FAVORITE PERSON");
-    document.getElementById("newPuzzleBtn").addEventListener("click", function() {
-      const phrases = ["YOU ARE SO BEAUTIFUL", "LOVE YOU SO MUCH"];
-      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
-      generatePuzzle(phrase);
-    });
   </script>
-  
-  <!-- Additional Styles for Crossword Puzzle -->
-  <style>
-    .puzzle-grid {
-      border-collapse: collapse;
-      margin: 0 auto;
-    }
-    .puzzle-grid td {
-      border: 1px solid rgba(255,255,255,0.5);
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      vertical-align: middle;
-    }
-    .puzzle-cell {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      font-size: 1.2rem;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: var(--text);
-      outline: none;
-    }
-    .empty-cell { background: rgba(0,0,0,0.8); }
-  </style>
 </body>
 </html>
