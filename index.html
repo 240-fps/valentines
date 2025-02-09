@@ -99,7 +99,7 @@
       box-shadow: 0 4px 12px var(--shadow-color);
     }
     
-    /* --- Classic Heart Shape with Randomized Starting Rotation & Spinning Animation --- */
+    /* --- Classic Heart Shape with Randomized Rotation & Spinning Animation --- */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -108,7 +108,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* Each heart uses the 'spin' animation. Its starting rotation is randomized via --start */
+      /* The heart will spin using the keyframes defined below.
+         Its starting rotation is set via the CSS variable --start. */
       animation: spin 12s linear infinite;
     }
     /* Two circles to form the top lobes */
@@ -129,13 +130,19 @@
       left: 25px;
       top: 0;
     }
-    /* Wrap the heart's inner text in a container that counter-rotates so the text stays horizontal */
-    .love-heart .heart-content {
-      display: block;
-      animation: counterSpin 12s linear infinite;
+    /* The inner text is simply placed inside the heart and centered.
+       It rotates along with the heart. */
+    .love-heart span {
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+      color: var(--text-color);
+      width: 100%;
     }
-    /* Keyframes for the spinning hearts.
-       Each heart rotates from its random start (var(--start)) through +360deg over 12 seconds. */
+    
+    /* Keyframes for spinning hearts.
+       Each heart rotates from its random starting angle (var(--start)) through a full 360° rotation.
+       The translation moves the heart upward from below to above the viewport. */
     @keyframes spin {
       0% {
         transform: translateX(-50%) translateY(100vh) rotate(calc(var(--start) + 0deg)) scale(var(--scale));
@@ -148,19 +155,6 @@
       100% {
         transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
         opacity: 0;
-      }
-    }
-    /* Keyframes for the counter-rotation of the inner text.
-       This cancels the parent's rotation so that the text remains horizontal. */
-    @keyframes counterSpin {
-      0% {
-        transform: rotate(calc(-1 * (var(--start) + 0deg)));
-      }
-      15% {
-        transform: rotate(calc(-1 * (var(--start) + 180deg)));
-      }
-      100% {
-        transform: rotate(calc(-1 * (var(--start) + 360deg)));
       }
     }
     
@@ -476,19 +470,14 @@
           el.style.animationDuration = duration + "s";
           el.style.setProperty('--scale', scale);
           if (elementClass === "love-heart") {
-            // Generate a random starting rotation for each heart (0deg to 360deg)
+            // Set a random starting rotation between 0deg and 360deg.
             const randomStart = Math.floor(Math.random() * 360);
             el.style.setProperty('--start', randomStart + "deg");
-            // Create a nested container for counter-rotating text
-            const content = document.createElement("div");
-            content.classList.add("heart-content");
+            // Insert the text directly inside the heart.
             const span = document.createElement("span");
             const phrases = ["I Love You", "Be Mine"];
             span.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-            span.style.fontSize = "10px";
-            span.style.fontWeight = "bold";
-            content.appendChild(span);
-            el.appendChild(content);
+            el.appendChild(span);
           }
           container.appendChild(el);
         }
