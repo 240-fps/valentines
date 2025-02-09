@@ -9,27 +9,29 @@
   <!-- Google Fonts for a modern, professional look -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS (for both main and nested sliders) -->
+  <!-- Swiper CSS (for main and nested sliders) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* --- Theme Variables --- */
+    /* ================================
+       Theme Variables & Global Styles
+    ================================ */
     :root {
-      --background: #121212;         /* Dark background */
+      --background: #121212;             /* Dark background */
       --header-bg: rgba(18,18,18,0.9);
-      --primary: #E91E63;            /* Neon pink */
-      --secondary: #FF4081;          /* Lighter pink */
-      --accent: #8E24AA;             /* Deep purple accent */
-      --text: #FFFFFF;               /* White text */
-      --card-bg: rgba(255,255,255,0.15); /* Translucent frosted-glass */
-      --heart-color: #ff3366;        /* Classic candy heart red */
+      --primary: #E91E63;                /* Neon pink */
+      --secondary: #FF4081;              /* Lighter pink */
+      --accent: #8E24AA;                 /* Deep purple accent */
+      --text: #FFFFFF;                   /* White text */
+      --card-bg: rgba(255,255,255,0.15);  /* Translucent frosted-glass */
+      --heart-color: #ff3366;            /* Classic candy heart red */
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
-    
-    /* --- Global Reset & Base Styles --- */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
       font-family: 'Montserrat', sans-serif;
       background: var(--background);
       color: var(--text);
@@ -39,7 +41,9 @@
     }
     a { color: var(--primary); text-decoration: none; }
     
-    /* --- Main Swiper (3 full‑screen slides) --- */
+    /* ================================
+       Main Swiper (4 Slides: Hero, Itinerary, Memories & CTA, Crossword Puzzle)
+    ================================ */
     .swiper.mySwiperMain {
       width: 100%;
       height: 100vh;
@@ -52,7 +56,7 @@
       position: relative;
       padding: 1rem;
     }
-    /* Use fade effect for transitions */
+    /* Fade effect for slide transitions */
     .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
@@ -62,10 +66,12 @@
       z-index: 10;
     }
     
-    /* --- Hero Slide --- */
+    /* ================================
+       Hero Slide (Fully Filled)
+    ================================ */
     .hero {
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       flex-direction: column;
@@ -74,12 +80,14 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      padding: 0 1rem;
+      padding: 0;
+      margin: 0;
     }
     .hero::after {
       content: "";
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 150%;
       height: 150%;
       background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
@@ -116,7 +124,9 @@
       margin-bottom: 2rem;
     }
     
-    /* --- Itinerary Slide --- */
+    /* ================================
+       Itinerary Slide (Clickable Cards)
+    ================================ */
     .itinerary-section {
       width: 100%;
       height: 100%;
@@ -139,25 +149,29 @@
       margin-left: auto;
       margin-right: auto;
     }
-    details {
+    .card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
       padding: 1.5rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       cursor: pointer;
+      overflow: hidden;
     }
-    details:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
-    /* No auto-closing: multiple details can be open */
-    summary { font-size: 1.5rem; outline: none; }
-    details p {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      line-height: 1.4;
+    .card:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0,0,0,0.6); }
+    .card-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .card-content {
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
     }
     
-    /* --- Memories & CTA Slide --- */
+    /* ================================
+       Memories & CTA Slide
+    ================================ */
     .memories-cta {
       width: 100%;
       height: 100%;
@@ -214,24 +228,65 @@
     }
     .cta button:hover { background: #fff; transform: scale(1.05); }
     
-    /* --- Footer --- */
-    footer {
+    /* ================================
+       Crossword Puzzle Slide
+    ================================ */
+    .puzzle-section {
+      width: 100%;
+      height: 100%;
+      background: var(--background);
+      padding: 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+    .puzzle-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
       text-align: center;
-      padding: 2rem;
-      background: #1a1a1a;
-      color: #888;
-      font-size: 0.9rem;
     }
-    
-    /* --- Responsive Styles for iPhone --- */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1.1rem; }
-      .countdown { font-size: 2rem; }
-      .itinerary-section h2, .memories-cta h2 { font-size: 2.2rem; }
+    .puzzle-container {
+      margin-bottom: 1.5rem;
     }
+    .puzzle-grid {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    .puzzle-grid td {
+      border: 1px solid rgba(255,255,255,0.5);
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .puzzle-grid input {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: var(--text);
+      outline: none;
+    }
+    .empty-cell { background: rgba(0,0,0,0.8); }
+    .puzzle-btn {
+      background: var(--secondary);
+      color: var(--background);
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background var(--transition-speed), transform var(--transition-speed);
+      margin-top: 1rem;
+    }
+    .puzzle-btn:hover { background: #fff; transform: scale(1.05); }
     
-    /* --- Decorative Floating Elements --- */
+    /* ================================
+       Decorative Floating Elements (Particles)
+    ================================ */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -241,7 +296,6 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      /* Appear above slide backgrounds but behind main content */
       z-index: 2;
     }
     
@@ -255,6 +309,7 @@
       align-items: center;
       justify-content: center;
       animation: heartSpin 12s linear infinite;
+      cursor: default;
     }
     .love-heart::before,
     .love-heart::after {
@@ -267,6 +322,7 @@
     }
     .love-heart::before { top: -25px; left: 0; }
     .love-heart::after { left: 25px; top: 0; }
+    /* --- Updated: Inner text rotates with the heart --- */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -275,10 +331,10 @@
       text-align: center;
       color: var(--text);
       display: block;
-      transform: translateY(-5px) rotate(45deg);
+      /* Removed counterSpin animation and extra rotate so it spins with its parent */
+      transform: translateY(-5px);
       transform-origin: center;
       width: 100%;
-      animation: counterSpin 12s linear infinite;
     }
     @keyframes heartSpin {
       0% {
@@ -293,11 +349,6 @@
         transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
         opacity: 0;
       }
-    }
-    @keyframes counterSpin {
-      0% { transform: translateY(-5px) rotate(calc(-1 * var(--start))); }
-      15% { transform: translateY(-5px) rotate(calc(-1 * (var(--start) + 180deg))); }
-      100% { transform: translateY(-5px) rotate(calc(-1 * (var(--start) + 360deg))); }
     }
     
     /* --- Floating Rose Petals --- */
@@ -327,7 +378,7 @@
   </style>
 </head>
 <body>
-  <!-- Main Swiper Container (3 Slides) -->
+  <!-- Main Swiper Container (4 Slides: Hero, Itinerary, Memories & CTA, Crossword Puzzle) -->
   <div class="swiper mySwiperMain">
     <div class="swiper-wrapper">
       <!-- Slide 1: Hero -->
@@ -350,30 +401,30 @@
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
           <div class="itinerary-cards">
-            <details>
-              <summary>Feb 14 – Valentine's Day</summary>
-              <p>A romantic dinner at an exclusive venue with a special surprise.</p>
-            </details>
-            <details>
-              <summary>Feb 15 – Day 2</summary>
-              <p>A serene morning stroll paired with a gourmet picnic in a picturesque park.</p>
-            </details>
-            <details>
-              <summary>Feb 16 – Day 3</summary>
-              <p>An inspiring visit to an art gallery followed by a creative workshop.</p>
-            </details>
-            <details>
-              <summary>Feb 17 – Day 4</summary>
-              <p>An adventurous hike capturing breathtaking landscapes and memories.</p>
-            </details>
-            <details>
-              <summary>Feb 18 – Day 5</summary>
-              <p>A day of pampering with luxurious spa treatments and relaxation.</p>
-            </details>
-            <details>
-              <summary>Feb 19 – Day 6</summary>
-              <p>A charming farewell brunch paired with a heartfelt keepsake.</p>
-            </details>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 14 – Valentine's Day</div>
+              <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
+            </div>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 15 – Day 2</div>
+              <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
+            </div>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 16 – Day 3</div>
+              <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
+            </div>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 17 – Day 4</div>
+              <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
+            </div>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 18 – Day 5</div>
+              <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
+            </div>
+            <div class="card" data-open="false">
+              <div class="card-header">Feb 19 – Day 6</div>
+              <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
+            </div>
           </div>
         </section>
       </div>
@@ -406,15 +457,19 @@
           </div>
         </section>
       </div>
+      
+      <!-- Slide 4: Crossword Puzzle -->
+      <div class="swiper-slide">
+        <section class="puzzle-section">
+          <h2>Crossword Puzzle</h2>
+          <div class="puzzle-container" id="puzzleContainer"></div>
+          <button class="puzzle-btn" id="newPuzzleBtn">Generate New Puzzle</button>
+        </section>
+      </div>
     </div>
     <!-- Main Swiper Pagination (dots) -->
     <div class="swiper-pagination"></div>
   </div>
-  
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 My Valentine's Surprise. All rights reserved.</p>
-  </footer>
   
   <!-- Decorative Floating Elements -->
   <div class="heart-container"></div>
@@ -431,10 +486,7 @@
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetTime - now;
-      if (diff < 0) {
-        countdownEl.textContent = "It's time!";
-        return;
-      }
+      if (diff < 0) { countdownEl.textContent = "It's time!"; return; }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -472,7 +524,7 @@
       burstContainer.style.pointerEvents = 'none';
       document.body.appendChild(burstContainer);
       
-      const numParticles = 20; // Adjust as desired
+      const numParticles = 20;
       for (let i = 0; i < numParticles; i++) {
         const isHeart = Math.random() < 0.5;
         const particle = document.createElement('div');
@@ -499,6 +551,25 @@
       }
       setTimeout(() => burstContainer.remove(), 3000);
     }
+    
+    /* --- Custom Itinerary Card Toggle --- */
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => {
+      const content = card.querySelector(".card-content");
+      gsap.set(content, { height: 0, opacity: 0 });
+      card.addEventListener("click", () => {
+        if (card.dataset.open === "true") {
+          gsap.to(content, { height: 0, opacity: 0, duration: 0.5 });
+          card.dataset.open = "false";
+        } else {
+          content.style.height = "auto";
+          const fullHeight = content.offsetHeight;
+          content.style.height = "0px";
+          gsap.to(content, { height: fullHeight, opacity: 1, duration: 0.5 });
+          card.dataset.open = "true";
+        }
+      });
+    });
     
     /* --- Generate Floating Decorative Elements --- */
     function generateFloatingElements(containerSelector, count, elementClass) {
@@ -538,8 +609,71 @@
       alert("I love you! Can't wait to share this amazing week with you!");
     });
     
-    /* --- Auto-Close Itinerary Details Disabled --- */
-    // (By omitting the auto-close code, multiple itinerary cards can be open simultaneously)
+    /* --- Crossword Puzzle Generation --- */
+    function generatePuzzle(phrase) {
+      const text = phrase.replace(/\s/g, '').toUpperCase();
+      const columns = 7;
+      const rows = Math.ceil(text.length / columns);
+      const container = document.getElementById("puzzleContainer");
+      container.innerHTML = "";
+      
+      const table = document.createElement("table");
+      table.classList.add("puzzle-grid");
+      
+      let charIndex = 0;
+      for (let r = 0; r < rows; r++) {
+        const tr = document.createElement("tr");
+        for (let c = 0; c < columns; c++) {
+          const td = document.createElement("td");
+          if (charIndex < text.length) {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.maxLength = 1;
+            input.classList.add("puzzle-cell");
+            input.dataset.letter = text[charIndex];
+            td.appendChild(input);
+            charIndex++;
+          } else {
+            td.classList.add("empty-cell");
+          }
+          tr.appendChild(td);
+        }
+        table.appendChild(tr);
+      }
+      container.appendChild(table);
+    }
+    generatePuzzle("YOU ARE MY FAVORITE PERSON");
+    document.getElementById("newPuzzleBtn").addEventListener("click", function() {
+      const phrases = ["YOU ARE SO BEAUTIFUL", "LOVE YOU SO MUCH"];
+      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+      generatePuzzle(phrase);
+    });
   </script>
+  
+  <!-- Additional Styles for Crossword Puzzle -->
+  <style>
+    .puzzle-grid {
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+    .puzzle-grid td {
+      border: 1px solid rgba(255,255,255,0.5);
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .puzzle-cell {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: var(--text);
+      outline: none;
+    }
+    .empty-cell { background: rgba(0,0,0,0.8); }
+  </style>
 </body>
 </html>
