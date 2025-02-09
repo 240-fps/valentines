@@ -22,9 +22,11 @@
       --accent: #8E24AA;             /* Deep purple accent */
       --text: #FFFFFF;               /* White text */
       --card-bg: rgba(255, 255, 255, 0.1);
+      --heart-color: #ff3366;        /* Classic candy heart red */
+      --shadow-color: rgba(0, 0, 0, 0.25);
       --transition-speed: 0.3s;
     }
-
+    
     /* Global Reset & Base Styles */
     * {
       margin: 0;
@@ -43,7 +45,7 @@
       color: var(--primary);
       text-decoration: none;
     }
-
+    
     /* Fixed Header with Smooth Navigation */
     header {
       position: fixed;
@@ -69,7 +71,7 @@
     header nav ul li a:hover {
       color: var(--secondary);
     }
-
+    
     /* Hero Section: Full-Viewport with Animated Gradient Background */
     .hero {
       height: 100vh;
@@ -118,7 +120,7 @@
       font-weight: bold;
       margin-bottom: 2rem;
     }
-
+    
     /* Section Base Styles */
     .section {
       padding: 4rem 2rem;
@@ -133,7 +135,7 @@
       margin-bottom: 1rem;
       text-align: center;
     }
-
+    
     /* Itinerary Section: Modern Card Layout */
     .itinerary-cards {
       display: grid;
@@ -162,7 +164,7 @@
     .card p {
       font-size: 1rem;
     }
-
+    
     /* Memories Section: Swiper Slider */
     .slider-container {
       margin-top: 2rem;
@@ -176,7 +178,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
+    
     /* Call-to-Action Section */
     .cta {
       text-align: center;
@@ -204,7 +206,7 @@
       background: #fff;
       transform: scale(1.05);
     }
-
+    
     /* Footer */
     footer {
       text-align: center;
@@ -213,7 +215,7 @@
       color: #888;
       font-size: 0.9rem;
     }
-
+    
     /* Responsive Styles */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
@@ -221,7 +223,7 @@
       .countdown { font-size: 2rem; }
       .section h2 { font-size: 2.2rem; }
     }
-
+    
     /* Decorative Floating Elements (Background Effects) */
     .heart-container,
     .flower-container {
@@ -234,48 +236,69 @@
       z-index: 0;
       overflow: hidden;
     }
-    /* Floating Hearts using a Clip-Path Heart Shape */
+    
+    /* --- Classic Heart Shape using Pseudo-Elements (as provided) --- */
     .love-heart {
       position: absolute;
       width: 50px;
       height: 50px;
-      background: var(--primary);
-      /* Use a clip-path to form a heart shape */
-      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
+      background: var(--heart-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: spin 12s linear infinite;
+      /* The heart always stays rotated -45deg */
+      animation: loveHeartFloat 12s linear infinite;
+    }
+    .love-heart::before,
+    .love-heart::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: var(--heart-color);
+      border-radius: 50%;
+    }
+    .love-heart::before {
+      top: -25px;
+      left: 0;
+    }
+    .love-heart::after {
+      left: 25px;
+      top: 0;
     }
     .love-heart span {
+      position: relative;
+      z-index: 1;
       font-size: 10px;
       font-weight: bold;
       text-align: center;
       color: var(--text);
-      padding: 2px;
-      /* Ensure the text is not clipped by increasing line-height */
-      line-height: 1.2;
+      display: block;
+      transform: translateY(-5px) rotate(45deg);
+      transform-origin: center;
+      width: 100%;
     }
-    @keyframes spin {
+    @keyframes loveHeartFloat {
       0% {
-        transform: translateX(-50%) translateY(100vh) rotate(calc(var(--start) + 0deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
       15% {
-        transform: translateX(-50%) translateY(80vh) rotate(calc(var(--start) + 180deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
         opacity: 1;
       }
       100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(calc(var(--start) + 360deg)) scale(var(--scale));
+        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
         opacity: 0;
       }
     }
+    
     /* Floating Rose Petals */
     .flower {
       position: absolute;
       width: 20px;
       height: 30px;
-      background: var(--secondary);
+      background: #ff66aa;
       clip-path: polygon(50% 0%, 70% 20%, 60% 100%, 40% 100%, 30% 20%);
       opacity: 0.8;
       animation: petalFloat 14s linear infinite;
@@ -438,10 +461,13 @@
         el.style.animationDelay = Math.random() * 5 + 's';
         el.style.animationDuration = (10 + Math.random() * 8) + 's';
         if (elementClass === 'love-heart') {
+          // Set a random starting rotation between 0 and 360deg
           const randomStart = Math.floor(Math.random() * 360);
           el.style.setProperty('--start', randomStart + 'deg');
+          // Set a random scale between 0.8 and 1.5
           const scale = 0.8 + Math.random() * 0.7;
           el.style.setProperty('--scale', scale);
+          // Insert centered text inside each heart
           const phrases = ["I Love You", "Be Mine"];
           const span = document.createElement('span');
           span.textContent = phrases[Math.floor(Math.random() * phrases.length)];
