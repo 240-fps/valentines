@@ -57,7 +57,8 @@
     .swiper.mySwiperMain {
       width: 100vw;
       height: 100vh;
-      margin: 0 auto;
+      /* Remove any auto-margins so it fills the viewport exactly */
+      margin: 0;
     }
     .swiper.mySwiperMain .swiper-slide {
       width: 100vw;
@@ -83,6 +84,7 @@
     .hero {
       width: 100%;
       height: 100%;
+      /* Use a full pink gradient to cover the entire viewport */
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       justify-content: center;
@@ -166,16 +168,18 @@
       margin-bottom: 0.5rem;
       text-align: center;
     }
-    /* The grid container uses flex-grow so it fills the remaining space */
+    /* Use flex-grow so that the grid fills the remaining space */
     .itinerary-cards {
-      flex: 1;
+      flex-grow: 1;
       width: 90vw;
       max-width: 600px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
-      /* Set a smaller height so all cards fit on screen */
+      /* Adjusted height so all six cards are visible on an iPhone */
       height: 55vh;
+      margin: 0 auto;
+      padding: 0.5rem;
     }
     /* Each card uses a 3D flip container */
     .card {
@@ -207,6 +211,10 @@
       overflow: hidden;
       word-wrap: break-word;
       overflow-wrap: break-word;
+    }
+    /* Add a pink border to accent the boxes */
+    .card-front, .card-back {
+      border: 2px solid var(--secondary);
     }
     .card-front {
       background: var(--card-bg);
