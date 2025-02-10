@@ -138,7 +138,7 @@
     }
     
     /* ================================
-       ITINERARY SLIDE (2×3 Grid)
+       ITINERARY SLIDE (2×3 Grid of Flippable Cards)
     ================================ */
     .itinerary-section {
       width: 100%;
@@ -162,24 +162,46 @@
       gap: 1rem;
       width: 100%;
       max-width: 600px;
-      height: 70vh;
+      height: 70vh;  /* Adjust height to fill most of the screen */
       margin: 0 auto;
       padding: 0.5rem;
     }
+    /* Each card now uses a 3D flip container */
     .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      cursor: pointer;
-      overflow: hidden;
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+      perspective: 1000px;
       aspect-ratio: 1;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .card-front {
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .card-back {
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transform: rotateY(180deg);
     }
     .card-header {
       font-size: 1.2rem;
@@ -187,10 +209,8 @@
       margin-bottom: 0.5rem;
     }
     .card-content {
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
       font-size: 0.9rem;
+      text-align: center;
     }
     
     /* ================================
@@ -259,7 +279,7 @@
     }
     
     /* ================================
-       FLOATING ELEMENTS (Behind Main Content)
+       FLOATING ELEMENTS (Background)
     ================================ */
     .heart-container,
     .flower-container {
@@ -272,7 +292,6 @@
       overflow: hidden;
       z-index: 2;
     }
-    
     /* Floating Hearts */
     .love-heart {
       position: absolute;
@@ -328,7 +347,6 @@
         opacity: 0;
       }
     }
-    
     /* Floating Rose Petals */
     .flower {
       position: absolute;
@@ -386,7 +404,7 @@
     }
     
     /* ================================
-       MEDIA QUERY (iPhone)
+       MEDIA QUERY (Smaller Screens)
     ================================ */
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.5rem; }
@@ -424,29 +442,72 @@
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
           <div class="itinerary-cards">
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 14 – Valentine's Day</div>
-              <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
+            <!-- Each card uses a flip structure -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 14 – Valentine's Day</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 14 – Valentine's Day</div>
+                  <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 15 – Day 2</div>
-              <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 15 – Day 2</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 15 – Day 2</div>
+                  <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 16 – Day 3</div>
-              <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 16 – Day 3</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 16 – Day 3</div>
+                  <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 17 – Day 4</div>
-              <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 17 – Day 4</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 17 – Day 4</div>
+                  <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 18 – Day 5</div>
-              <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 18 – Day 5</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 18 – Day 5</div>
+                  <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 19 – Day 6</div>
-              <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 19 – Day 6</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 19 – Day 6</div>
+                  <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -485,13 +546,13 @@
   <!-- Popup Modal -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
-      <!-- Replace with your custom popup GIF -->
+      <!-- Replace the src URL below with your custom popup GIF -->
       <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
       <p>I love you! Can't wait to share this amazing week with you!</p>
     </div>
   </div>
   
-  <!-- Decorative Floating Elements -->
+  <!-- Floating Decorative Elements -->
   <div class="heart-container"></div>
   <div class="flower-container"></div>
   
@@ -576,22 +637,11 @@
       setTimeout(() => burstContainer.remove(), 3000);
     }
     
-    /* --- Custom Itinerary Card Toggle Animation --- */
+    /* --- Card Flip Toggle for Itinerary Cards --- */
     const cards = document.querySelectorAll(".card");
     cards.forEach(card => {
-      const content = card.querySelector(".card-content");
-      gsap.set(content, { height: 0, opacity: 0 });
       card.addEventListener("click", () => {
-        if (card.dataset.open === "true") {
-          gsap.to(content, { height: 0, opacity: 0, duration: 0.5 });
-          card.dataset.open = "false";
-        } else {
-          content.style.height = "auto";
-          const fullHeight = content.offsetHeight;
-          content.style.height = "0px";
-          gsap.to(content, { height: fullHeight, opacity: 1, duration: 0.5 });
-          card.dataset.open = "true";
-        }
+        card.classList.toggle("flipped");
       });
     });
     
@@ -671,10 +721,10 @@
   <script>
     /* --- Popup Modal Trigger for "Yes, I will!" Button --- */
     document.getElementById('valentineBtn').addEventListener('click', () => {
-      createParticleBurst(); // Optional particle burst on click
+      createParticleBurst(); // Optional burst on click
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       
-      // Show the popup modal with a fade-in animation and enable dismissal by clicking
+      // Show popup modal with fade-in and enable dismissal by clicking anywhere on it
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
       gsap.to(modal, { opacity: 1, duration: 0.5, onComplete: () => {
@@ -682,7 +732,7 @@
       }});
     });
     
-    // Dismiss the modal when clicking anywhere on it
+    // Dismiss the modal when clicked anywhere on it
     document.getElementById('popupModal').addEventListener('click', () => {
       const modal = document.getElementById('popupModal');
       gsap.to(modal, { opacity: 0, duration: 0.5, onComplete: () => {
@@ -691,5 +741,40 @@
       }});
     });
   </script>
+  
+  <!-- ================================
+       New CSS for Card Flip Effect
+  ================================ -->
+  <style>
+    .card {
+      perspective: 1000px;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+  </style>
 </body>
 </html>
