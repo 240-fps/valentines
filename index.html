@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Updated meta viewport with safe area support -->
+  <!-- Use viewport-fit=cover for safe areas and device width -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>My Valentine's Surprise</title>
   
@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* ================================
-       Reset & Global Styles
-    ================================ */
+    /* ===========================================
+       Global Reset & Box Sizing
+    =========================================== */
     * {
       margin: 0;
       padding: 0;
@@ -24,21 +24,18 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* No scrolling */
+      /* Prevent any horizontal scroll */
+      overflow-x: hidden;
       font-family: 'Montserrat', sans-serif;
       background: #121212;
       color: #FFF;
       line-height: 1.6;
       scroll-behavior: smooth;
     }
-    a {
-      color: #E91E63;
-      text-decoration: none;
-    }
     
-    /* ================================
+    /* ===========================================
        Theme Variables
-    ================================ */
+    =========================================== */
     :root {
       --background: #121212;
       --primary: #E91E63;
@@ -51,13 +48,14 @@
       --transition-speed: 0.3s;
     }
     
-    /* ================================
+    /* ===========================================
        Main Swiper Container
-    ================================ */
+    =========================================== */
     .swiper.mySwiperMain {
       width: 100%;
+      /* Use custom vh so the slide always fills the visible viewport */
       height: calc(var(--vh, 1vh) * 100);
-      margin: 0;
+      overflow-x: hidden;
     }
     .swiper.mySwiperMain .swiper-slide {
       width: 100%;
@@ -69,15 +67,16 @@
       position: relative;
       padding: 1rem;
       transition: opacity 0.5s;
+      overflow-x: hidden;
     }
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
     }
     
-    /* ================================
-       HERO SLIDE (Full Pink Background)
-    ================================ */
+    /* ===========================================
+       HERO SLIDE
+    =========================================== */
     .hero {
       width: 100%;
       height: 100%;
@@ -86,6 +85,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      overflow-x: hidden;
     }
     .hero::after {
       content: "";
@@ -99,8 +99,8 @@
       z-index: 1;
     }
     @keyframes pulse {
-      0% { transform: scale(0.8); opacity: 0.6; }
-      50% { transform: scale(1.1); opacity: 0.2; }
+      0%   { transform: scale(0.8); opacity: 0.6; }
+      50%  { transform: scale(1.1); opacity: 0.2; }
       100% { transform: scale(0.8); opacity: 0.6; }
     }
     .hero-content {
@@ -129,6 +129,7 @@
     }
     .gif-container img {
       width: 90%;
+      max-width: 100%;
       border-radius: 8px;
       box-shadow: 0 4px 12px var(--shadow-color);
     }
@@ -142,28 +143,31 @@
       margin-bottom: 2rem;
     }
     
-    /* ================================
-       ITINERARY SLIDE (2×3 Grid of Flippable Cards)
-    ================================ */
+    /* ===========================================
+       ITINERARY SLIDE
+         • Fills the screen vertically (using our custom vh)
+         • Uses only vertical safe-area insets to avoid horizontal overflow
+    =========================================== */
     .itinerary-section {
       width: 100%;
       height: calc(var(--vh, 1vh) * 100);
-      /* Add safe area insets so content doesn’t clash with Safari’s UI */
-      padding: calc(0.5rem + env(safe-area-inset-top)) calc(0.5rem + env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) calc(0.5rem + env(safe-area-inset-left));
+      /* Only add vertical safe area insets */
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;
       background: rgba(18,18,18,0.8);
       position: relative;
       z-index: 5;
       display: flex;
       flex-direction: column;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.3rem;
       margin-bottom: 0.5rem;
       text-align: center;
+      padding: 0 1rem;
     }
-    /* The grid container for cards */
     .itinerary-cards {
       flex: 1;
       width: 90%;
@@ -174,10 +178,11 @@
       grid-template-rows: repeat(3, 1fr);
       gap: 0.3rem;
       padding: 0.3rem;
+      overflow-x: hidden;
     }
-    /* Each card uses a flip container */
     .card {
       perspective: 1000px;
+      /* Use aspect-ratio to force a square */
       aspect-ratio: 1;
     }
     .card-inner {
@@ -217,7 +222,6 @@
       border: 2px solid var(--secondary);
       transform: rotateY(180deg);
     }
-    /* Smaller font for the date (card header) */
     .card-header {
       font-size: 0.8rem;
       font-weight: bold;
@@ -228,18 +232,19 @@
       text-align: center;
     }
     
-    /* ================================
+    /* ===========================================
        MEMORIES & CTA SLIDE
-    ================================ */
+    =========================================== */
     .memories-cta {
       width: 100%;
       height: calc(var(--vh, 1vh) * 100);
-      padding: calc(2rem + env(safe-area-inset-top)) 1rem calc(2rem + env(safe-area-inset-bottom)) 1rem;
+      padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom) 1rem;
       background: var(--background);
       display: flex;
       flex-direction: column;
       align-items: center;
       overflow-y: auto;
+      overflow-x: hidden;
       position: relative;
       z-index: 5;
     }
@@ -253,11 +258,13 @@
       width: 90%;
       max-width: 600px;
       margin: 0 auto 2rem auto;
+      overflow-x: hidden;
     }
     .swiper.mySwiperNested {
       width: 100%;
       height: 40vh;
       padding-bottom: 1rem;
+      overflow-x: hidden;
     }
     .swiper.mySwiperNested .swiper-slide img {
       width: 100%;
@@ -293,9 +300,9 @@
       transform: scale(1.05);
     }
     
-    /* ================================
-       FLOATING ELEMENTS (Background)
-    ================================ */
+    /* ===========================================
+       FLOATING DECORATIVE ELEMENTS
+    =========================================== */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -307,7 +314,6 @@
       overflow: hidden;
       z-index: 2;
     }
-    /* Floating Hearts */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -362,8 +368,6 @@
         opacity: 0;
       }
     }
-    
-    /* Floating Rose Petals */
     .flower {
       position: absolute;
       width: 20px;
@@ -388,9 +392,9 @@
       }
     }
     
-    /* ================================
+    /* ===========================================
        POPUP MODAL
-    ================================ */
+    =========================================== */
     .popup-modal {
       position: fixed;
       top: 0;
@@ -404,6 +408,7 @@
       z-index: 30;
       opacity: 0;
       pointer-events: none;
+      overflow-x: hidden;
     }
     .popup-content {
       text-align: center;
@@ -420,9 +425,9 @@
       margin-top: 20px;
     }
     
-    /* ================================
-       MEDIA QUERY (For Smaller Screens)
-    ================================ */
+    /* ===========================================
+       MEDIA QUERY for Smaller Screens
+    =========================================== */
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.5rem; }
       .hero p { font-size: 1rem; }
@@ -436,7 +441,9 @@
       .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
     }
     
-    /* New CSS for Card Flip Effect */
+    /* ===========================================
+       Card Flip Effect (Reiterated)
+    =========================================== */
     .card {
       perspective: 1000px;
     }
@@ -471,10 +478,10 @@
     }
   </style>
   
-  <!-- JS to set --vh for mobile viewport issues -->
+  <!-- JavaScript to calculate the proper viewport height -->
   <script>
     function setVh() {
-      let vh = window.innerHeight * 0.01;
+      const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
     setVh();
@@ -504,7 +511,7 @@
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
           <div class="itinerary-cards">
-            <!-- Each card uses a flip structure -->
+            <!-- Card 1 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -516,6 +523,7 @@
                 </div>
               </div>
             </div>
+            <!-- Card 2 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -527,6 +535,7 @@
                 </div>
               </div>
             </div>
+            <!-- Card 3 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -538,6 +547,7 @@
                 </div>
               </div>
             </div>
+            <!-- Card 4 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -549,6 +559,7 @@
                 </div>
               </div>
             </div>
+            <!-- Card 5 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -560,6 +571,7 @@
                 </div>
               </div>
             </div>
+            <!-- Card 6 -->
             <div class="card">
               <div class="card-inner">
                 <div class="card-front">
@@ -622,13 +634,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
   
   <script>
-    /* --- Countdown Timer --- */
+    /* Countdown Timer */
     const countdownEl = document.getElementById('countdown');
     const targetTime = new Date("2025-02-14T20:30:00-08:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetTime - now;
-      if (diff < 0) {
+      if(diff < 0) {
         countdownEl.textContent = "It's time!";
         return;
       }
@@ -641,21 +653,21 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    /* --- Initialize Main Swiper --- */
+    /* Initialize Main Swiper */
     const mainSwiper = new Swiper(".mySwiperMain", {
       effect: 'fade',
       fadeEffect: { crossFade: true },
       pagination: { el: ".swiper-pagination", clickable: true },
     });
     
-    /* --- Initialize Nested Swiper for Memories Slider --- */
+    /* Initialize Nested Swiper */
     const swiperNested = new Swiper('.mySwiperNested', {
       loop: true,
       autoplay: { delay: 3000, disableOnInteraction: false },
       pagination: { el: '.swiper-pagination', clickable: true }
     });
     
-    /* --- Particle Burst on Slide Transition --- */
+    /* Particle Burst on Slide Change */
     mainSwiper.on('slideChangeTransitionStart', function() {
       createParticleBurst();
     });
@@ -671,7 +683,7 @@
       document.body.appendChild(burstContainer);
       
       const numParticles = 20;
-      for (let i = 0; i < numParticles; i++) {
+      for(let i = 0; i < numParticles; i++) {
         const isHeart = Math.random() < 0.5;
         const particle = document.createElement('div');
         particle.classList.add(isHeart ? 'love-heart' : 'flower');
@@ -681,7 +693,7 @@
         particle.style.opacity = '0';
         const scale = isHeart ? (0.8 + Math.random() * 0.7) : (0.7 + Math.random() * 0.6);
         particle.style.setProperty('--scale', scale);
-        if (isHeart) {
+        if(isHeart) {
           const randomStart = Math.floor(Math.random() * 360);
           particle.style.setProperty('--start', randomStart + 'deg');
         }
@@ -698,7 +710,7 @@
       setTimeout(() => burstContainer.remove(), 3000);
     }
     
-    /* --- Card Flip Toggle for Itinerary Cards --- */
+    /* Card Flip Toggle */
     const cards = document.querySelectorAll(".card");
     cards.forEach(card => {
       card.addEventListener("click", () => {
@@ -706,17 +718,17 @@
       });
     });
     
-    /* --- Generate Floating Decorative Elements --- */
+    /* Floating Decorative Elements */
     function generateFloatingElements(containerSelector, count, elementClass) {
       const container = document.querySelector(containerSelector);
-      for (let i = 0; i < count; i++) {
+      for(let i = 0; i < count; i++) {
         const el = document.createElement('div');
         el.classList.add(elementClass);
         el.style.left = Math.random() * 100 + '%';
         el.style.top = '100%';
         el.style.animationDelay = Math.random() * 5 + 's';
         el.style.animationDuration = (10 + Math.random() * 8) + 's';
-        if (elementClass === 'love-heart') {
+        if(elementClass === 'love-heart') {
           const randomStart = Math.floor(Math.random() * 360);
           el.style.setProperty('--start', randomStart + 'deg');
           const scale = 0.8 + Math.random() * 0.7;
@@ -737,12 +749,10 @@
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
     
-    /* --- Popup Modal Trigger for "Yes, I will!" Button --- */
+    /* Popup Modal Trigger */
     document.getElementById('valentineBtn').addEventListener('click', () => {
       createParticleBurst(); // Optional burst on click
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
-      
-      // Show popup modal with fade-in and enable dismissal by clicking anywhere on it
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
       gsap.to(modal, { opacity: 1, duration: 0.5, onComplete: () => {
@@ -750,7 +760,7 @@
       }});
     });
     
-    // Dismiss the modal when clicked anywhere on it
+    /* Popup Modal Dismiss */
     document.getElementById('popupModal').addEventListener('click', () => {
       const modal = document.getElementById('popupModal');
       gsap.to(modal, { opacity: 0, duration: 0.5, onComplete: () => {
