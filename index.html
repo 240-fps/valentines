@@ -57,7 +57,6 @@
     .swiper.mySwiperMain {
       width: 100vw;
       height: 100vh;
-      /* Remove any auto-margins so it fills the viewport exactly */
       margin: 0;
     }
     .swiper.mySwiperMain .swiper-slide {
@@ -79,12 +78,12 @@
     }
     
     /* ================================
-       HERO SLIDE
+       HERO SLIDE (Full Pink Background)
     ================================ */
     .hero {
       width: 100%;
       height: 100%;
-      /* Use a full pink gradient to cover the entire viewport */
+      /* Ensure the pink gradient fills the entire page */
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       justify-content: center;
@@ -157,8 +156,6 @@
       z-index: 5;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
       padding: 0.5rem;
       overflow: hidden;
     }
@@ -168,20 +165,18 @@
       margin-bottom: 0.5rem;
       text-align: center;
     }
-    /* Use flex-grow so that the grid fills the remaining space */
+    /* The grid container fills the remaining space */
     .itinerary-cards {
-      flex-grow: 1;
+      flex: 1;
       width: 90vw;
       max-width: 600px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      /* Adjusted height so all six cards are visible on an iPhone */
-      height: 55vh;
-      margin: 0 auto;
-      padding: 0.5rem;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0.3rem;
+      padding: 0.3rem;
     }
-    /* Each card uses a 3D flip container */
+    /* Each card uses a flip container */
     .card {
       perspective: 1000px;
       aspect-ratio: 1;
@@ -207,32 +202,30 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0.5rem;
+      padding: 0.4rem;
       overflow: hidden;
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
-    /* Add a pink border to accent the boxes */
-    .card-front, .card-back {
-      border: 2px solid var(--secondary);
-    }
     .card-front {
       background: var(--card-bg);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      border: 2px solid var(--secondary);
     }
     .card-back {
       background: var(--card-bg);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      border: 2px solid var(--secondary);
       transform: rotateY(180deg);
     }
-    /* Smaller font for the date */
+    /* Smaller font for the date (card header) */
     .card-header {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: bold;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
     .card-content {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-align: center;
     }
     
@@ -436,8 +429,8 @@
       .countdown { font-size: 2rem; }
       .itinerary-section h2 { font-size: 2rem; }
       .card-front .card-header,
-      .card-back .card-header { font-size: 0.9rem; }
-      .card { padding: 0.8rem; font-size: 0.9rem; }
+      .card-back .card-header { font-size: 0.8rem; }
+      .card { padding: 0.6rem; font-size: 0.8rem; }
       .memories-cta h2 { font-size: 2rem; }
       .cta h2 { font-size: 1.8rem; }
       .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
