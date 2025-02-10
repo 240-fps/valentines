@@ -24,7 +24,7 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* Disable scrolling */
+      overflow: hidden; /* No scrolling */
       font-family: 'Montserrat', sans-serif;
       background: #121212;
       color: #FFF;
@@ -166,16 +166,16 @@
       margin-bottom: 0.5rem;
       text-align: center;
     }
-    /* The grid container fills the remaining space below the heading */
+    /* The grid container uses flex-grow so it fills the remaining space */
     .itinerary-cards {
       flex: 1;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
       width: 90vw;
       max-width: 600px;
-      margin: 0 auto;
-      padding: 0.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      /* Set a smaller height so all cards fit on screen */
+      height: 55vh;
     }
     /* Each card uses a 3D flip container */
     .card {
@@ -219,7 +219,7 @@
     }
     /* Smaller font for the date */
     .card-header {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: bold;
       margin-bottom: 0.3rem;
     }
