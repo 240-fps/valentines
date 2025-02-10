@@ -24,7 +24,7 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* No scrolling */
+      overflow: hidden; /* Disable scrolling */
       font-family: 'Montserrat', sans-serif;
       background: #121212;
       color: #FFF;
@@ -155,9 +155,9 @@
       z-index: 5;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      padding: 1rem;
+      padding: 0.5rem;
       overflow: hidden;
     }
     .itinerary-section h2 {
@@ -166,18 +166,18 @@
       margin-bottom: 0.5rem;
       text-align: center;
     }
+    /* The grid container fills the remaining space below the heading */
     .itinerary-cards {
+      flex: 1;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
       width: 90vw;
       max-width: 600px;
-      /* Set a fixed height so all 6 cards are visible without scrolling */
-      height: 60vh;
       margin: 0 auto;
       padding: 0.5rem;
     }
-    /* Each card uses a flip container */
+    /* Each card uses a 3D flip container */
     .card {
       perspective: 1000px;
       aspect-ratio: 1;
@@ -217,7 +217,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       transform: rotateY(180deg);
     }
-    /* Smaller font for the date (card header) */
+    /* Smaller font for the date */
     .card-header {
       font-size: 1rem;
       font-weight: bold;
@@ -420,15 +420,16 @@
     }
     
     /* ================================
-       MEDIA QUERY (For iPhone)
+       MEDIA QUERY (For Smaller Screens)
     ================================ */
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.5rem; }
       .hero p { font-size: 1rem; }
       .countdown { font-size: 2rem; }
       .itinerary-section h2 { font-size: 2rem; }
+      .card-front .card-header,
+      .card-back .card-header { font-size: 0.9rem; }
       .card { padding: 0.8rem; font-size: 0.9rem; }
-      .card-header { font-size: 1rem; }
       .memories-cta h2 { font-size: 2rem; }
       .cta h2 { font-size: 1.8rem; }
       .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
@@ -696,7 +697,7 @@
   <!-- Popup Modal Markup -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
-      <!-- Replace the src URL below with your custom popup GIF -->
+      <!-- Replace with your custom popup GIF -->
       <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
       <p>I love you! Can't wait to share this amazing week with you!</p>
     </div>
