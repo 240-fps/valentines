@@ -1,21 +1,32 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Optimized for iPhone -->
+  <!-- Optimized for any device -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine's Surprise</title>
   
-  <!-- Google Fonts for a modern, professional look -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   
-  <!-- Swiper CSS (for main and nested sliders) -->
+  <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* ================================
-       Theme Variables & Global Styles
-    ================================ */
+    /* Reset & Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* No scrolling */
+      font-family: 'Montserrat', sans-serif;
+      background: #121212;
+      color: #FFF;
+      scroll-behavior: smooth;
+    }
+    a { color: #E91E63; text-decoration: none; }
+    
+    /* Theme Variables */
     :root {
       --background: #121212;
       --primary: #E91E63;
@@ -27,59 +38,36 @@
       --shadow-color: rgba(0,0,0,0.25);
       --transition-speed: 0.3s;
     }
-    /* Disable scrolling on the entire page */
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Montserrat', sans-serif;
-      background: var(--background);
-      color: var(--text);
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }
-    a { color: var(--primary); text-decoration: none; }
     
-    /* ================================
-       Main Swiper
-    ================================ */
+    /* Main Swiper */
     .swiper.mySwiperMain {
-      width: 100%;
+      width: 100vw;
       height: 100vh;
-      margin: 0 auto;
     }
     .swiper.mySwiperMain .swiper-slide {
+      width: 100vw;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      padding: 1rem;
-      width: 100%;
       text-align: center;
-    }
-    .swiper.mySwiperMain .swiper-slide {
-      transition: opacity 0.5s;
+      position: relative;
     }
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
     }
     
-    /* ================================
-       Hero Slide
-    ================================ */
+    /* HERO SLIDE */
     .hero {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
-      overflow: hidden;
-      margin: 0 auto;
     }
     .hero::after {
       content: "";
@@ -100,6 +88,8 @@
     .hero-content {
       position: relative;
       z-index: 3;
+      width: 100%;
+      max-width: 600px;
       margin: 0 auto;
     }
     .hero h1 {
@@ -108,16 +98,17 @@
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    .gif-container { margin-bottom: 1rem; }
+    .gif-container {
+      margin-bottom: 1rem;
+    }
     .gif-container img {
-      max-width: 90%;
+      width: 90%;
       border-radius: 8px;
       box-shadow: 0 4px 12px var(--shadow-color);
     }
     .hero p {
       font-size: 1.3rem;
       margin-bottom: 2rem;
-      max-width: 600px;
     }
     .countdown {
       font-size: 2.5rem;
@@ -125,9 +116,7 @@
       margin-bottom: 2rem;
     }
     
-    /* ================================
-       Itinerary Slide (2×3 Grid of Cards)
-    ================================ */
+    /* ITINERARY SLIDE (2×3 Grid) */
     .itinerary-section {
       width: 100%;
       height: 100%;
@@ -136,7 +125,6 @@
       z-index: 5;
       padding: 1.5rem;
       overflow: hidden;
-      margin: 0 auto;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
@@ -147,12 +135,12 @@
     .itinerary-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, 1fr);
       gap: 1rem;
       width: 100%;
       max-width: 600px;
-      height: 70vh;  /* Adjust grid height to fill screen on iPhone */
+      height: 80vh; /* Adjust height to fill most of the screen */
       margin: 0 auto;
+      padding: 0.5rem;
     }
     .card {
       background: var(--card-bg);
@@ -181,9 +169,7 @@
       font-size: 0.9rem;
     }
     
-    /* ================================
-       Memories & CTA Slide
-    ================================ */
+    /* MEMORIES & CTA SLIDE */
     .memories-cta {
       width: 100%;
       height: 100%;
@@ -207,7 +193,7 @@
       max-width: 600px;
       margin: 0 auto 2rem auto;
     }
-    /* Set nested swiper height so the CTA button is visible */
+    /* Fixed nested swiper height to keep CTA visible */
     .swiper.mySwiperNested {
       width: 100%;
       height: 40vh;
@@ -247,9 +233,7 @@
       transform: scale(1.05);
     }
     
-    /* ================================
-       Decorative Floating Elements (Particles)
-    ================================ */
+    /* FLOATING ELEMENTS (Behind Main Content) */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -259,10 +243,10 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 2; /* Set to 2 so they appear in front of the background but behind main interactive content */
+      z-index: 2; /* Behind main content */
     }
     
-    /* --- Floating Hearts (Stolen Heart) --- */
+    /* Floating Hearts */
     .love-heart {
       position: absolute;
       width: 50px;
@@ -291,7 +275,7 @@
       left: 25px;
       top: 0;
     }
-    /* Center the text using flex centering; rotate 45deg */
+    /* Center text using flex centering; simply rotate the text */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -319,7 +303,7 @@
       }
     }
     
-    /* --- Floating Rose Petals --- */
+    /* Floating Rose Petals */
     .flower {
       position: absolute;
       width: 20px;
@@ -344,9 +328,7 @@
       }
     }
     
-    /* ================================
-       Popup Modal (for "Yes, I will!" action)
-    ================================ */
+    /* POPUP MODAL */
     .popup-modal {
       position: fixed;
       top: 0;
@@ -375,9 +357,7 @@
       font-family: 'Playfair Display', serif;
     }
     
-    /* ================================
-       Media Query for Smaller Screens (iPhone)
-    ================================ */
+    /* Media Query for Smaller Screens */
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.5rem; }
       .hero p { font-size: 1rem; }
@@ -667,7 +647,7 @@
       createParticleBurst(); // Optional particle burst on click
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       
-      // Show the popup modal with a fade-in animation and enable pointer events for dismissal
+      // Show the popup modal with a fade-in animation and enable dismissal by clicking
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
       gsap.to(modal, { opacity: 1, duration: 0.5, onComplete: () => {
@@ -675,7 +655,7 @@
       }});
     });
     
-    // Allow clicking anywhere on the modal to dismiss it
+    // Dismiss the modal when clicking anywhere on it
     document.getElementById('popupModal').addEventListener('click', () => {
       const modal = document.getElementById('popupModal');
       gsap.to(modal, { opacity: 0, duration: 0.5, onComplete: () => {
