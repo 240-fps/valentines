@@ -13,20 +13,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   
   <style>
-    /* Reset & Global Styles */
+    /* ================================
+       Reset & Global Styles
+    ================================ */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* No scrolling */
+      overflow: hidden; /* Disable scrolling */
       font-family: 'Montserrat', sans-serif;
       background: #121212;
       color: #FFF;
+      line-height: 1.6;
       scroll-behavior: smooth;
     }
     a { color: #E91E63; text-decoration: none; }
     
-    /* Theme Variables */
+    /* ================================
+       Theme Variables
+    ================================ */
     :root {
       --background: #121212;
       --primary: #E91E63;
@@ -39,10 +44,13 @@
       --transition-speed: 0.3s;
     }
     
-    /* Main Swiper */
+    /* ================================
+       Main Swiper Container
+    ================================ */
     .swiper.mySwiperMain {
       width: 100vw;
       height: 100vh;
+      margin: 0 auto;
     }
     .swiper.mySwiperMain .swiper-slide {
       width: 100vw;
@@ -52,19 +60,24 @@
       align-items: center;
       text-align: center;
       position: relative;
+      padding: 1rem;
+    }
+    .swiper.mySwiperMain .swiper-slide {
+      transition: opacity 0.5s;
     }
     .swiper-pagination {
       bottom: 20px !important;
       z-index: 10;
     }
     
-    /* HERO SLIDE */
+    /* ================================
+       HERO SLIDE
+    ================================ */
     .hero {
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
@@ -91,6 +104,11 @@
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
@@ -100,6 +118,9 @@
     }
     .gif-container {
       margin-bottom: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
     .gif-container img {
       width: 90%;
@@ -116,7 +137,9 @@
       margin-bottom: 2rem;
     }
     
-    /* ITINERARY SLIDE (2×3 Grid) */
+    /* ================================
+       ITINERARY SLIDE (2×3 Grid)
+    ================================ */
     .itinerary-section {
       width: 100%;
       height: 100%;
@@ -125,6 +148,7 @@
       z-index: 5;
       padding: 1.5rem;
       overflow: hidden;
+      margin: 0 auto;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
@@ -138,7 +162,7 @@
       gap: 1rem;
       width: 100%;
       max-width: 600px;
-      height: 80vh; /* Adjust height to fill most of the screen */
+      height: 70vh;
       margin: 0 auto;
       padding: 0.5rem;
     }
@@ -169,7 +193,9 @@
       font-size: 0.9rem;
     }
     
-    /* MEMORIES & CTA SLIDE */
+    /* ================================
+       MEMORIES & CTA SLIDE
+    ================================ */
     .memories-cta {
       width: 100%;
       height: 100%;
@@ -193,7 +219,6 @@
       max-width: 600px;
       margin: 0 auto 2rem auto;
     }
-    /* Fixed nested swiper height to keep CTA visible */
     .swiper.mySwiperNested {
       width: 100%;
       height: 40vh;
@@ -233,7 +258,9 @@
       transform: scale(1.05);
     }
     
-    /* FLOATING ELEMENTS (Behind Main Content) */
+    /* ================================
+       FLOATING ELEMENTS (Behind Main Content)
+    ================================ */
     .heart-container,
     .flower-container {
       position: fixed;
@@ -243,7 +270,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 2; /* Behind main content */
+      z-index: 2;
     }
     
     /* Floating Hearts */
@@ -275,7 +302,6 @@
       left: 25px;
       top: 0;
     }
-    /* Center text using flex centering; simply rotate the text */
     .love-heart span {
       position: relative;
       z-index: 1;
@@ -328,7 +354,9 @@
       }
     }
     
-    /* POPUP MODAL */
+    /* ================================
+       POPUP MODAL
+    ================================ */
     .popup-modal {
       position: fixed;
       top: 0;
@@ -357,7 +385,9 @@
       font-family: 'Playfair Display', serif;
     }
     
-    /* Media Query for Smaller Screens */
+    /* ================================
+       MEDIA QUERY (iPhone)
+    ================================ */
     @media (max-width: 480px) {
       .hero h1 { font-size: 2.5rem; }
       .hero p { font-size: 1rem; }
@@ -372,15 +402,14 @@
   </style>
 </head>
 <body>
-  <!-- Main Swiper Container (3 Slides: Hero, Itinerary, Memories & CTA) -->
+  <!-- Main Swiper Container -->
   <div class="swiper mySwiperMain">
     <div class="swiper-wrapper">
-      <!-- Slide 1: Hero -->
+      <!-- HERO SLIDE -->
       <div class="swiper-slide">
         <section class="hero">
           <div class="hero-content">
             <h1>My Valentine's Surprise</h1>
-            <!-- Custom GIF (replace src with your custom GIF URL) -->
             <div class="gif-container">
               <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Custom GIF">
             </div>
@@ -390,7 +419,7 @@
         </section>
       </div>
       
-      <!-- Slide 2: Itinerary -->
+      <!-- ITINERARY SLIDE -->
       <div class="swiper-slide">
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
@@ -423,12 +452,11 @@
         </section>
       </div>
       
-      <!-- Slide 3: Memories & CTA -->
+      <!-- MEMORIES & CTA SLIDE -->
       <div class="swiper-slide">
         <section class="memories-cta">
           <h2>Our Beautiful Memories</h2>
           <div class="slider-container">
-            <!-- Nested Swiper for Memories Slider -->
             <div class="swiper mySwiperNested">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -441,7 +469,6 @@
                   <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
                 </div>
               </div>
-              <!-- Slider Pagination -->
               <div class="swiper-pagination"></div>
             </div>
           </div>
@@ -455,10 +482,10 @@
     <div class="swiper-pagination"></div>
   </div>
   
-  <!-- Popup Modal for "Yes, I will!" Button -->
+  <!-- Popup Modal -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
-      <!-- Replace the src URL below with your custom popup GIF -->
+      <!-- Replace with your custom popup GIF -->
       <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
       <p>I love you! Can't wait to share this amazing week with you!</p>
     </div>
@@ -479,9 +506,9 @@
     function updateCountdown() {
       const now = new Date().getTime();
       const diff = targetTime - now;
-      if (diff < 0) { 
-        countdownEl.textContent = "It's time!"; 
-        return; 
+      if (diff < 0) {
+        countdownEl.textContent = "It's time!";
+        return;
       }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -492,7 +519,7 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    /* --- Initialize Main Swiper (Fade Effect) --- */
+    /* --- Initialize Main Swiper --- */
     const mainSwiper = new Swiper(".mySwiperMain", {
       effect: 'fade',
       fadeEffect: { crossFade: true },
