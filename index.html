@@ -169,7 +169,7 @@
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
-      padding: 1rem;
+      padding: 0.7rem; /* Reduced padding */
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       cursor: pointer;
@@ -181,17 +181,18 @@
       transform: translateY(-8px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.6);
     }
-    /* Adjusted card-header: Reduced font size and margin so the date doesn't take too much space */
+    /* Reduced the card-header font size and margin */
     .card-header {
-      font-size: 1rem; /* Reduced from 1.2rem */
+      font-size: 1rem;  /* Reduced from 1.2rem */
       font-weight: bold;
-      margin-bottom: 0.3rem; /* Reduced margin */
+      margin-bottom: 0.3rem; /* Reduced bottom margin */
     }
+    /* Reduced the card-content font size */
     .card-content {
       height: 0;
       opacity: 0;
       overflow: hidden;
-      font-size: 0.9rem;
+      font-size: 0.75rem; /* Reduced from 0.9rem */
     }
     
     /* ================================
@@ -426,27 +427,27 @@
           <h2>Valentine's Week Itinerary</h2>
           <div class="itinerary-cards">
             <div class="card" data-open="false">
-              <div class="card-header">Feb 14 </div>
+              <div class="card-header">Feb 14 – Valentine's Day</div>
               <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
             </div>
             <div class="card" data-open="false">
-              <div class="card-header">Feb 15 </div>
+              <div class="card-header">Feb 15 – Day 2</div>
               <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
             </div>
             <div class="card" data-open="false">
-              <div class="card-header">Feb 16 </div>
+              <div class="card-header">Feb 16 – Day 3</div>
               <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
             </div>
             <div class="card" data-open="false">
-              <div class="card-header">Feb 17 </div>
+              <div class="card-header">Feb 17 – Day 4</div>
               <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
             </div>
             <div class="card" data-open="false">
-              <div class="card-header">Feb 18 </div>
+              <div class="card-header">Feb 18 – Day 5</div>
               <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
             </div>
             <div class="card" data-open="false">
-              <div class="card-header">Feb 19 </div>
+              <div class="card-header">Feb 19 – Day 6</div>
               <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
             </div>
           </div>
