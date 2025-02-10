@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Use viewport-fit=cover for safe areas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- Lock the scale and enable full-screen safe area support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>My Valentine's Surprise</title>
   
   <!-- Google Fonts -->
@@ -14,7 +14,7 @@
   
   <style>
     /* ===================================================
-       Global Reset, Box Sizing & No-Scroll Settings
+       Global Reset & No-Scroll Settings
     =================================================== */
     * {
       margin: 0;
@@ -24,16 +24,11 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden; /* Prevent scrolling entirely */
+      overflow: hidden; /* Prevent any scrolling */
       font-family: 'Montserrat', sans-serif;
       background: #121212;
       color: #FFF;
       line-height: 1.6;
-      scroll-behavior: smooth;
-    }
-    /* Prevent any horizontal overflow */
-    body, .swiper, .swiper-slide {
-      overflow-x: hidden;
     }
     a {
       color: #E91E63;
@@ -41,36 +36,31 @@
     }
     
     /* ===================================================
-       Theme Variables
+       Custom Viewport Height Variable
+         – This will be set via JavaScript (see below)
     =================================================== */
     :root {
-      --background: #121212;
-      --primary: #E91E63;
-      --secondary: #FF4081;
-      --accent: #8E24AA;
-      --text: #FFFFFF;
-      --card-bg: rgba(255,255,255,0.15);
-      --heart-color: #ff3366;
-      --shadow-color: rgba(0,0,0,0.25);
-      --transition-speed: 0.3s;
+      --vh: 1vh;
     }
     
     /* ===================================================
        Main Swiper Container (Full Screen Slides)
+         – Each slide’s height subtracts the safe area insets so that nothing is hidden.
     =================================================== */
     .swiper.mySwiperMain {
       width: 100%;
-      height: calc(var(--vh, 1vh) * 100);
+      height: calc(var(--vh, 1vh) * 100 - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     }
     .swiper.mySwiperMain .swiper-slide {
       width: 100%;
-      height: calc(var(--vh, 1vh) * 100);
+      height: calc(var(--vh, 1vh) * 100 - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
       position: relative;
-      padding: 1rem;
+      padding: 0.5rem;
+      overflow: hidden;
       transition: opacity 0.5s;
     }
     .swiper-pagination {
@@ -84,7 +74,7 @@
     .hero {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, #E91E63, #FF4081);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,75 +103,68 @@
       width: 100%;
       max-width: 600px;
       margin: 0 auto;
+      padding: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
     .gif-container {
-      margin-bottom: 1rem;
-      width: 100%;
+      margin-bottom: 0.5rem;
+      width: 90%;
       display: flex;
       justify-content: center;
     }
     .gif-container img {
-      width: 90%;
-      max-width: 100%;
+      width: 100%;
+      max-width: 300px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px var(--shadow-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
     .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
     }
     .countdown {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: bold;
-      margin-bottom: 2rem;
     }
     
     /* ===================================================
        ITINERARY SLIDE (No Scrolling)
-         • The slide is split into a heading and a grid that fills the rest.
+         – The slide is divided into a heading and a grid that fills the rest.
     =================================================== */
     .itinerary-section {
       width: 100%;
-      height: calc(var(--vh, 1vh) * 100);
-      /* Use vertical safe-area insets (if needed) */
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
+      height: 100%;
       background: rgba(18,18,18,0.8);
       position: relative;
       z-index: 5;
       display: flex;
       flex-direction: column;
-      overflow: hidden; /* Remove scrolling */
+      overflow: hidden;
     }
     .itinerary-section h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.3rem;
-      margin-bottom: 0.2rem;
+      font-size: 1.8rem;
+      margin: 0.2rem;
       text-align: center;
-      padding: 0 1rem;
-      flex: 0 0 auto;
     }
     .itinerary-cards {
-      flex: 1 1 auto;
+      flex: 1;
       width: 90%;
       max-width: 600px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(3, 1fr);
-      gap: 0.3rem;
-      padding: 0.3rem;
+      gap: 0.2rem;
       overflow: hidden;
     }
     .card {
@@ -198,8 +181,7 @@
     .card.flipped .card-inner {
       transform: rotateY(180deg);
     }
-    .card-front,
-    .card-back {
+    .card-front, .card-back {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -209,29 +191,27 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0.4rem;
+      padding: 0.3rem;
       overflow: hidden;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
     }
     .card-front {
-      background: var(--card-bg);
+      background: rgba(255,255,255,0.15);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      border: 2px solid var(--secondary);
+      border: 2px solid #FF4081;
     }
     .card-back {
-      background: var(--card-bg);
+      background: rgba(255,255,255,0.15);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      border: 2px solid var(--secondary);
+      border: 2px solid #FF4081;
       transform: rotateY(180deg);
     }
     .card-header {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: bold;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.1rem;
     }
     .card-content {
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       text-align: center;
     }
     
@@ -240,11 +220,8 @@
     =================================================== */
     .memories-cta {
       width: 100%;
-      height: calc(var(--vh, 1vh) * 100);
-      /* Use vertical safe-area insets */
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      background: var(--background);
+      height: 100%;
+      background: #121212;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -254,22 +231,19 @@
     }
     .memories-cta h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin: 0.5rem;
       text-align: center;
-      flex: 0 0 auto;
     }
     .slider-container {
       width: 90%;
       max-width: 600px;
-      margin: 0 auto 2rem auto;
+      margin: 0 auto 1rem auto;
       overflow: hidden;
-      flex: 0 0 auto;
     }
     .swiper.mySwiperNested {
       width: 100%;
-      height: 40vh;
-      padding-bottom: 1rem;
+      height: 35vh;
       overflow: hidden;
     }
     .swiper.mySwiperNested .swiper-slide img {
@@ -279,28 +253,26 @@
     }
     .cta {
       text-align: center;
-      padding: 2rem 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      padding: 1rem;
+      background: linear-gradient(135deg, #E91E63, #8E24AA);
       border-radius: 8px;
       margin: 0 auto;
       max-width: 400px;
-      backdrop-filter: blur(8px);
-      flex: 0 0 auto;
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
     .cta button {
-      background: var(--secondary);
-      color: var(--background);
-      padding: 0.75rem 1.75rem;
-      font-size: 1.5rem;
+      background: #FF4081;
+      color: #121212;
+      padding: 0.6rem 1.2rem;
+      font-size: 1.3rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: background var(--transition-speed), transform var(--transition-speed);
+      transition: background 0.3s, transform 0.3s;
     }
     .cta button:hover {
       background: #fff;
@@ -308,10 +280,9 @@
     }
     
     /* ===================================================
-       FLOATING DECORATIVE ELEMENTS
+       Floating Decorative Elements
     =================================================== */
-    .heart-container,
-    .flower-container {
+    .heart-container, .flower-container {
       position: fixed;
       top: 0;
       left: 0;
@@ -323,57 +294,42 @@
     }
     .love-heart {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      background: var(--heart-color);
+      width: 40px;
+      height: 40px;
+      background: #ff3366;
       display: flex;
       align-items: center;
       justify-content: center;
       animation: loveHeartFloat 12s linear infinite;
-      cursor: default;
     }
-    .love-heart::before,
-    .love-heart::after {
+    .love-heart::before, .love-heart::after {
       content: "";
       position: absolute;
-      width: 50px;
-      height: 50px;
-      background: var(--heart-color);
+      width: 40px;
+      height: 40px;
+      background: #ff3366;
       border-radius: 50%;
     }
     .love-heart::before {
-      top: -25px;
+      top: -20px;
       left: 0;
     }
     .love-heart::after {
-      left: 25px;
+      left: 20px;
       top: 0;
     }
     .love-heart span {
       position: relative;
       z-index: 1;
-      font-size: 10px;
+      font-size: 8px;
       font-weight: bold;
-      text-align: center;
-      color: var(--text);
-      display: block;
+      color: #FFF;
       transform: rotate(45deg);
-      transform-origin: center;
-      width: 100%;
     }
     @keyframes loveHeartFloat {
-      0% {
-        transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(var(--scale));
-        opacity: 0;
-      }
-      15% {
-        transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(var(--scale));
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(var(--scale));
-        opacity: 0;
-      }
+      0% { transform: translateX(-50%) translateY(100vh) rotate(-45deg) scale(0.8); opacity: 0; }
+      15% { transform: translateX(-50%) translateY(80vh) rotate(-45deg) scale(0.8); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(-150vh) rotate(-45deg) scale(0.8); opacity: 0; }
     }
     .flower {
       position: absolute;
@@ -385,22 +341,13 @@
       animation: petalFloat 14s linear infinite;
     }
     @keyframes petalFloat {
-      0% {
-        transform: translateX(-50%) translateY(100vh) rotate(0deg) scale(var(--scale));
-        opacity: 0;
-      }
-      20% {
-        transform: translateX(-50%) translateY(80vh) rotate(0deg) scale(var(--scale));
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(-50%) translateY(-150vh) rotate(360deg) scale(var(--scale));
-        opacity: 0;
-      }
+      0% { transform: translateX(-50%) translateY(100vh) rotate(0deg) scale(0.7); opacity: 0; }
+      20% { transform: translateX(-50%) translateY(80vh) rotate(0deg) scale(0.7); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(-150vh) rotate(360deg) scale(0.7); opacity: 0; }
     }
     
     /* ===================================================
-       POPUP MODAL
+       Popup Modal
     =================================================== */
     .popup-modal {
       position: fixed;
@@ -408,7 +355,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0,0,0,0.8);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -419,7 +366,7 @@
     }
     .popup-content {
       text-align: center;
-      color: var(--text);
+      color: #FFF;
     }
     .popup-content img {
       max-width: 300px;
@@ -427,74 +374,24 @@
       margin-bottom: 20px;
     }
     .popup-content p {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-family: 'Playfair Display', serif;
       margin-top: 20px;
     }
     
     /* ===================================================
-       MEDIA QUERIES for Smaller Screens
+       Media Queries (further scaling for very small screens)
     =================================================== */
     @media (max-width: 480px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; }
-      .countdown { font-size: 2rem; }
-      .itinerary-section h2 { font-size: 1.8rem; margin-bottom: 0.1rem; }
-      .card-front .card-header,
-      .card-back .card-header { font-size: 0.7rem; }
-      .card { padding: 0.4rem; font-size: 0.7rem; }
-      .memories-cta h2 { font-size: 1.8rem; }
-      .cta h2 { font-size: 1.6rem; }
-      .cta button { font-size: 1.2rem; padding: 0.5rem 1rem; }
-    }
-    @media (max-height: 700px) {
-      /* Further reduce sizes if the available height is very limited */
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 0.9rem; }
-      .countdown { font-size: 1.8rem; }
-      .itinerary-section h2 { font-size: 1.6rem; }
-      .card-front .card-header,
-      .card-back .card-header { font-size: 0.65rem; }
-      .card { padding: 0.3rem; font-size: 0.65rem; }
+      .countdown { font-size: 1.5rem; }
+      .itinerary-section h2 { font-size: 1.5rem; }
+      .card-header { font-size: 0.6rem; }
+      .card-content { font-size: 0.55rem; }
       .memories-cta h2 { font-size: 1.6rem; }
-      .cta h2 { font-size: 1.5rem; }
-      .cta button { font-size: 1.1rem; padding: 0.4rem 0.8rem; }
-    }
-    
-    /* ===================================================
-       Card Flip Effect (Reiterated)
-    =================================================== */
-    .card {
-      perspective: 1000px;
-    }
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-    .card-front,
-    .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 0.8rem;
-      overflow: hidden;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    .card-back {
-      transform: rotateY(180deg);
+      .cta h2 { font-size: 1.4rem; }
+      .cta button { font-size: 1rem; padding: 0.5rem 0.8rem; }
     }
   </style>
   
@@ -526,7 +423,7 @@
         </section>
       </div>
       
-      <!-- ITINERARY SLIDE (No Scrolling) -->
+      <!-- ITINERARY SLIDE -->
       <div class="swiper-slide">
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
@@ -534,80 +431,50 @@
             <!-- Card 1 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 14</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 14 – Valentine's Day</div>
-                  <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 14</div></div>
+                <div class="card-back"><div class="card-header">Feb 14 – Valentine's Day</div><div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div></div>
               </div>
             </div>
             <!-- Card 2 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 15</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 15 – Day 2</div>
-                  <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 15</div></div>
+                <div class="card-back"><div class="card-header">Feb 15 – Day 2</div><div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div></div>
               </div>
             </div>
             <!-- Card 3 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 16</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 16 – Day 3</div>
-                  <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 16</div></div>
+                <div class="card-back"><div class="card-header">Feb 16 – Day 3</div><div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div></div>
               </div>
             </div>
             <!-- Card 4 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 17</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 17 – Day 4</div>
-                  <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 17</div></div>
+                <div class="card-back"><div class="card-header">Feb 17 – Day 4</div><div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div></div>
               </div>
             </div>
             <!-- Card 5 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 18</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 18 – Day 5</div>
-                  <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 18</div></div>
+                <div class="card-back"><div class="card-header">Feb 18 – Day 5</div><div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div></div>
               </div>
             </div>
             <!-- Card 6 -->
             <div class="card">
               <div class="card-inner">
-                <div class="card-front">
-                  <div class="card-header">Feb 19</div>
-                </div>
-                <div class="card-back">
-                  <div class="card-header">Feb 19 – Day 6</div>
-                  <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
-                </div>
+                <div class="card-front"><div class="card-header">Feb 19</div></div>
+                <div class="card-back"><div class="card-header">Feb 19 – Day 6</div><div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div></div>
               </div>
             </div>
           </div>
         </section>
       </div>
       
-      <!-- MEMORIES & CTA SLIDE (No Scrolling) -->
+      <!-- MEMORIES & CTA SLIDE -->
       <div class="swiper-slide">
         <section class="memories-cta">
           <h2>Our Beautiful Memories</h2>
@@ -756,7 +623,7 @@
           const phrases = ["I Love You", "Be Mine"];
           const span = document.createElement('span');
           span.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-          span.style.fontSize = "10px";
+          span.style.fontSize = "8px";
           span.style.fontWeight = "bold";
           el.appendChild(span);
         } else {
@@ -771,7 +638,7 @@
     
     /* Popup Modal Trigger */
     document.getElementById('valentineBtn').addEventListener('click', () => {
-      createParticleBurst(); // Optional burst on click
+      createParticleBurst();
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
