@@ -138,7 +138,7 @@
     }
     
     /* ================================
-       ITINERARY SLIDE (2×3 Grid)
+       ITINERARY SLIDE (2×3 Grid of Flip Cards)
     ================================ */
     .itinerary-section {
       width: 100%;
@@ -166,31 +166,59 @@
       margin: 0 auto;
       padding: 0.5rem;
     }
+    /* New Flip Card Structure */
     .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      perspective: 1000px;
       cursor: pointer;
-      overflow: hidden;
-      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       aspect-ratio: 1;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
     }
-    .card-header {
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    /* Front side: show only a small date */
+    .card-front {
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .card-front .card-header {
+      font-size: 1rem; /* Smaller date font */
+      font-weight: bold;
+    }
+    /* Back side: show full details */
+    .card-back {
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transform: rotateY(180deg);
+    }
+    .card-back .card-header {
       font-size: 1.2rem;
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
-    .card-content {
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
+    .card-back .card-content {
       font-size: 0.9rem;
+      text-align: center;
     }
     
     /* ================================
@@ -424,29 +452,77 @@
         <section class="itinerary-section">
           <h2>Valentine's Week Itinerary</h2>
           <div class="itinerary-cards">
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 14 – Valentine's Day</div>
-              <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
+            <!-- Flip Card 1 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 14</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 14 – Valentine's Day</div>
+                  <div class="card-content">A romantic dinner at an exclusive venue with a special surprise.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 15 – Day 2</div>
-              <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
+            <!-- Flip Card 2 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 15</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 15 – Day 2</div>
+                  <div class="card-content">A serene morning stroll paired with a gourmet picnic in a picturesque park.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 16 – Day 3</div>
-              <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
+            <!-- Flip Card 3 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 16</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 16 – Day 3</div>
+                  <div class="card-content">An inspiring visit to an art gallery followed by a creative workshop.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 17 – Day 4</div>
-              <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
+            <!-- Flip Card 4 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 17</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 17 – Day 4</div>
+                  <div class="card-content">An adventurous hike capturing breathtaking landscapes and memories.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 18 – Day 5</div>
-              <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
+            <!-- Flip Card 5 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 18</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 18 – Day 5</div>
+                  <div class="card-content">A day of pampering with luxurious spa treatments and relaxation.</div>
+                </div>
+              </div>
             </div>
-            <div class="card" data-open="false">
-              <div class="card-header">Feb 19 – Day 6</div>
-              <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
+            <!-- Flip Card 6 -->
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-front">
+                  <div class="card-header">Feb 19</div>
+                </div>
+                <div class="card-back">
+                  <div class="card-header">Feb 19 – Day 6</div>
+                  <div class="card-content">A charming farewell brunch paired with a heartfelt keepsake.</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -485,7 +561,7 @@
   <!-- Popup Modal -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
-      <!-- Replace with your custom popup GIF -->
+      <!-- Replace the src URL below with your custom popup GIF -->
       <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
       <p>I love you! Can't wait to share this amazing week with you!</p>
     </div>
@@ -576,22 +652,10 @@
       setTimeout(() => burstContainer.remove(), 3000);
     }
     
-    /* --- Custom Itinerary Card Toggle Animation --- */
-    const cards = document.querySelectorAll(".card");
-    cards.forEach(card => {
-      const content = card.querySelector(".card-content");
-      gsap.set(content, { height: 0, opacity: 0 });
-      card.addEventListener("click", () => {
-        if (card.dataset.open === "true") {
-          gsap.to(content, { height: 0, opacity: 0, duration: 0.5 });
-          card.dataset.open = "false";
-        } else {
-          content.style.height = "auto";
-          const fullHeight = content.offsetHeight;
-          content.style.height = "0px";
-          gsap.to(content, { height: fullHeight, opacity: 1, duration: 0.5 });
-          card.dataset.open = "true";
-        }
+    /* --- Flip Card Toggle for Itinerary Cards --- */
+    document.querySelectorAll('.itinerary-cards .card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
       });
     });
     
