@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -49,7 +49,8 @@
     ================================ */
     .swiper.mySwiperMain {
       width: 100vw;
-      height: 100vh;
+      /* Use dynamically calculated viewport height */
+      height: calc(var(--vh, 1vh) * 100);
       margin: 0 auto;
     }
     .swiper.mySwiperMain .swiper-slide {
@@ -61,8 +62,6 @@
       text-align: center;
       position: relative;
       padding: 1rem;
-    }
-    .swiper.mySwiperMain .swiper-slide {
       transition: opacity 0.5s;
     }
     .swiper-pagination {
@@ -201,11 +200,12 @@
       height: 100%;
       background: var(--background);
       padding: 1rem;
+      /* Extra bottom padding for safe areas on iOS */
+      padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Space header, slider, and CTA evenly */
+      justify-content: space-between;
       align-items: center;
-      /* Removed overflow-y to prevent internal scrolling */
       position: relative;
       z-index: 5;
     }
@@ -232,12 +232,13 @@
       width: 100%;
       height: 100%;
     }
-    /* Adjust image styling to fill the container and center the content */
+    /* Adjust image styling; here we use object-fit: cover with an adjusted object-position 
+       so the right side isn’t overly cropped. */
     .swiper.mySwiperNested .swiper-slide img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      object-fit: cover; /* Change to 'contain' if you need the entire image visible */
+      object-position: left center;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
@@ -250,7 +251,7 @@
       margin: 0 auto;
       max-width: 400px;
       backdrop-filter: blur(8px);
-      /* Added negative top margin to move the button up */
+      /* Negative top margin to slightly overlap the slider */
       margin-top: -20px;
     }
     .cta h2 {
@@ -417,6 +418,16 @@
       .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
     }
   </style>
+  
+  <!-- Set the viewport height custom property for mobile browsers -->
+  <script>
+    function setVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
+  </script>
 </head>
 <body>
   <!-- Main Swiper Container -->
@@ -648,38 +659,6 @@
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
   </script>
-  
-  <!-- Additional Styles for Popup Modal -->
-  <style>
-    .popup-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 30;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .popup-content {
-      text-align: center;
-      color: var(--text);
-    }
-    .popup-content img {
-      max-width: 300px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    .popup-content p {
-      font-size: 1.8rem;
-      margin-top: 20px;
-      font-family: 'Playfair Display', serif;
-    }
-  </style>
   
   <script>
     /* --- Popup Modal Trigger for "Yes, I will!" Button --- */
