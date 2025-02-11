@@ -283,7 +283,7 @@
       align-items: center;
       justify-content: center;
       animation: loveHeartFloat 12s linear infinite;
-      animation-fill-mode: backwards; /* Hearts start hidden until animation begins */
+      animation-fill-mode: backwards;
       cursor: default;
     }
     .love-heart::before,
@@ -410,7 +410,7 @@
       <div class="swiper-slide">
         <section class="hero">
           <div class="hero-content">
-            <h1>Hi my love, Valentines is soon :)</h1>
+            <h1>Hi my love, Valentine's is soon :)</h1>
             <div class="gif-container">
               <!-- Local homepage GIF -->
               <img src="images/homepage.gif" alt="Custom Homepage GIF">
@@ -432,23 +432,23 @@
             </div>
             <div class="card" data-open="false">
               <div class="card-header">Feb 15</div>
-              <div class="card-content">Let get some food</div>
+              <div class="card-content">Let's get some food</div>
             </div>
             <div class="card" data-open="false">
               <div class="card-header">Feb 16</div>
-              <div class="card-content">get way</div>
+              <div class="card-content">Get away</div>
             </div>
             <div class="card" data-open="false">
               <div class="card-header">Feb 17</div>
-              <div class="card-content">fun day :)</div>
+              <div class="card-content">Fun day :)</div>
             </div>
             <div class="card" data-open="false">
               <div class="card-header">Feb 18</div>
-              <div class="card-content">my birthday!</div>
+              <div class="card-content">My birthday!</div>
             </div>
             <div class="card" data-open="false">
               <div class="card-header">Feb 19</div>
-              <div class="card-content">you go back :(</div>
+              <div class="card-content">You go back :(</div>
             </div>
           </div>
         </section>
@@ -457,21 +457,24 @@
       <!-- MEMORIES & CTA SLIDE -->
       <div class="swiper-slide">
         <section class="memories-cta">
-          <h2>you're the most beautiful girl in the world</h2>
+          <h2>You're the most beautiful girl in the world</h2>
           <div class="slider-container">
             <div class="swiper mySwiperNested">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <img src="https://via.placeholder.com/800x450?text=Memory+1" alt="Memory 1">
+                  <img src="images/memory1.jpg" alt="Memory 1">
                 </div>
                 <div class="swiper-slide">
-                  <img src="https://via.placeholder.com/800x450?text=Memory+2" alt="Memory 2">
+                  <img src="images/memory2.jpg" alt="Memory 2">
                 </div>
                 <div class="swiper-slide">
-                  <img src="https://via.placeholder.com/800x450?text=Memory+3" alt="Memory 3">
+                  <img src="images/memory3.jpg" alt="Memory 3">
                 </div>
               </div>
+              <!-- Pagination and Navigation (optional) -->
               <div class="swiper-pagination"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
           </div>
           <div class="cta">
@@ -532,7 +535,8 @@
     const swiperNested = new Swiper('.mySwiperNested', {
       loop: true,
       autoplay: { delay: 3000, disableOnInteraction: false },
-      pagination: { el: '.swiper-pagination', clickable: true }
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
     });
     
     /* --- Particle Burst on Slide Transition --- */
@@ -686,3 +690,4 @@
   </script>
 </body>
 </html>
+
