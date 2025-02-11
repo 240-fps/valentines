@@ -211,17 +211,17 @@
     .memories-cta h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
-      margin-bottom: 0.5rem; /* reduced margin */
+      margin-bottom: 0.5rem;
       text-align: center;
       flex: 0 0 auto;
     }
-    /* Slider container – reduced height and margin */
+    /* SLIDER CONTAINER: Set to a 5:4 ratio so the JPGs fit properly */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
       margin-bottom: 0.5rem;
-      padding-top: 60%; /* reduces the vertical space (approx 5:3 ratio) */
+      padding-top: 80%; /* 80% gives a 5:4 aspect ratio */
     }
     /* Absolutely position the nested swiper inside the container */
     .swiper.mySwiperNested {
@@ -249,7 +249,7 @@
       margin: 0 auto;
       max-width: 400px;
       backdrop-filter: blur(8px);
-      margin-top: -5px; /* reduced negative margin */
+      margin-top: -5px;
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
@@ -417,7 +417,7 @@
       .slider-container {
         max-width: 100%;
         margin-bottom: 0.3rem;
-        padding-top: 60%;
+        padding-top: 80%;  /* maintain the 5:4 ratio */
       }
       .cta h2 { font-size: 1.6rem; margin-bottom: 0.3rem; }
       .cta button { font-size: 1.1rem; padding: 0.5rem 0.75rem; }
