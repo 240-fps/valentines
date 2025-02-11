@@ -203,7 +203,7 @@
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       position: relative;
       z-index: 5;
@@ -211,17 +211,17 @@
     .memories-cta h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       text-align: center;
       flex: 0 0 auto;
     }
-    /* SLIDER CONTAINER: Set to a 5:4 ratio so the JPGs fit properly */
+    /* Set the container to a fixed 5:4 aspect ratio */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin-bottom: 0.5rem;
-      padding-top: 80%; /* 80% gives a 5:4 aspect ratio */
+      margin-bottom: 1rem;
+      padding-top: 80%; /* 5:4 aspect ratio (height = width * 0.8) */
     }
     /* Absolutely position the nested swiper inside the container */
     .swiper.mySwiperNested {
@@ -231,30 +231,32 @@
       width: 100%;
       height: 100%;
     }
-    /* Ensure the entire image is visible without cropping */
+    /* Adjust image styling; here we use object-fit: cover with an adjusted object-position 
+       so the right side isn’t overly cropped. */
     .swiper.mySwiperNested .swiper-slide img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      object-position: center;
+      object-fit: cover; /* Change to 'contain' if you need the entire image visible */
+      object-position: left center;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
     .cta {
       flex: 0 0 auto;
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       border-radius: 8px;
       margin: 0 auto;
       max-width: 400px;
       backdrop-filter: blur(8px);
-      margin-top: -5px;
+      /* Negative top margin to slightly overlap the slider */
+      margin-top: -20px;
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
     }
     .cta button {
       background: var(--secondary);
@@ -272,7 +274,7 @@
     }
     
     /* ================================
-       FLOATING ELEMENTS (Decorative)
+       FLOATING ELEMENTS (Behind Main Content)
     ================================ */
     .heart-container,
     .flower-container {
@@ -285,6 +287,7 @@
       overflow: hidden;
       z-index: 2;
     }
+    
     /* Floating Hearts */
     .love-heart {
       position: absolute;
@@ -400,26 +403,33 @@
     }
     
     /* ================================
-       MEDIA QUERY (Mobile Adjustments)
+       MEDIA QUERY (iPhone Adjustments)
     ================================ */
     @media (max-width: 480px) {
+      /* HERO adjustments */
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 0.9rem; }
       .countdown { font-size: 1.5rem; }
+      
+      /* ITINERARY adjustments */
       .itinerary-section h2 { font-size: 1.8rem; }
       .card { padding: 0.5rem; font-size: 0.8rem; }
       .card-header { font-size: 1rem; }
+      
+      /* MEMORIES & CTA slide adjustments */
       .memories-cta {
         padding: 0.5rem;
         padding-bottom: calc(1rem + env(safe-area-inset-bottom));
       }
-      .memories-cta h2 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+      .memories-cta h2 { font-size: 1.8rem; }
+      
+      /* Reduce the slider container height for mobile */
       .slider-container {
         max-width: 100%;
-        margin-bottom: 0.3rem;
-        padding-top: 80%;  /* maintain the 5:4 ratio */
+        margin-bottom: 0.5rem;
+        padding-top: 60%;  /* reduced from 80% to condense the area */
       }
-      .cta h2 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+      .cta h2 { font-size: 1.6rem; }
       .cta button { font-size: 1.1rem; padding: 0.5rem 0.75rem; }
     }
   </style>
@@ -444,6 +454,7 @@
           <div class="hero-content">
             <h1>Hi my love, Valentine's is soon :)</h1>
             <div class="gif-container">
+              <!-- Local homepage GIF -->
               <img src="images/homepage.gif" alt="Custom Homepage GIF">
             </div>
             <p>YOU WILL BE HOME IN:</p>
@@ -502,6 +513,7 @@
                   <img src="images/memory3.jpg" alt="Memory 3">
                 </div>
               </div>
+              <!-- Pagination (vertical swipe with fade effect, no arrows) -->
               <div class="swiper-pagination"></div>
             </div>
           </div>
@@ -518,6 +530,7 @@
   <!-- Popup Modal -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
+      <!-- Local popup GIF -->
       <img src="images/popup.gif" alt="Celebration GIF">
       <p>I love you sahoo sahooo muchhh!</p>
     </div>
@@ -562,8 +575,8 @@
     const swiperNested = new Swiper('.mySwiperNested', {
       loop: true,
       autoplay: { delay: 3000, disableOnInteraction: false },
-      direction: 'vertical',
-      effect: 'fade',
+      direction: 'vertical', // Enables vertical swiping
+      effect: 'fade',        // Fade transition between slides
       fadeEffect: { crossFade: true },
       pagination: { el: '.swiper-pagination', clickable: true }
     });
@@ -665,9 +678,10 @@
   <script>
     /* --- Popup Modal Trigger for "Yes, I will!" Button --- */
     document.getElementById('valentineBtn').addEventListener('click', () => {
-      createParticleBurst();
+      createParticleBurst(); // Optional particle burst on click
       gsap.fromTo('#valentineBtn', { scale: 1 }, { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1 });
       
+      // Show the popup modal with a fade-in animation and enable dismissal by clicking
       const modal = document.getElementById('popupModal');
       modal.style.display = 'flex';
       gsap.to(modal, { opacity: 1, duration: 0.5, onComplete: () => {
@@ -675,6 +689,7 @@
       }});
     });
     
+    // Dismiss the modal when clicking anywhere on it
     document.getElementById('popupModal').addEventListener('click', () => {
       const modal = document.getElementById('popupModal');
       gsap.to(modal, { opacity: 0, duration: 0.5, onComplete: () => {
