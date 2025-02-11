@@ -205,8 +205,6 @@
     ================================ */
     .memories-cta {
       width: 100%;
-      /* Removed height: 100% so that content is not forced to fill the slide */
-      /* height: 100%; */
       background: var(--background);
       padding: 1rem;
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
@@ -224,13 +222,20 @@
       text-align: center;
       flex: 0 0 auto;
     }
-    /* Slider container – reduced height and margin */
+    /* Slider container – reduced height and centered horizontally */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin-bottom: 0.5rem;
-      padding-top: 60%; /* reduces the vertical space (approx 5:3 ratio) */
+      margin: 0 auto 0.5rem auto;
+      padding-top: 60%; /* maintains the aspect ratio (approx 5:3 ratio) */
+    }
+    /* Center the nested swiper pagination inside the slider container */
+    .slider-container .swiper-pagination {
+      bottom: 10px !important;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
     }
     /* Absolutely position the nested swiper inside the container */
     .swiper.mySwiperNested {
