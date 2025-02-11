@@ -283,7 +283,7 @@
       align-items: center;
       justify-content: center;
       animation: loveHeartFloat 12s linear infinite;
-      animation-fill-mode: backwards; /* Ensures hearts start hidden (opacity: 0) until animation begins */
+      animation-fill-mode: backwards; /* Hearts start hidden until animation begins */
       cursor: default;
     }
     .love-heart::before,
@@ -412,7 +412,8 @@
           <div class="hero-content">
             <h1>Hi my love, Valentines is soon :)</h1>
             <div class="gif-container">
-              <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Custom GIF">
+              <!-- Local homepage GIF -->
+              <img src="images/homepage.gif" alt="Custom Homepage GIF">
             </div>
             <p>YOU WILL BE HOME IN:</p>
             <div class="countdown" id="countdown">Loading...</div>
@@ -486,8 +487,8 @@
   <!-- Popup Modal -->
   <div id="popupModal" class="popup-modal" style="display: none;">
     <div class="popup-content">
-      <!-- Replace the src URL below with your custom popup GIF -->
-      <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
+      <!-- Local popup GIF -->
+      <img src="images/popup.gif" alt="Celebration GIF">
       <p>I love you sahoo sahooo muchhh!</p>
     </div>
   </div>
@@ -627,15 +628,6 @@
     generateFloatingElements('.heart-container', 30, 'love-heart');
     generateFloatingElements('.flower-container', 20, 'flower');
   </script>
-  
-  <!-- Popup Modal Markup -->
-  <div id="popupModal" class="popup-modal" style="display: none;">
-    <div class="popup-content">
-      <!-- Replace the src URL below with your custom popup GIF -->
-      <img src="https://yourdomain.com/yourcustomgif.gif" alt="Celebration GIF">
-      <p>I love you! Can't wait to share this amazing week with you!</p>
-    </div>
-  </div>
   
   <!-- Additional Styles for Popup Modal -->
   <style>
