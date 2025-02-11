@@ -203,7 +203,7 @@
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
       z-index: 5;
@@ -215,7 +215,7 @@
       text-align: center;
       flex: 0 0 auto;
     }
-    /* SLIDER CONTAINER: Using a 5:4 aspect ratio so the JPGs fit properly */
+    /* SLIDER CONTAINER: Set to a 5:4 ratio so the JPGs fit properly */
     .slider-container {
       position: relative;
       width: 100%;
@@ -416,7 +416,7 @@
       .memories-cta h2 { font-size: 1.8rem; margin-bottom: 0.3rem; }
       .slider-container {
         max-width: 100%;
-        margin: 0 auto 0.3rem;
+        margin-bottom: 0.3rem;
         padding-top: 80%;  /* maintain the 5:4 ratio */
       }
       .cta h2 { font-size: 1.6rem; margin-bottom: 0.3rem; }
@@ -489,7 +489,6 @@
       <div class="swiper-slide">
         <section class="memories-cta">
           <h2>You're the most beautiful girl in the world</h2>
-          <!-- Nested slider is placed directly in the slider-container -->
           <div class="slider-container">
             <div class="swiper mySwiperNested">
               <div class="swiper-wrapper">
