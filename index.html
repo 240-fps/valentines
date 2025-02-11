@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Use viewport-fit=cover to allow content to extend fully into safe areas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- Optimized for any device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Valentine's Surprise</title>
   
   <!-- Google Fonts -->
@@ -196,16 +196,16 @@
     /* ================================
        MEMORIES & CTA SLIDE
     ================================ */
-    /* Adjust the height to avoid being covered by Safari’s bottom UI */
     .memories-cta {
       width: 100%;
-      height: calc(100vh - env(safe-area-inset-bottom));
+      height: 100%;
       background: var(--background);
       padding: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between; /* Space header, slider, and CTA evenly */
       align-items: center;
+      /* Removed overflow-y to prevent internal scrolling */
       position: relative;
       z-index: 5;
     }
@@ -216,13 +216,13 @@
       text-align: center;
       flex: 0 0 auto;
     }
-    /* Reduce the slider container height by changing the aspect ratio */
+    /* Set the container to a fixed 5:4 aspect ratio */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
       margin-bottom: 1rem;
-      padding-top: 60%; /* Changed from 80% to 60% for a 5:3 aspect ratio */
+      padding-top: 80%; /* 5:4 aspect ratio (height = width * 0.8) */
     }
     /* Absolutely position the nested swiper inside the container */
     .swiper.mySwiperNested {
@@ -250,7 +250,8 @@
       margin: 0 auto;
       max-width: 400px;
       backdrop-filter: blur(8px);
-      /* Removed extra safe-area bottom padding so the button sits higher */
+      /* Added negative top margin to move the button up */
+      margin-top: -20px;
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
