@@ -203,7 +203,7 @@
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       position: relative;
       z-index: 5;
@@ -215,12 +215,20 @@
       text-align: center;
       flex: 0 0 auto;
     }
-    /* SLIDER CONTAINER: Set to a 5:4 ratio so the JPGs fit properly */
+    /* New wrapper to center the slider within the available space */
+    .slider-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    /* SLIDER CONTAINER: Using a 5:4 aspect ratio for the JPGs */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
-      margin-bottom: 0.5rem;
+      margin: 0 auto 0.5rem;
       padding-top: 80%; /* 80% gives a 5:4 aspect ratio */
     }
     /* Absolutely position the nested swiper inside the container */
@@ -230,6 +238,12 @@
       left: 0;
       width: 100%;
       height: 100%;
+    }
+    /* Center each slide’s content */
+    .swiper.mySwiperNested .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     /* Ensure the entire image is visible without cropping */
     .swiper.mySwiperNested .swiper-slide img {
@@ -416,7 +430,7 @@
       .memories-cta h2 { font-size: 1.8rem; margin-bottom: 0.3rem; }
       .slider-container {
         max-width: 100%;
-        margin-bottom: 0.3rem;
+        margin: 0 auto 0.3rem;
         padding-top: 80%;  /* maintain the 5:4 ratio */
       }
       .cta h2 { font-size: 1.6rem; margin-bottom: 0.3rem; }
@@ -489,20 +503,23 @@
       <div class="swiper-slide">
         <section class="memories-cta">
           <h2>You're the most beautiful girl in the world</h2>
-          <div class="slider-container">
-            <div class="swiper mySwiperNested">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="images/memory1.jpg" alt="Memory 1">
+          <!-- New slider wrapper to center the nested slider vertically -->
+          <div class="slider-wrapper">
+            <div class="slider-container">
+              <div class="swiper mySwiperNested">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src="images/memory1.jpg" alt="Memory 1">
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="images/memory2.jpg" alt="Memory 2">
+                  </div>
+                  <div class="swiper-slide">
+                    <img src="images/memory3.jpg" alt="Memory 3">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <img src="images/memory2.jpg" alt="Memory 2">
-                </div>
-                <div class="swiper-slide">
-                  <img src="images/memory3.jpg" alt="Memory 3">
-                </div>
+                <div class="swiper-pagination"></div>
               </div>
-              <div class="swiper-pagination"></div>
             </div>
           </div>
           <div class="cta">
