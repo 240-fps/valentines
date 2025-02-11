@@ -198,14 +198,13 @@
     ================================ */
     .memories-cta {
       width: 100%;
-      height: 100%;
+      height: 100vh; /* Force exactly viewport height */
       background: var(--background);
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Space header, slider, and CTA evenly */
       align-items: center;
-      overflow-y: auto;
+      /* Removed overflow-y to prevent internal scrolling */
       position: relative;
       z-index: 5;
     }
@@ -214,24 +213,19 @@
       font-size: 2.8rem;
       margin-bottom: 1rem;
       text-align: center;
+      flex: 0 0 auto;
     }
-    /* Set the container to a fixed 5:4 aspect ratio */
+    /* Remove fixed aspect ratio; let the slider expand */
     .slider-container {
-      position: relative;
+      flex: 1;
       width: 100%;
       max-width: 600px;
-      margin-bottom: 2rem;
-      padding-top: 80%; /* 5:4 aspect ratio (height = width * 0.8) */
+      margin-bottom: 1rem;
     }
-    /* Absolutely position the nested swiper inside the container */
     .swiper.mySwiperNested {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
     }
-    /* Adjust image styling to fill the container */
     .swiper.mySwiperNested .swiper-slide img {
       width: 100%;
       height: 100%;
@@ -240,8 +234,9 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
     .cta {
+      flex: 0 0 auto;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       border-radius: 8px;
       margin: 0 auto;
@@ -251,7 +246,7 @@
     .cta h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     .cta button {
       background: var(--secondary);
@@ -481,7 +476,7 @@
                   <img src="images/memory3.jpg" alt="Memory 3">
                 </div>
               </div>
-              <!-- Pagination (no arrows, vertical swipe with fade effect) -->
+              <!-- Pagination (vertical swipe with fade effect, no arrows) -->
               <div class="swiper-pagination"></div>
             </div>
           </div>
