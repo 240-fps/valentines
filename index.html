@@ -205,7 +205,7 @@
       flex-direction: column;
       justify-content: space-between; /* Space header, slider, and CTA evenly */
       align-items: center;
-      /* Remove overflow-y to prevent internal scrolling */
+      /* Removed overflow-y to prevent internal scrolling */
       position: relative;
       z-index: 5;
     }
@@ -250,8 +250,8 @@
       margin: 0 auto;
       max-width: 400px;
       backdrop-filter: blur(8px);
-      /* Add safe-area padding to avoid iOS Safari UI overlap */
-      padding-bottom: calc(2rem + env(safe-area-inset-bottom, 20px));
+      /* Removed extra safe-area bottom padding to move the button back up */
+      /* Previously: padding-bottom: calc(2rem + env(safe-area-inset-bottom, 20px)); */
     }
     .cta h2 {
       font-family: 'Playfair Display', serif;
