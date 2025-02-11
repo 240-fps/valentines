@@ -200,7 +200,6 @@
       height: 100%;
       background: var(--background);
       padding: 1rem;
-      /* Extra bottom padding for safe areas on iOS */
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
@@ -404,18 +403,34 @@
     }
     
     /* ================================
-       MEDIA QUERY (iPhone)
+       MEDIA QUERY (iPhone Adjustments)
     ================================ */
     @media (max-width: 480px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1rem; }
-      .countdown { font-size: 2rem; }
-      .itinerary-section h2 { font-size: 2rem; }
-      .card { padding: 0.8rem; font-size: 0.9rem; }
-      .card-header { font-size: 1.2rem; }
-      .memories-cta h2 { font-size: 2rem; }
-      .cta h2 { font-size: 1.8rem; }
-      .cta button { font-size: 1.3rem; padding: 0.5rem 1rem; }
+      /* HERO adjustments */
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 0.9rem; }
+      .countdown { font-size: 1.5rem; }
+      
+      /* ITINERARY adjustments */
+      .itinerary-section h2 { font-size: 1.8rem; }
+      .card { padding: 0.5rem; font-size: 0.8rem; }
+      .card-header { font-size: 1rem; }
+      
+      /* MEMORIES & CTA slide adjustments */
+      .memories-cta {
+        padding: 0.5rem;
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+      }
+      .memories-cta h2 { font-size: 1.8rem; }
+      
+      /* Reduce the slider container height for mobile */
+      .slider-container {
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+        padding-top: 60%;  /* reduced from 80% to condense the area */
+      }
+      .cta h2 { font-size: 1.6rem; }
+      .cta button { font-size: 1.1rem; padding: 0.5rem 0.75rem; }
     }
   </style>
   
