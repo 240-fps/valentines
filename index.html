@@ -169,7 +169,7 @@
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
-      padding: 0.7rem; /* Reduced padding */
+      padding: 0.7rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       cursor: pointer;
@@ -181,18 +181,16 @@
       transform: translateY(-8px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.6);
     }
-    /* Reduced the card-header font size and margin */
     .card-header {
-      font-size: 1rem;  /* Reduced from 1.2rem */
+      font-size: 1rem;
       font-weight: bold;
-      margin-bottom: 0.3rem; /* Reduced bottom margin */
+      margin-bottom: 0.3rem;
     }
-    /* Reduced the card-content font size */
     .card-content {
       height: 0;
       opacity: 0;
       overflow: hidden;
-      font-size: 0.75rem; /* Reduced from 0.9rem */
+      font-size: 0.75rem;
     }
     
     /* ================================
@@ -285,6 +283,7 @@
       align-items: center;
       justify-content: center;
       animation: loveHeartFloat 12s linear infinite;
+      animation-fill-mode: backwards; /* Ensures hearts start hidden (opacity: 0) until animation begins */
       cursor: default;
     }
     .love-heart::before,
