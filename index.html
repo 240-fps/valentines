@@ -225,15 +225,16 @@
       text-align: center;
       flex: 0 0 auto;
     }
-    /* Slider container – maintains aspect ratio and centers itself */
+    /* Slider container – maintains aspect ratio and centers itself,
+       and now shifted slightly to the left */
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 600px;
       margin: 0 auto 0.5rem auto;
       padding-top: 60%; /* maintains the aspect ratio (approx 5:3 ratio) */
-      /* Ensure the container centers in flex layouts */
       align-self: center;
+      transform: translateX(-5%);
     }
     /* Center the nested swiper pagination inside the slider container */
     .slider-container .swiper-pagination {
